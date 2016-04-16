@@ -16,17 +16,17 @@ public class Slime extends Entity
 		if(size == 2)
 		{
 			//64 = displacement needed to get medium slime in center
-			updatePosition(getX() + 64, getY() + 64);
-			resize = 128;
+			updatePosition(getX() + 32, getY() + 32);
+			resize = 64;
 		}
 		else if(size == 1)
 		{
 			//64 = displacement needed to get small slime in center
-			updatePosition(getX() + 96, getY() + 96);
-			resize = 64;
+			updatePosition(getX() + 48, getY() + 48);
+			resize = 32;
 		}
 		else
-			resize = 256;
+			resize = 128;
 	}
 	
 	//Health, attack power, and image name based on size

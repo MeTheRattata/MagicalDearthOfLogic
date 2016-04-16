@@ -13,7 +13,10 @@ import javax.swing.JPanel;
 
 public class Main extends JPanel
 {
-	private ArrayList<Entity> entities;
+	//0 = player positions, 1 = companion, 2 = enemy 1, 3 = enemy 2
+	private int[] xPositions = {32, 160, 512, 384};
+	private int[] yPositions = {192, 32, 192, 32};
+	private ArrayList<Entity> entities = new ArrayList<Entity>();
 	private static final long serialVersionUID = 1L;
 
 	public static void main(String[] args) 
@@ -22,7 +25,7 @@ public class Main extends JPanel
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		Main panel = new Main();
-		frame.getContentPane().setPreferredSize(new Dimension(512, 512));
+		frame.getContentPane().setPreferredSize(new Dimension(672, 352));
 		frame.getContentPane().add(panel);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
@@ -37,8 +40,11 @@ public class Main extends JPanel
 	public Main()
 	{
 		entities = new ArrayList<Entity>();
-		entities.add(new Companion(0,0,"dog"));
-		entities.add(new Player(0,256,"Rock"));
+		entities.add(new Player(32,192,"Rock"));
+		entities.add(new Companion(160,32,"dog"));
+		entities.add(new Slime(512,192,2));
+		entities.add(new Slime(384,32,3));
+		
 	}
 	
 	public void tick() //happens 60 times a second, things happen
@@ -47,14 +53,15 @@ public class Main extends JPanel
 	}
 	public void paintComponent(Graphics g)//already happens forever and ever
 	{
-		/*BufferedImage image = null;
+		BufferedImage image = null;
 		try {
-			image = ImageIO.read(new File("res/cat.png"));
+			image = ImageIO.read(new File("res/background.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//Draws images 8 times larger, factor this into your shit
-		g.drawImage(image, 0, 0, 256, 256, null); */
+		//Draws images 4 times larger, factor this into the other classes draw methods
+		g.drawImage(image, 0, 0, 672, 352, null);
+		
 		for(int i = 0; i < entities.size(); i++)
 			entities.get(i).paintComponent(g);
 	}

@@ -7,7 +7,7 @@ DONE 1. Get main class set up
 	DONE c. write Companion class
 	DONE d. write Player class
 	e. write individual attacks / damage methods
-	f. test damage shit
+	f. test damage methods
 3. Visual Things:
 	a. create background
 	b. position sprites on background

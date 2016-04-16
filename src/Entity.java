@@ -62,7 +62,7 @@ public class Entity
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//multiplied by 256 to make image 8 times larger
-		g.drawImage(image, (int) x, (int) y, 256, 256, null);
+		//multiplied by 256 to make image 4 times larger
+		g.drawImage(image, (int) x, (int) y, 128, 128, null);
 	}
 }

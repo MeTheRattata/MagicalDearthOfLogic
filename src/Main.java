@@ -22,7 +22,7 @@ public class Main extends JPanel
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		Main panel = new Main();
-		frame.getContentPane().setPreferredSize(new Dimension(500, 500));
+		frame.getContentPane().setPreferredSize(new Dimension(512, 512));
 		frame.getContentPane().add(panel);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
@@ -38,6 +38,7 @@ public class Main extends JPanel
 	{
 		entities = new ArrayList<Entity>();
 		entities.add(new Companion(0,0,"dog"));
+		entities.add(new Player(0,256,"Rock"));
 	}
 	
 	public void tick() //happens 60 times a second, things happen

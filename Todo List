@@ -4,11 +4,19 @@ DONE 1. Get main class set up
 2. Write classes for player character, companions and enemies
 	DONE a. write Entity class as parent, including health, position and image file(s)
 	DONE b. write Slime class
-	c. write Companion class
-	d. write Player class
+	DONE c. write Companion class
+	DONE d. write Player class
 	e. write individual attacks / damage methods
+	f. test damage shit
 3. Visual Things:
-	a. separate sprite sheet into seperate sprites for each character
-	b. organize sprites
-	c. give classes their individual sprites
-	d. 
+	a. create background
+	b. position sprites on background
+	DONE c. separate sprite sheet into seperate sprites for each character
+	NOPE d. organize sprites 
+	DONE e. give classes their individual sprites
+	f. damage animations
+	g. health bars
+	h. attack animations
+	i. change sprites according to hp for slimes
+	
+	 

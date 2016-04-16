@@ -7,12 +7,10 @@ import javax.imageio.ImageIO;
 
 public class Slime extends Entity
 {
-	int size; //size of slime
 	int resize; //size of sprite
-	public Slime(double xPos, double yPos, int newSize) 
+	public Slime(double xPos, double yPos, int size) 
 	{
-		super(xPos, yPos, assignHealth(newSize), assignDamage(newSize), "slime" + assignName(newSize));
-		size = newSize;
+		super(xPos, yPos, assignHealth(size), assignDamage(size), "slime" + assignName(size));
 		//If slimes are smaller than 32 by 32, puts them in the center of the 32 by 32 square where they are
 		//Also updates size the sprite is resized to to keep proportions consistent
 		if(size == 2)

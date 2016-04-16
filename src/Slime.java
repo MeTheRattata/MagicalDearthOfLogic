@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -7,24 +8,20 @@ import javax.imageio.ImageIO;
 
 public class Slime extends Entity
 {
+	int size;
 	int resize; //size of sprite
-	public Slime(double xPos, double yPos, int size) 
+	int attackPower;
+	public Slime(double xPos, double yPos, int newSize) 
 	{
-		super(xPos, yPos, assignHealth(size), assignDamage(size), "slime" + assignName(size));
+		super(xPos, yPos, assignHealth(newSize), "slime" + assignName(newSize));
+		size = newSize;
+		attackPower = assignPower(newSize);
 		//If slimes are smaller than 32 by 32, puts them in the center of the 32 by 32 square where they are
 		//Also updates size the sprite is resized to to keep proportions consistent
 		if(size == 2)
-		{
-			//64 = displacement needed to get medium slime in center
-			updatePosition(getX() + 32, getY() + 32);
 			resize = 64;
-		}
 		else if(size == 1)
-		{
-			//64 = displacement needed to get small slime in center
-			updatePosition(getX() + 48, getY() + 48);
 			resize = 32;
-		}
 		else
 			resize = 128;
 	}
@@ -39,7 +36,7 @@ public class Slime extends Entity
 		else
 			return 100;
 	}
-	private static int assignDamage(int size)
+	private static int assignPower(int size)
 	{
 		if(size == 1)
 			return 5;
@@ -69,6 +66,21 @@ public class Slime extends Entity
 			e.printStackTrace();
 		}
 		//multiplied by 256 to make image 8 times larger
-		g.drawImage(image, (int) getX(), (int) getY(), resize, resize, null);
+		if(size == 2)
+			//32 = displacement needed to get medium slime in center
+			g.drawImage(image, (int) getX() + 32, (int) getY() + 32, resize, resize, null);
+		else if(size == 1)
+			//48 = displacement needed to get small slime in center
+			g.drawImage(image, (int) getX() + 48, (int) getY() + 48, resize, resize, null);
+		else
+			g.drawImage(image, (int) getX(), (int) getY(), resize, resize, null);
+		
+		//Draw Health Bar
+		
+		g.setColor(Color.RED);
+		g.fillRect((int)getX(), (int) getY() + 132, 128, 8);
+		g.setColor(Color.GREEN);
+		double barLength =  ((double) getHealth() / getMaxHealth()) * 128;
+		g.fillRect((int)getX(), (int) getY() + 132, (int) barLength, 8);
 	}
 }

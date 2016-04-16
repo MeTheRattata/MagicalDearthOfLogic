@@ -7,15 +7,16 @@ DONE 1. Get main class set up
 	DONE c. write Companion class
 	DONE d. write Player class
 	e. write individual attacks / damage methods
-	f. test damage methods
+	DONE f. test damage methods
+	DONE g. set up health bars
 3. Visual Things:
-	a. create background
-	b. position sprites on background
+	DONEa. create background
+	DONEb. position sprites on background
 	DONE c. separate sprite sheet into seperate sprites for each character
 	NOPE d. organize sprites 
 	DONE e. give classes their individual sprites
 	f. damage animations
-	g. health bars
+	DONE g. health bars
 	h. attack animations
 	i. change sprites according to hp for slimes
 	

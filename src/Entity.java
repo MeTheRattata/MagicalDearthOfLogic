@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -9,15 +10,16 @@ public class Entity
 	private double x;
 	private double y;
 	private int health;
+	private int maxHealth;
 	private int attackPower;
 	String imagePath; //path of image used as sprite, change to change sprite
 	
-	public Entity(double xPos, double yPos, int entHealth, int entPower, String entImagePath)
+	public Entity(double xPos, double yPos, int entHealth, String entImagePath)
 	{
 		x = xPos;
 		y = yPos;
 		health = entHealth;
-		attackPower = entPower;
+		maxHealth = entHealth;
 		imagePath = entImagePath;
 	}
 	
@@ -47,12 +49,18 @@ public class Entity
 		else
 			return false;
 	}
-
 	public int getDamage()
 	{
 		return attackPower;
 	}
-	
+	public int getHealth()
+	{
+		return health;
+	}
+	public int getMaxHealth()
+	{
+		return maxHealth;
+	}
 	
 	public void paintComponent(Graphics g)
 	{
@@ -64,5 +72,12 @@ public class Entity
 		}
 		//multiplied by 256 to make image 4 times larger
 		g.drawImage(image, (int) x, (int) y, 128, 128, null);
+		
+		//Draw Health Bar
+		g.setColor(Color.RED);
+		g.fillRect((int)x, (int) y + 132, 128, 8);
+		g.setColor(Color.GREEN);
+		double barLength =  ((double) health / maxHealth) * 128;
+		g.fillRect((int)x, (int) y + 132, (int) barLength, 8);
 	}
 }

@@ -44,6 +44,7 @@ public class Main extends JPanel
 		entities.add(new Companion(160,32,"dog"));
 		entities.add(new Slime(512,192,2));
 		entities.add(new Slime(384,32,3));
+		entities.get(0).takeDamage(50);
 		
 	}
 	

@@ -37,10 +37,7 @@ public class Main extends JPanel
 	public Main()
 	{
 		entities = new ArrayList<Entity>();
-		//Adds 3 slimes to the entities arraylist to test out how they draw
-		entities.add(new Slime(0,0,3));
-		entities.add(new Slime(0,0,2));
-		entities.add(new Slime(0,0,1));
+		entities.add(new Companion(0,0,"dog"));
 	}
 	
 	public void tick() //happens 60 times a second, things happen

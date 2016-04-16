@@ -2,7 +2,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
 public class Entity 
@@ -10,14 +9,48 @@ public class Entity
 	private double x;
 	private double y;
 	private int health;
-	String imagePath;
+	private int attackPower;
+	String imagePath; //path of image used as sprite, change to change sprite
 	
 	
-	public Entity(double xPos, double yPos, int health, String imagePath)
+	public Entity(double xPos, double yPos, int entHealth, int entPower, String entImagePath)
 	{
-		
+		x = xPos;
+		y = yPos;
+		health = entHealth;
+		attackPower = entPower;
+		imagePath = entImagePath;
 	}
-	public void paintComponent(Graphics g)//already happens forever and ever
+	
+	//Methods using position
+	public double[] getPosition()
+	{
+		double[] pos = {x, y};
+		return pos;
+	}
+	public void updatePosition(double newX, double newY)
+	{
+		x = newX;
+		y = newY;
+	}
+	
+	//Methods using health
+	
+	//Returns whether the entity is dead (true = dead, false = still alive)
+	public boolean takeDamage(int damage)
+	{
+		health -= damage;
+		if(health <= 0)
+			return true;
+		else
+			return false;
+	}
+	public int getDamage()
+	{
+		return attackPower;
+	}
+	
+	public void paintComponent(Graphics g)
 	{
 		BufferedImage image = null;
 		try {
@@ -25,6 +58,7 @@ public class Entity
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		g.drawImage(image, 0, 0, null);
+		//multiplied by 256 to make image 8 times larger
+		g.drawImage(image, (int) x, (int) y, 256, 256, null);
 	}
 }

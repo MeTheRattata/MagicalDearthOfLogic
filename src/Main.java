@@ -49,6 +49,7 @@ public class Main extends JPanel
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		g.drawImage(image, 0, 0, null);
+		//Draws images 8 times larger, factor this into your shit
+		g.drawImage(image, 0, 0, 256, 256, null);
 	}
 }

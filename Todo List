@@ -2,9 +2,11 @@ TODO:
 
 DONE 1. Get main class set up
 2. Write classes for player character, companions and enemies
-	a. write Entity class as parent, including health, position and image file(s)
-	b. use enums for players, companions and enemy sizes
-	c. write individual attacks / damage methods
+	DONE a. write Entity class as parent, including health, position and image file(s)
+	DONE b. write Slime class
+	c. write Companion class
+	d. write Player class
+	e. write individual attacks / damage methods
 3. Visual Things:
 	a. separate sprite sheet into seperate sprites for each character
 	b. organize sprites

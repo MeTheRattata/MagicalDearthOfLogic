@@ -12,7 +12,6 @@ public class Entity
 	private int attackPower;
 	String imagePath; //path of image used as sprite, change to change sprite
 	
-	
 	public Entity(double xPos, double yPos, int entHealth, int entPower, String entImagePath)
 	{
 		x = xPos;
@@ -23,10 +22,13 @@ public class Entity
 	}
 	
 	//Methods using position
-	public double[] getPosition()
+	public double getX()
 	{
-		double[] pos = {x, y};
-		return pos;
+		return x;
+	}
+	public double getY()
+	{
+		return y;
 	}
 	public void updatePosition(double newX, double newY)
 	{
@@ -45,16 +47,18 @@ public class Entity
 		else
 			return false;
 	}
+
 	public int getDamage()
 	{
 		return attackPower;
 	}
 	
+	
 	public void paintComponent(Graphics g)
 	{
 		BufferedImage image = null;
 		try {
-			image = ImageIO.read(new File(imagePath));
+			image = ImageIO.read(new File("res/" + imagePath + ".png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

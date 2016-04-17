@@ -11,8 +11,10 @@ DONE 1. Get main class set up
 	DONE g. set up health bars
 	DONE h. Player Select
 	DONE i. Companion Select
-	j. Select which monster to attack
-	k. Select which attack to use
+	DONE j. Select which monster to attack
+	k. selections with each character
+	l. Select which attack to use
+	m. write pair attacks
 3. Visual Things:
 	DONEa. create background
 	DONEb. position sprites on background
@@ -22,6 +24,6 @@ DONE 1. Get main class set up
 	f. damage animations
 	DONE g. health bars
 	h. attack animations
-	i. change sprites according to hp for slimes
+	DONE i. change sprites according to hp for slimes
 	
 	 

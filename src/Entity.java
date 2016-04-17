@@ -50,6 +50,10 @@ public class Entity
 		else
 			return false;
 	}
+	public int getMagicAttack()
+	{
+		return 0;
+	}
 	public int getAttack()
 	{
 		return attackPower;

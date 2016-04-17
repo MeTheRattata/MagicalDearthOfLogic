@@ -14,10 +14,10 @@ DONE 1. Get main class set up
 	DONE j. Select which monster to attack
 	DONE k. selections with each character
 	DONE l. do default damage with each character
-	m. Select which attack to use
+	DONE m. Select which attack to use (wizard)
 	n. write pair attacks
 	o. write special attacks
-	p. put in new slimes once the old ones die
+	DONE p. put in new slimes once the old ones die
 3. Visual Things:
 	DONE a. create background
 	DONE b. position sprites on background

@@ -25,14 +25,19 @@ public class Main extends JPanel
 	private boolean outOfInitialMenus = false;
 	//MenuNum : 0 = player select, 1 = companion select, 2 = game menu
 	int menuNum = 0; //which menu you're in
-	//0 = select player, 1 = select companion, 2 = select attack target
+	//0 = select player, 1 = select companion, 2 = select attack target, 3 = temp to let tick method do damage and things,
+	//4 = select attack
+	
 	boolean playerTurn = true;
 	String[] menuTexts = {"Life Wizard", "Light Wizard", "Earth Wizard", "Water Wizard", "Cat", "Dog", "Lizard", "Emu"};
 	int gameMenuNum = 0; //Which game menu you're in, 0 = select enemy to attack with player, 1 = select
 	//an enemy to attack with companion
-	String[] gameMenuTexts = {"Select an enemy to attack with player:", "Select an enemy to attack with companion:"};
+	String[] gameMenuTexts = {"Select an enemy to target with wizard:", "Select an enemy to target with companion:", 
+			"Magic Attack", "Melee Attack"};
 	int selectedMobPlayer = -1;
 	int selectedMobCompanion = -1;
+	boolean isManaAttack = false;
+	boolean past4 = false;
 	
 	private static final long serialVersionUID = 1L;
 
@@ -89,28 +94,53 @@ public class Main extends JPanel
 							entities.get(1).setName("lizard");
 						else if(e.getX() > 336 && e.getY() > 240) //bottom right
 							entities.get(1).setName("emu");
-						menuNum = 2;
+						menuNum = 4;
 						outOfInitialMenus = true;
 					}	
 				}
-				else if(menuNum == 2)
+				else if(menuNum == 4 && !past4)
+				{
+					System.out.print("inFour");
+					if(e.getX() > 0 && e.getX() < 336 && e.getY() > 352 && e.getY() < 480)
+					{
+						isManaAttack = true;
+						past4 = true;
+						menuNum = 2;
+					}
+						
+					else if(e.getX() > 336 && e.getX() < 672 && e.getY() > 352 && e.getY() < 480)
+					{
+						isManaAttack = false;
+						past4 = true;
+						menuNum = 2;
+					}	
+				}
+				//Used for Getting location of targets for player and companion
+				else if(past4 && menuNum == 2)
 				{
 					System.out.println("In main");
+					
 					if(gameMenuNum == 0)
 					{
+						System.out.println("In wizard");
 						for(int i = 2; i < 4; i++)
 							if(e.getX() > xEntityPos[i] && e.getX() < xEntityPos[i] + 128 && 
-							   e.getY() > yEntityPos[i] && e.getY() < xEntityPos[i] + 128)
+							   e.getY() > yEntityPos[i] && e.getY() < yEntityPos[i] + 128)
 								selectedMobPlayer = i;
+						
 						gameMenuNum = 1;
+						playerTurn = false;
 					}
-					else //(gameMenuNum == 1)
+					else if(gameMenuNum == 1)
 					{
+						System.out.println("In companion");
 						for(int i = 2; i < 4; i++)
 							if(e.getX() > xEntityPos[i] && e.getX() < xEntityPos[i] + 128 && 
-							   e.getY() > yEntityPos[i] && e.getY() < xEntityPos[i] + 128)
+							   e.getY() > yEntityPos[i] && e.getY() < yEntityPos[i] + 128)
 								selectedMobCompanion = i;
 						menuNum = 3;
+						past4 = false;
+						playerTurn = true;
 					}
 				}		
 			}
@@ -122,20 +152,32 @@ public class Main extends JPanel
 		if(menuNum == 3)
 		{	
 			System.out.println("In ticks");
-			//do damage to enemies with both player and companion
-			if(entities.get(selectedMobPlayer).takeDamage(entities.get(0).getAttack()))
-				entities.set(selectedMobPlayer, new Slime(xEntityPos[selectedMobPlayer],yEntityPos[selectedMobPlayer],(int)(Math.random()*3) + 1));
-			if(entities.get(selectedMobCompanion).takeDamage(entities.get(1).getAttack()))
-				entities.set(selectedMobCompanion, new Slime(xEntityPos[selectedMobCompanion],yEntityPos[selectedMobCompanion],(int)(Math.random()*3) + 1));
+			if(selectedMobPlayer != -1 && selectedMobCompanion != -1)
+			{
+				//do damage to enemies with both player and companion
+				if(isManaAttack)
+				{
+					//hopefully overridden by player
+					if(entities.get(selectedMobPlayer).takeDamage(entities.get(0).getMagicAttack()))
+						entities.set(selectedMobPlayer, new Slime(xEntityPos[selectedMobPlayer],yEntityPos[selectedMobPlayer],(int)(Math.random()*3) + 1));
+				}
+				else
+				{
+					if(entities.get(selectedMobPlayer).takeDamage(entities.get(0).getAttack()))
+						entities.set(selectedMobPlayer, new Slime(xEntityPos[selectedMobPlayer],yEntityPos[selectedMobPlayer],(int)(Math.random()*3) + 1));
+				}
+					
+				if(entities.get(selectedMobCompanion).takeDamage(entities.get(1).getAttack()))
+					entities.set(selectedMobCompanion, new Slime(xEntityPos[selectedMobCompanion],yEntityPos[selectedMobCompanion],(int)(Math.random()*3) + 1));
 			
-			System.out.println("Mob1: " + entities.get(selectedMobPlayer).getHealth());
-			System.out.println("Mob2: " + entities.get(selectedMobCompanion).getHealth());
+				System.out.println("Mob1: " + entities.get(selectedMobPlayer).getHealth());
+				System.out.println("Mob2: " + entities.get(selectedMobCompanion).getHealth());
+				
+				selectedMobPlayer = -1;
+				selectedMobCompanion = -1;
+			}
 			
-			
-			
-			selectedMobPlayer = -1;
-			selectedMobCompanion = -1;
-			menuNum = 2; //Go back into selecting mobs to attack
+			menuNum = 4; //Go back into selecting wizards attack
 			gameMenuNum = 0; //Go back to player attacking
 		}
 	}
@@ -144,6 +186,7 @@ public class Main extends JPanel
 	{
 		if(!outOfInitialMenus)
 		{
+			//Prep to draw menus
 			g.setColor(Color.WHITE);
 			g.fillRect(0,0,672,480);
 			g.setColor(Color.BLACK);
@@ -157,6 +200,7 @@ public class Main extends JPanel
 			Font font = new Font("Arial", Font.BOLD, 32);
 			g.setFont(font);
 			
+			//Draw Player Select
 			if(menuNum == 0)
 			{
 				for(int i = 0; i < 4; i++)
@@ -165,6 +209,7 @@ public class Main extends JPanel
 					g.drawString(str, xMenuPos[i], yMenuPos[i]);
 				}
 			}
+			//Draw Companion Select
 			else if(menuNum == 1)
 			{
 				for(int i = 4; i < 8; i++)
@@ -176,9 +221,7 @@ public class Main extends JPanel
 		}
 		else
 		{
-			//Clean background, set up for menu printing
-			g.setColor(Color.WHITE);
-			g.fillRect(0,0,672,480);
+			//Clean background, set up for game menu printing
 			g.setColor(Color.BLACK);
 			Font font = new Font("Arial", Font.BOLD, 32);
 			g.setFont(font);
@@ -197,7 +240,12 @@ public class Main extends JPanel
 			for(int i = 0; i < entities.size(); i++)
 				entities.get(i).paintComponent(g);
 			
-			if(menuNum == 2) //Enemy select for attacks
+			if(menuNum == 4)
+			{
+				g.drawLine(336, 240, 336, 480);
+				
+			}
+			else if(menuNum == 2) //Enemy select for attacks
 			{
 				//select with both wizard and companion
 				
@@ -217,6 +265,7 @@ public class Main extends JPanel
 				for(int j = 2; j < 4; j++)
 					g.drawImage(image, xEntityPos[j], yEntityPos[j], 128, 128, null);
 			}
+			
 		}
 	}
 }

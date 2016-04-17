@@ -222,10 +222,6 @@ public class Main extends JPanel
 		else
 		{
 			//Clean background, set up for game menu printing
-			g.setColor(Color.BLACK);
-			Font font = new Font("Arial", Font.BOLD, 32);
-			g.setFont(font);
-			String str = "";
 			
 			//draw background
 			BufferedImage image = null;
@@ -242,11 +238,23 @@ public class Main extends JPanel
 			
 			if(menuNum == 4)
 			{
-				g.drawLine(336, 240, 336, 480);
+				g.setColor(Color.BLACK);
+				Font font = new Font("Arial", Font.BOLD, 32);
+				g.setFont(font);
+				java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+				g2.setStroke(new java.awt.BasicStroke(4)); // thickness of 3.0f
+				g2.setColor(Color.BLACK);
+				g2.drawLine(336, 354, 336, 480);
+				g.drawString(gameMenuTexts[2], 64, 434);
+				g.drawString(gameMenuTexts[3], 400, 432);
 				
 			}
 			else if(menuNum == 2) //Enemy select for attacks
 			{
+				g.setColor(Color.BLACK);
+				Font font = new Font("Arial", Font.BOLD, 32);
+				g.setFont(font);
+				String str = "";
 				//select with both wizard and companion
 				
 				//Draw menu string for selection

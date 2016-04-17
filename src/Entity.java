@@ -57,6 +57,10 @@ public class Entity
 	{
 		return health;
 	}
+	public void setHealth(int newHealth)
+	{
+		health = newHealth;
+	}
 	public int getMaxHealth()
 	{
 		return maxHealth;

@@ -13,7 +13,7 @@ public class Slime extends Entity
 	int attackPower;
 	public Slime(double xPos, double yPos, int newSize) 
 	{
-		super(xPos, yPos, assignHealth(newSize), "slime" + assignName(newSize));
+		super(xPos, yPos, assignHealth(newSize), "slime/slime" + assignName(newSize, assignHealth(newSize), assignHealth(newSize)));
 		size = newSize;
 		attackPower = assignPower(newSize);
 		//If slimes are smaller than 32 by 32, puts them in the center of the 32 by 32 square where they are
@@ -45,14 +45,35 @@ public class Slime extends Entity
 		else
 			return 15;
 	}
-	private static String assignName(int size)
+	private static String assignName(int size, int health, int maxHealth)
 	{
+		String restOfName = "slime/slime";
 		if(size == 1)
-			return "Small";
+			restOfName += "Small";
 		else if(size == 2)
-			return "Medium";
+			restOfName += "Medium";
 		else
-			return "Large";
+			restOfName += "Large";
+		
+		if(((double) health / (double) maxHealth) * 100 > 75) //health is above 75%
+			restOfName += "100";
+		else if(((double) health / (double) maxHealth) * 100 > 50)//health is above 50%
+			restOfName += "75";
+		else if(((double) health / (double) maxHealth) * 100 > 25)//health is above 25%
+			restOfName += "50";
+		else //health is below 25%
+			restOfName += "25";
+		return restOfName;
+	}
+	
+	public boolean takeDamage(int damage)
+	{
+		setHealth(getHealth() - damage);
+		this.setName(assignName(size, getHealth(), getMaxHealth()));
+		if(getHealth() <= 0)
+			return true;
+		else
+			return false;
 	}
 	
 	//Overridden from parent to resize slimes properly

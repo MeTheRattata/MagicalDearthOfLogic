@@ -58,7 +58,7 @@ public class Main extends JPanel
 		entities.add(new Companion(160,32,"cat")); //starts with default name
 		entities.add(new Slime(512,192,2));
 		entities.add(new Slime(384,32,3));
-		entities.get(0).takeDamage(50);
+		entities.get(3).takeDamage(50);
 		
 		this.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e)

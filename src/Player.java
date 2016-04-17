@@ -11,13 +11,15 @@ public class Player extends Entity
 	int magicAttack = 40;
 	int mana;
 	int maxMana;
-	public Player(double xPos, double yPos, String type) 
+	String type;
+	public Player(double xPos, double yPos, String newType) 
 	{
 		//Players start with a health of 100 and an attack power of 20
 		//Type is specified upon player select, is "Rock", "Life", "Light" or "Water"
-		super(xPos, yPos, 100, "wizard" + type, 20);
+		super(xPos, yPos, 100, "wizard" + newType, 20);
 		mana = 50;
 		maxMana = mana;
+		type = newType;
 	}
 	public int getMagicAttack()
 	{
@@ -30,6 +32,10 @@ public class Player extends Entity
 			return magicAttack;
 		}
 			
+	}
+	public String getType()
+	{
+		return type;
 	}
 	public void paintComponent(Graphics g)
 	{
@@ -55,5 +61,13 @@ public class Player extends Entity
 		g.setColor(Color.BLUE);
 		double manaBarLength =  ((double) mana / maxMana) * 128;
 		g.fillRect((int)getX(), (int)getY() + 140, (int) manaBarLength, 8);
+	}
+	public int getMana() 
+	{
+		return mana;
+	}
+	public void refillMana()
+	{
+		mana = maxMana;
 	}
 }

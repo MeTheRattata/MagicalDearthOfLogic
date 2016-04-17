@@ -75,6 +75,19 @@ public class Slime extends Entity
 		else
 			return false;
 	}
+	public String getSize()
+	{
+		if(size == 1)
+			return "Small";
+		else if(size == 2)
+			return "Medium";
+		else
+			return "Large";
+	}
+	public int getResize()
+	{
+		return resize;
+	}
 	
 	//Overridden from parent to resize slimes properly
 	public void paintComponent(Graphics g)
@@ -103,5 +116,14 @@ public class Slime extends Entity
 		g.setColor(Color.GREEN);
 		double barLength =  ((double) getHealth() / getMaxHealth()) * 128;
 		g.fillRect((int)getX(), (int) getY() + 132, (int) barLength, 8);
+	}
+	public int getDisplacement()
+	{
+		if(size == 1)
+			return 48;
+		if(size == 2)
+			return 32;
+		else
+			return 0;
 	}
 }

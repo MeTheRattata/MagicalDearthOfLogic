@@ -38,7 +38,10 @@ public class Entity
 		x = newX;
 		y = newY;
 	}
-	
+	public String getName()
+	{
+		return imagePath;
+	}
 	//Methods using health
 	
 	//Returns whether the entity is dead (true = dead, false = still alive)

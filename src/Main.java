@@ -38,6 +38,8 @@ public class Main extends JPanel
 	int selectedMobCompanion = -1;
 	boolean isManaAttack = false;
 	boolean past4 = false;
+	int[] hurting = {0,0,0,0};
+	int kills = 0;
 	
 	private static final long serialVersionUID = 1L;
 
@@ -158,17 +160,36 @@ public class Main extends JPanel
 				if(isManaAttack)
 				{
 					//hopefully overridden by player
+					if(((Player) entities.get(0)).getMana() > 20)
+						hurting[selectedMobPlayer] += 30;
 					if(entities.get(selectedMobPlayer).takeDamage(entities.get(0).getMagicAttack()))
+					{
+						kills++;
+						((Player) entities.get(0)).refillMana();
 						entities.set(selectedMobPlayer, new Slime(xEntityPos[selectedMobPlayer],yEntityPos[selectedMobPlayer],(int)(Math.random()*3) + 1));
+					}
+						
 				}
 				else
 				{
+					hurting[selectedMobPlayer] += 30;
 					if(entities.get(selectedMobPlayer).takeDamage(entities.get(0).getAttack()))
+					{
+						kills++;
+						((Player) entities.get(0)).refillMana();
 						entities.set(selectedMobPlayer, new Slime(xEntityPos[selectedMobPlayer],yEntityPos[selectedMobPlayer],(int)(Math.random()*3) + 1));
+					}
+						
+				}
+				
+				hurting[selectedMobCompanion] += 30;
+				if(entities.get(selectedMobCompanion).takeDamage(entities.get(1).getAttack()))
+				{
+					kills++;
+					((Player) entities.get(0)).refillMana();
+					entities.set(selectedMobCompanion, new Slime(xEntityPos[selectedMobCompanion],yEntityPos[selectedMobCompanion],(int)(Math.random()*3) + 1));
 				}
 					
-				if(entities.get(selectedMobCompanion).takeDamage(entities.get(1).getAttack()))
-					entities.set(selectedMobCompanion, new Slime(xEntityPos[selectedMobCompanion],yEntityPos[selectedMobCompanion],(int)(Math.random()*3) + 1));
 			
 				System.out.println("Mob1: " + entities.get(selectedMobPlayer).getHealth());
 				System.out.println("Mob2: " + entities.get(selectedMobCompanion).getHealth());
@@ -222,6 +243,9 @@ public class Main extends JPanel
 		else
 		{
 			//Clean background, set up for game menu printing
+			g.setColor(Color.BLACK);
+			Font font = new Font("Arial", Font.BOLD, 32);
+			g.setFont(font);
 			
 			//draw background
 			BufferedImage image = null;
@@ -231,15 +255,56 @@ public class Main extends JPanel
 				e.printStackTrace();
 			}
 			g.drawImage(image, 0, 0, 672, 480, null);
-			
+			g.drawString("Kills: " + kills, 32, 32);
 			//draw entities
 			for(int i = 0; i < entities.size(); i++)
 				entities.get(i).paintComponent(g);
-			
+			if(hurting[0] > 0)
+			{
+				try {
+					image = ImageIO.read(new File("res/wizardDmg.png"));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				g.drawImage(image, xEntityPos[0], yEntityPos[0], 128, 128, null);
+				hurting[0]--;
+			}	
+			if(hurting[1] > 0)
+			{
+				try {
+					image = ImageIO.read(new File("res/" + entities.get(1) + "Dmg.png"));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				g.drawImage(image, xEntityPos[1], yEntityPos[1], 128, 128, null);
+				hurting[1]--;
+			}
+			if(hurting[2] > 0)
+			{
+				try {
+					image = ImageIO.read(new File("res/slime/slime" + ((Slime) entities.get(2)).getSize() + "Dmg.png"));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				g.drawImage(image, xEntityPos[2] + ((Slime) entities.get(2)).getDisplacement(), yEntityPos[2] + ((Slime) entities.get(2)).getDisplacement(), 
+						((Slime) entities.get(2)).getResize(), ((Slime) entities.get(2)).getResize(), null);
+				hurting[2]--;
+			}
+			if(hurting[3] > 0)
+			{
+				try {
+					image = ImageIO.read(new File("res/slime/slime" + ((Slime) entities.get(3)).getSize() + "Dmg.png"));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				g.drawImage(image, xEntityPos[3] + ((Slime) entities.get(3)).getDisplacement(), yEntityPos[3] + ((Slime) entities.get(3)).getDisplacement(), 
+						((Slime) entities.get(3)).getResize(), ((Slime) entities.get(3)).getResize(), null);
+				hurting[3]--;
+			}
+				
 			if(menuNum == 4)
 			{
 				g.setColor(Color.BLACK);
-				Font font = new Font("Arial", Font.BOLD, 32);
 				g.setFont(font);
 				java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
 				g2.setStroke(new java.awt.BasicStroke(4)); // thickness of 3.0f
@@ -252,7 +317,6 @@ public class Main extends JPanel
 			else if(menuNum == 2) //Enemy select for attacks
 			{
 				g.setColor(Color.BLACK);
-				Font font = new Font("Arial", Font.BOLD, 32);
 				g.setFont(font);
 				String str = "";
 				//select with both wizard and companion

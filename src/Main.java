@@ -59,9 +59,8 @@ public class Main extends JPanel
 		entities = new ArrayList<Entity>();
 		entities.add(new Player(xEntityPos[0],yEntityPos[0],"Life")); //starts with default name
 		entities.add(new Companion(xEntityPos[1],yEntityPos[1],"cat")); //starts with default name
-		entities.add(new Slime(xEntityPos[2],yEntityPos[2],3));
-		entities.add(new Slime(xEntityPos[3],yEntityPos[3],3));
-		entities.get(3).takeDamage(50);
+		entities.add(new Slime(xEntityPos[2],yEntityPos[2],(int)(Math.random()*3) + 1));
+		entities.add(new Slime(xEntityPos[3],yEntityPos[3],(int)(Math.random()*3) + 1));
 		
 		this.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e)
@@ -124,10 +123,15 @@ public class Main extends JPanel
 		{	
 			System.out.println("In ticks");
 			//do damage to enemies with both player and companion
-			entities.get(selectedMobPlayer).takeDamage(entities.get(0).getAttack());
-			entities.get(selectedMobCompanion).takeDamage(entities.get(1).getAttack());
+			if(entities.get(selectedMobPlayer).takeDamage(entities.get(0).getAttack()))
+				entities.set(selectedMobPlayer, new Slime(xEntityPos[selectedMobPlayer],yEntityPos[selectedMobPlayer],(int)(Math.random()*3) + 1));
+			if(entities.get(selectedMobCompanion).takeDamage(entities.get(1).getAttack()))
+				entities.set(selectedMobCompanion, new Slime(xEntityPos[selectedMobCompanion],yEntityPos[selectedMobCompanion],(int)(Math.random()*3) + 1));
+			
 			System.out.println("Mob1: " + entities.get(selectedMobPlayer).getHealth());
 			System.out.println("Mob2: " + entities.get(selectedMobCompanion).getHealth());
+			
+			
 			
 			selectedMobPlayer = -1;
 			selectedMobCompanion = -1;

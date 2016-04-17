@@ -6,19 +6,21 @@ DONE 1. Get main class set up
 	DONE b. write Slime class
 	DONE c. write Companion class
 	DONE d. write Player class
-	e. write individual attacks / damage methods
+	DONE e. write individual attacks / damage methods
 	DONE f. test damage methods
 	DONE g. set up health bars
 	DONE h. Player Select
 	DONE i. Companion Select
 	DONE j. Select which monster to attack
 	DONE k. selections with each character
-	l. do default damage with each character
+	DONE l. do default damage with each character
 	m. Select which attack to use
 	n. write pair attacks
+	o. write special attacks
+	p. put in new slimes once the old ones die
 3. Visual Things:
-	DONEa. create background
-	DONEb. position sprites on background
+	DONE a. create background
+	DONE b. position sprites on background
 	DONE c. separate sprite sheet into seperate sprites for each character
 	NOPE d. organize sprites 
 	DONE e. give classes their individual sprites

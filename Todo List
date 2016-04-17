@@ -24,7 +24,7 @@ DONE 1. Get main class set up
 	DONE c. separate sprite sheet into seperate sprites for each character
 	NOPE d. organize sprites 
 	DONE e. give classes their individual sprites
-	f. damage animations
+	DONE f. damage animations
 	DONE g. health bars
 	h. attack animations
 	DONE i. change sprites according to hp for slimes

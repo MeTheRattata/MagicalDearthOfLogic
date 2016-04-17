@@ -190,9 +190,7 @@ public class Main extends JPanel
 					entities.set(selectedMobCompanion, new Slime(xEntityPos[selectedMobCompanion],yEntityPos[selectedMobCompanion],(int)(Math.random()*3) + 1));
 				}
 					
-			
-				System.out.println("Mob1: " + entities.get(selectedMobPlayer).getHealth());
-				System.out.println("Mob2: " + entities.get(selectedMobCompanion).getHealth());
+				
 				
 				selectedMobPlayer = -1;
 				selectedMobCompanion = -1;

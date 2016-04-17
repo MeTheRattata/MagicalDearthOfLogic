@@ -10,12 +10,11 @@ public class Slime extends Entity
 {
 	int size;
 	int resize; //size of sprite
-	int attackPower;
 	public Slime(double xPos, double yPos, int newSize) 
 	{
-		super(xPos, yPos, assignHealth(newSize), "");
+		super(xPos, yPos, assignHealth(newSize), "", 0);
 		size = newSize;
-		attackPower = getPower(size);
+		setAttack(getPower(size));
 		setName(getName(size, getHealth(), getMaxHealth()));
 		//If slimes are smaller than 32 by 32, puts them in the center of the 32 by 32 square where they are
 		//Also updates size the sprite is resized to to keep proportions consistent

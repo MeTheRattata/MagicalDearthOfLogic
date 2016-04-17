@@ -94,14 +94,16 @@ public class Main extends JPanel
 						outOfInitialMenus = true;
 					}	
 				}
-				else
+				else if(menuNum == 2)
 				{
+					System.out.println("In main");
 					if(gameMenuNum == 0)
 					{
 						for(int i = 2; i < 4; i++)
 							if(e.getX() > xEntityPos[i] && e.getX() < xEntityPos[i] + 128 && 
 							   e.getY() > yEntityPos[i] && e.getY() < xEntityPos[i] + 128)
 								selectedMobPlayer = i;
+						gameMenuNum = 1;
 					}
 					else //(gameMenuNum == 1)
 					{
@@ -109,7 +111,7 @@ public class Main extends JPanel
 							if(e.getX() > xEntityPos[i] && e.getX() < xEntityPos[i] + 128 && 
 							   e.getY() > yEntityPos[i] && e.getY() < xEntityPos[i] + 128)
 								selectedMobCompanion = i;
-						gameMenuNum = 3;
+						menuNum = 3;
 					}
 				}		
 			}
@@ -118,15 +120,19 @@ public class Main extends JPanel
 	public void tick() //happens 60 times a second, things happen
 	{
 		//if both player and mob have selected an enemy to fight
-		if(gameMenuNum == 3)
-		{
+		if(menuNum == 3)
+		{	
+			System.out.println("In ticks");
 			//do damage to enemies with both player and companion
-			entities.get(selectedMobPlayer).takeDamage(entities.get(0).getDamage());
-			entities.get(selectedMobCompanion).takeDamage(entities.get(1).getDamage());
+			entities.get(selectedMobPlayer).takeDamage(entities.get(0).getAttack());
+			entities.get(selectedMobCompanion).takeDamage(entities.get(1).getAttack());
+			System.out.println("Mob1: " + entities.get(selectedMobPlayer).getHealth());
+			System.out.println("Mob2: " + entities.get(selectedMobCompanion).getHealth());
 			
 			selectedMobPlayer = -1;
 			selectedMobCompanion = -1;
-			menuNum = 2;
+			menuNum = 2; //Go back into selecting mobs to attack
+			gameMenuNum = 0; //Go back to player attacking
 		}
 	}
 	//Draws images 4 times larger, factor this into the other classes draw methods
@@ -181,7 +187,7 @@ public class Main extends JPanel
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			g.drawImage(image, 0, 0, 672, 352, null);
+			g.drawImage(image, 0, 0, 672, 480, null);
 			
 			//draw entities
 			for(int i = 0; i < entities.size(); i++)

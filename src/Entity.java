@@ -14,13 +14,14 @@ public class Entity
 	private int attackPower;
 	String imagePath; //path of image used as sprite, change to change sprite
 	
-	public Entity(double xPos, double yPos, int entHealth, String entImagePath)
+	public Entity(double xPos, double yPos, int entHealth, String entImagePath, int newAttackPower)
 	{
 		x = xPos;
 		y = yPos;
 		health = entHealth;
 		maxHealth = entHealth;
 		imagePath = entImagePath;
+		attackPower = newAttackPower;
 	}
 	
 	//Methods using position
@@ -49,9 +50,13 @@ public class Entity
 		else
 			return false;
 	}
-	public int getDamage()
+	public int getAttack()
 	{
 		return attackPower;
+	}
+	public void setAttack(int attack)
+	{
+		attackPower = attack;
 	}
 	public int getHealth()
 	{

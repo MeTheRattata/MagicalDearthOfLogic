@@ -56,7 +56,7 @@ public class Main extends JPanel
 		entities = new ArrayList<Entity>();
 		entities.add(new Player(32,192,"Life")); //starts with default name
 		entities.add(new Companion(160,32,"cat")); //starts with default name
-		entities.add(new Slime(512,192,2));
+		entities.add(new Slime(512,192,3));
 		entities.add(new Slime(384,32,3));
 		entities.get(3).takeDamage(50);
 		

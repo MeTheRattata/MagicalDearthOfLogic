@@ -13,9 +13,10 @@ public class Slime extends Entity
 	int attackPower;
 	public Slime(double xPos, double yPos, int newSize) 
 	{
-		super(xPos, yPos, assignHealth(newSize), "slime/slime" + assignName(newSize, assignHealth(newSize), assignHealth(newSize)));
+		super(xPos, yPos, assignHealth(newSize), "");
 		size = newSize;
-		attackPower = assignPower(newSize);
+		attackPower = getPower(size);
+		setName(getName(size, getHealth(), getMaxHealth()));
 		//If slimes are smaller than 32 by 32, puts them in the center of the 32 by 32 square where they are
 		//Also updates size the sprite is resized to to keep proportions consistent
 		if(size == 2)
@@ -36,7 +37,7 @@ public class Slime extends Entity
 		else
 			return 100;
 	}
-	private static int assignPower(int size)
+	private int getPower(int size)
 	{
 		if(size == 1)
 			return 5;
@@ -45,7 +46,7 @@ public class Slime extends Entity
 		else
 			return 15;
 	}
-	private static String assignName(int size, int health, int maxHealth)
+	private String getName(int size, int health, int maxHealth)
 	{
 		String restOfName = "slime/slime";
 		if(size == 1)
@@ -55,11 +56,11 @@ public class Slime extends Entity
 		else
 			restOfName += "Large";
 		
-		if(((double) health / (double) maxHealth) * 100 > 75) //health is above 75%
+		if((((double) health / (double) maxHealth) * 100) > 75) //health is above 75%
 			restOfName += "100";
-		else if(((double) health / (double) maxHealth) * 100 > 50)//health is above 50%
+		else if((((double) health / (double) maxHealth) * 100) > 50)//health is above 50%
 			restOfName += "75";
-		else if(((double) health / (double) maxHealth) * 100 > 25)//health is above 25%
+		else if((((double) health / (double) maxHealth) * 100) > 25)//health is above 25%
 			restOfName += "50";
 		else //health is below 25%
 			restOfName += "25";
@@ -69,7 +70,7 @@ public class Slime extends Entity
 	public boolean takeDamage(int damage)
 	{
 		setHealth(getHealth() - damage);
-		this.setName(assignName(size, getHealth(), getMaxHealth()));
+		this.setName(getName(size, getHealth(), getMaxHealth()));
 		if(getHealth() <= 0)
 			return true;
 		else

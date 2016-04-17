@@ -80,4 +80,13 @@ public class Entity
 		double barLength =  ((double) health / maxHealth) * 128;
 		g.fillRect((int)x, (int) y + 132, (int) barLength, 8);
 	}
+
+	public void setName(String name)
+	{
+		imagePath = name;
+	}
+	public String getImagePath()
+	{
+		return imagePath;
+	}
 }

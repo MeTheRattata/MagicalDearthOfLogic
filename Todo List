@@ -9,6 +9,10 @@ DONE 1. Get main class set up
 	e. write individual attacks / damage methods
 	DONE f. test damage methods
 	DONE g. set up health bars
+	DONE h. Player Select
+	DONE i. Companion Select
+	j. Select which monster to attack
+	k. Select which attack to use
 3. Visual Things:
 	DONEa. create background
 	DONEb. position sprites on background

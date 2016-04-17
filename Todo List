@@ -12,9 +12,10 @@ DONE 1. Get main class set up
 	DONE h. Player Select
 	DONE i. Companion Select
 	DONE j. Select which monster to attack
-	k. selections with each character
-	l. Select which attack to use
-	m. write pair attacks
+	DONE k. selections with each character
+	l. do default damage with each character
+	m. Select which attack to use
+	n. write pair attacks
 3. Visual Things:
 	DONEa. create background
 	DONEb. position sprites on background

@@ -2,7 +2,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -25,13 +24,16 @@ public class Main extends JPanel
 	private ArrayList<Entity> entities = new ArrayList<Entity>();
 	private boolean outOfInitialMenus = false;
 	//MenuNum : 0 = player select, 1 = companion select, 2 = game menu
-	int menuNum = 0;
+	int menuNum = 0; //which menu you're in
+	//0 = select player, 1 = select companion, 2 = select attack target
 	boolean playerTurn = true;
 	String[] menuTexts = {"Life Wizard", "Light Wizard", "Earth Wizard", "Water Wizard", "Cat", "Dog", "Lizard", "Emu"};
-	int gameMenuNum = 0;
-	String[] gameMenuTexts = {"Select an enemy to attack:"};
-	String[] gameMenuSelections = {};
-	int selectedEntity; //entity that was clicked on last, used for attacks, doubles, etc
+	int gameMenuNum = 0; //Which game menu you're in, 0 = select enemy to attack with player, 1 = select
+	//an enemy to attack with companion
+	String[] gameMenuTexts = {"Select an enemy to attack with player:", "Select an enemy to attack with companion:"};
+	int selectedMobPlayer = -1;
+	int selectedMobCompanion = -1;
+	
 	private static final long serialVersionUID = 1L;
 
 	public static void main(String[] args) 
@@ -64,47 +66,70 @@ public class Main extends JPanel
 		this.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e)
 			{
-				if(menuNum == 0)
+				if(!outOfInitialMenus)
 				{
-					if(e.getX() < 336 && e.getY() < 240) //top left
-						entities.get(0).setName("wizardLife");
-					else if(e.getX() > 336 && e.getY() < 240) //top right
-						entities.get(0).setName("wizardLight");
-					else if(e.getX() < 336 && e.getY() > 240) //bottom left
-						entities.get(0).setName("wizardRock");
-					else if(e.getX() > 336 && e.getY() > 240) //bottom right
-						entities.get(0).setName("wizardWater");
-					menuNum = 1;
+					if(menuNum == 0)
+					{
+						if(e.getX() < 336 && e.getY() < 240) //top left
+							entities.get(0).setName("wizardLife");
+						else if(e.getX() > 336 && e.getY() < 240) //top right
+							entities.get(0).setName("wizardLight");
+						else if(e.getX() < 336 && e.getY() > 240) //bottom left
+							entities.get(0).setName("wizardRock");
+						else if(e.getX() > 336 && e.getY() > 240) //bottom right
+							entities.get(0).setName("wizardWater");
+						menuNum = 1;
+					}
+					else if(menuNum == 1)
+					{
+						if(e.getX() < 336 && e.getY() < 240) //top left
+							entities.get(1).setName("cat");
+						else if(e.getX() > 336 && e.getY() < 240) //top right
+							entities.get(1).setName("dog");
+						else if(e.getX() < 336 && e.getY() > 240) //bottom left
+							entities.get(1).setName("lizard");
+						else if(e.getX() > 336 && e.getY() > 240) //bottom right
+							entities.get(1).setName("emu");
+						menuNum = 2;
+						outOfInitialMenus = true;
+					}	
 				}
-				else if(menuNum == 1)
+				else
 				{
-					if(e.getX() < 336 && e.getY() < 240) //top left
-						entities.get(1).setName("cat");
-					else if(e.getX() > 336 && e.getY() < 240) //top right
-						entities.get(1).setName("dog");
-					else if(e.getX() < 336 && e.getY() > 240) //bottom left
-						entities.get(1).setName("lizard");
-					else if(e.getX() > 336 && e.getY() > 240) //bottom right
-						entities.get(1).setName("emu");
-					menuNum = 2;
-					outOfInitialMenus = true;
-				}	
-				else if(menuNum == 2)
-				{
-					for(int i = 2; i < 4; i++)
-						if(e.getX() > xEntityPos[i] && e.getX() < xEntityPos[i] + 128 && 
-						   e.getY() > yEntityPos[i] && e.getY() < xEntityPos[i] + 128)
-							selectedEntity = i;
-					menuNum = 3;
-				}
+					if(gameMenuNum == 0)
+					{
+						for(int i = 2; i < 4; i++)
+							if(e.getX() > xEntityPos[i] && e.getX() < xEntityPos[i] + 128 && 
+							   e.getY() > yEntityPos[i] && e.getY() < xEntityPos[i] + 128)
+								selectedMobPlayer = i;
+					}
+					else //(gameMenuNum == 1)
+					{
+						for(int i = 2; i < 4; i++)
+							if(e.getX() > xEntityPos[i] && e.getX() < xEntityPos[i] + 128 && 
+							   e.getY() > yEntityPos[i] && e.getY() < xEntityPos[i] + 128)
+								selectedMobCompanion = i;
+						gameMenuNum = 3;
+					}
+				}		
 			}
 		});
 	}
-	
 	public void tick() //happens 60 times a second, things happen
 	{
-		
+		//if both player and mob have selected an enemy to fight
+		if(gameMenuNum == 3)
+		{
+			//do damage to enemies with both player and companion
+			entities.get(selectedMobPlayer).takeDamage(entities.get(0).getDamage());
+			entities.get(selectedMobCompanion).takeDamage(entities.get(1).getDamage());
+			
+			selectedMobPlayer = -1;
+			selectedMobCompanion = -1;
+			menuNum = 2;
+		}
 	}
+	//Draws images 4 times larger, factor this into the other classes draw methods
 	public void paintComponent(Graphics g)//already happens forever and ever
 	{
 		if(!outOfInitialMenus)
@@ -130,7 +155,7 @@ public class Main extends JPanel
 					g.drawString(str, xMenuPos[i], yMenuPos[i]);
 				}
 			}
-			else
+			else if(menuNum == 1)
 			{
 				for(int i = 4; i < 8; i++)
 				{
@@ -149,32 +174,38 @@ public class Main extends JPanel
 			g.setFont(font);
 			String str = "";
 			
+			//draw background
 			BufferedImage image = null;
 			try {
 				image = ImageIO.read(new File("res/background.png"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			//Draws images 4 times larger, factor this into the other classes draw methods
 			g.drawImage(image, 0, 0, 672, 352, null);
 			
+			//draw entities
 			for(int i = 0; i < entities.size(); i++)
 				entities.get(i).paintComponent(g);
 			
-			if(menuNum == 2) //Enemy select for attack
+			if(menuNum == 2) //Enemy select for attacks
 			{
-					//Draw menu string for selection
-					str = gameMenuTexts[gameMenuNum];
-					g.drawString(str, 32, 424);
-					
-					//draw selection squares around monsters
-					try {
-						image = ImageIO.read(new File("res/redSelectionBorder.png"));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					for(int i = 2; i < 4; i++)
-						g.drawImage(image, xEntityPos[i], yEntityPos[i], 128, 128, null);
+				//select with both wizard and companion
+				
+				//Draw menu string for selection
+				if(selectedMobPlayer == -1)
+					str = gameMenuTexts[0];
+				else if(selectedMobCompanion == -1)
+					str = gameMenuTexts[1];
+				g.drawString(str, 16, 424);
+				
+				//draw selection squares around monsters
+				try {
+					image = ImageIO.read(new File("res/redSelectionBorder.png"));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				for(int j = 2; j < 4; j++)
+					g.drawImage(image, xEntityPos[j], yEntityPos[j], 128, 128, null);
 			}
 		}
 	}

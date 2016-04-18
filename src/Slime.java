@@ -1,10 +1,5 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 public class Slime extends Entity
 {
@@ -15,7 +10,7 @@ public class Slime extends Entity
 		super(xPos, yPos, assignHealth(newSize), "slime/slimeLarge100", 0);
 		size = newSize;
 		setAttack(getPower(size));
-		setName(getName(size, getHealth(), getMaxHealth()));
+		setName(size, getHealth(), getMaxHealth());
 		//If slimes are smaller than 32 by 32, puts them in the center of the 32 by 32 square where they are
 		//Also updates size the sprite is resized to to keep proportions consistent
 		if(size == 2)
@@ -45,7 +40,7 @@ public class Slime extends Entity
 		else
 			return 15;
 	}
-	private String getName(int size, int health, int maxHealth)
+	private void setName(int size, int health, int maxHealth)
 	{
 		String restOfName = "slime/slime";
 		if(size == 1)
@@ -63,13 +58,13 @@ public class Slime extends Entity
 			restOfName += "50";
 		else //health is below 25%
 			restOfName += "25";
-		return restOfName;
+		super.setName(restOfName);
 	}
 	
 	public boolean takeDamage(int damage)
 	{
 		setHealth(getHealth() - damage);
-		this.setName(getName(size, getHealth(), getMaxHealth()));
+		this.setName(size, getHealth(), getMaxHealth());
 		if(getHealth() <= 0)
 			return true;
 		else
@@ -92,22 +87,15 @@ public class Slime extends Entity
 	//Overridden from parent to resize slimes properly
 	public void paintComponent(Graphics g)
 	{
-		
-		BufferedImage image = null;
-		try {
-			image = ImageIO.read(new File("res/" + name + ".png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		//multiplied by 256 to make image 8 times larger
 		if(size == 2)
 			//32 = displacement needed to get medium slime in center
-			g.drawImage(image, (int) getX() + 32, (int) getY() + 32, resize, resize, null);
+			g.drawImage(getImage(), (int) getX() + 32, (int) getY() + 32, resize, resize, null);
 		else if(size == 1)
 			//48 = displacement needed to get small slime in center
-			g.drawImage(image, (int) getX() + 48, (int) getY() + 48, resize, resize, null);
+			g.drawImage(getImage(), (int) getX() + 48, (int) getY() + 48, resize, resize, null);
 		else
-			g.drawImage(image, (int) getX(), (int) getY(), resize, resize, null);
+			g.drawImage(getImage(), (int) getX(), (int) getY(), resize, resize, null);
 		
 		//Draw Health Bar
 		

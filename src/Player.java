@@ -1,10 +1,5 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 public class Player extends Entity
 {
@@ -20,7 +15,6 @@ public class Player extends Entity
 		super(xPos, yPos, 100, "wizard" + type, 20);
 		mana = 50;
 		maxMana = mana;
-		setName("wizard" + type);
 	}
 	public int getAttack()
 	{
@@ -37,14 +31,8 @@ public class Player extends Entity
 	}
 	public void paintComponent(Graphics g)
 	{
-		BufferedImage image = null;
-		try {
-			image = ImageIO.read(new File("res/" + name + ".png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		//multiplied by 256 to make image 4 times larger
-		g.drawImage(image, (int)getX(), (int)getY(), 128, 128, null);
+		g.drawImage(getImage(), (int)getX(), (int)getY(), 128, 128, null);
 		
 		//Draw Health Bar
 		g.setColor(Color.RED);

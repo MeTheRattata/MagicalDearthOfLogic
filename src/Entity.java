@@ -76,6 +76,7 @@ public class Entity
 	{
 		return maxHealth;
 	}
+	//setName always updates the image
 	public void setName(String newName)
 	{
 		name = newName;
@@ -84,6 +85,10 @@ public class Entity
 	public String getName()
 	{
 		return name;
+	}
+	public BufferedImage getImage()
+	{
+		return image;
 	}
 	public void updateImage()
 	{

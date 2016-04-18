@@ -6,6 +6,7 @@ public class Player extends Entity
 	int magicAttack = 40;
 	int mana;
 	int maxMana;
+	int manaSpent;
 	boolean isMagicAttack = false;
 	
 	public Player(double xPos, double yPos, String type) 
@@ -15,12 +16,14 @@ public class Player extends Entity
 		super(xPos, yPos, 100, "wizard" + type, 20);
 		mana = 50;
 		maxMana = mana;
+		manaSpent = 20;
 	}
 	public int getAttack()
 	{
 		if(isMagicAttack)
 		{
 			isMagicAttack = false;
+			mana -= manaSpent;
 			return super.getAttack() * 2;
 		}
 		return super.getAttack();

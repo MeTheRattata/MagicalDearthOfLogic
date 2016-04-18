@@ -12,15 +12,15 @@ public class Entity
 	private int health;
 	private int maxHealth;
 	private int attackPower;
-	String imagePath; //path of image used as sprite, change to change sprite
+	String name; //path of image used as sprite, change to change sprite
 	
-	public Entity(double xPos, double yPos, int entHealth, String entImagePath, int newAttackPower)
+	public Entity(double xPos, double yPos, int entHealth, String entName, int newAttackPower)
 	{
 		x = xPos;
 		y = yPos;
 		health = entHealth;
 		maxHealth = entHealth;
-		imagePath = entImagePath;
+		name = entName;
 		attackPower = newAttackPower;
 	}
 	
@@ -37,10 +37,6 @@ public class Entity
 	{
 		x = newX;
 		y = newY;
-	}
-	public String getName()
-	{
-		return imagePath;
 	}
 	//Methods using health
 	
@@ -77,12 +73,20 @@ public class Entity
 	{
 		return maxHealth;
 	}
+	public void setName(String newName)
+	{
+		name = newName;
+	}
+	public String getName()
+	{
+		return name;
+	}
 	
 	public void paintComponent(Graphics g)
 	{
 		BufferedImage image = null;
 		try {
-			image = ImageIO.read(new File("res/" + imagePath + ".png"));
+			image = ImageIO.read(new File("res/" + name + ".png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -95,14 +99,5 @@ public class Entity
 		g.setColor(Color.GREEN);
 		double barLength =  ((double) health / maxHealth) * 128;
 		g.fillRect((int)x, (int) y + 132, (int) barLength, 8);
-	}
-
-	public void setName(String name)
-	{
-		imagePath = name;
-	}
-	public String getImagePath()
-	{
-		return imagePath;
 	}
 }

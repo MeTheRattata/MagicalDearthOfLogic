@@ -11,37 +11,35 @@ public class Player extends Entity
 	int magicAttack = 40;
 	int mana;
 	int maxMana;
-	String type;
-	public Player(double xPos, double yPos, String newType) 
+	boolean isMagicAttack = false;
+	
+	public Player(double xPos, double yPos, String type) 
 	{
 		//Players start with a health of 100 and an attack power of 20
-		//Type is specified upon player select, is "Rock", "Life", "Light" or "Water"
-		super(xPos, yPos, 100, "wizard" + newType, 20);
+		//Name is specified upon player select, is "wizard" + "Rock", "Life", "Light" or "Water"
+		super(xPos, yPos, 100, "wizard" + type, 20);
 		mana = 50;
 		maxMana = mana;
-		type = newType;
+		setName("wizard" + type);
 	}
-	public int getMagicAttack()
+	public int getAttack()
 	{
-		//magic attack needs 20 mana, if player doesnt have the mana, attack will do 0 damage
-		if(mana < 20)
-			return 0;
-		else
+		if(isMagicAttack)
 		{
-			mana -= 20;
-			return magicAttack;
+			isMagicAttack = false;
+			return super.getAttack() * 2;
 		}
-			
+		return super.getAttack();
 	}
-	public String getType()
+	public void setMagicAttack(boolean bool)
 	{
-		return type;
+		isMagicAttack = bool;
 	}
 	public void paintComponent(Graphics g)
 	{
 		BufferedImage image = null;
 		try {
-			image = ImageIO.read(new File("res/" + imagePath + ".png"));
+			image = ImageIO.read(new File("res/" + name + ".png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -7,7 +7,6 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.imageio.ImageIO;
@@ -21,7 +20,9 @@ public class Main extends JPanel
 	private int[] yMenuPos = {120, 120, 360, 360};
 	private int[] xEntityPos = {32, 160, 512, 384};
 	private int[] yEntityPos = {192, 32, 192, 32};
-	private ArrayList<Entity> entities = new ArrayList<Entity>();
+	private Player player;
+	private Companion companion;
+	private Slime[] enemies = new Slime[2];
 	private boolean outOfInitialMenus = false;
 	//MenuNum : 0 = player select, 1 = companion select, 2 = game menu
 	int menuNum = 0; //which menu you're in
@@ -63,11 +64,8 @@ public class Main extends JPanel
 	
 	public Main()
 	{
-		entities = new ArrayList<Entity>();
-		entities.add(new Player(xEntityPos[0],yEntityPos[0],"Life")); //starts with default name
-		entities.add(new Companion(xEntityPos[1],yEntityPos[1],"cat")); //starts with default name
-		entities.add(new Slime(xEntityPos[2],yEntityPos[2],(int)(Math.random()*3) + 1));
-		entities.add(new Slime(xEntityPos[3],yEntityPos[3],(int)(Math.random()*3) + 1));
+		enemies[0] = new Slime(xEntityPos[2],yEntityPos[2],(int)(Math.random()*3) + 1);
+		enemies[1] = new Slime(xEntityPos[3],yEntityPos[3],(int)(Math.random()*3) + 1);
 		
 		this.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e)
@@ -76,26 +74,29 @@ public class Main extends JPanel
 				{
 					if(menuNum == 0)
 					{
-						if(e.getX() < 336 && e.getY() < 240) //top left
-							entities.get(0).setName("wizardLife");
-						else if(e.getX() > 336 && e.getY() < 240) //top right
-							entities.get(0).setName("wizardLight");
+						//TODO: Find out why this doesnt work out nicely for us
+						String name = "Life";
+						//If click is in top left box, name stays life
+						if(e.getX() > 336 && e.getY() < 240) //top right
+							name = "Light";
 						else if(e.getX() < 336 && e.getY() > 240) //bottom left
-							entities.get(0).setName("wizardRock");
+							name = "Rock";
 						else if(e.getX() > 336 && e.getY() > 240) //bottom right
-							entities.get(0).setName("wizardWater");
+							name = "Water";
+						player = new Player(xEntityPos[0],yEntityPos[0],name);
 						menuNum = 1;
 					}
 					else if(menuNum == 1)
 					{
-						if(e.getX() < 336 && e.getY() < 240) //top left
-							entities.get(1).setName("cat");
-						else if(e.getX() > 336 && e.getY() < 240) //top right
-							entities.get(1).setName("dog");
+						String name = "cat";
+						//If click is in top left box, name stays cat
+						if(e.getX() > 336 && e.getY() < 240) //top right
+							name = "dog";
 						else if(e.getX() < 336 && e.getY() > 240) //bottom left
-							entities.get(1).setName("lizard");
+							name = "lizard";
 						else if(e.getX() > 336 && e.getY() > 240) //bottom right
-							entities.get(1).setName("emu");
+							name = "emu";
+						companion = new Companion(xEntityPos[1],yEntityPos[1],name);
 						menuNum = 4;
 						outOfInitialMenus = true;
 					}	
@@ -105,7 +106,7 @@ public class Main extends JPanel
 					System.out.print("inFour");
 					if(e.getX() > 0 && e.getX() < 336 && e.getY() > 352 && e.getY() < 480)
 					{
-						isManaAttack = true;
+						player.setMagicAttack(true);
 						past4 = true;
 						menuNum = 2;
 					}
@@ -122,24 +123,22 @@ public class Main extends JPanel
 				{
 					System.out.println("In main");
 					
+					//TODO: Change selected mob to target, let the player and companion classes handle it
 					if(gameMenuNum == 0)
 					{
-						System.out.println("In wizard");
 						for(int i = 2; i < 4; i++)
 							if(e.getX() > xEntityPos[i] && e.getX() < xEntityPos[i] + 128 && 
 							   e.getY() > yEntityPos[i] && e.getY() < yEntityPos[i] + 128)
-								selectedMobPlayer = i;
-						
+								selectedMobPlayer = i - 2;
 						gameMenuNum = 1;
 						playerTurn = false;
-					}
+					} 
 					else if(gameMenuNum == 1)
 					{
-						System.out.println("In companion");
 						for(int i = 2; i < 4; i++)
 							if(e.getX() > xEntityPos[i] && e.getX() < xEntityPos[i] + 128 && 
 							   e.getY() > yEntityPos[i] && e.getY() < yEntityPos[i] + 128)
-								selectedMobCompanion = i;
+								selectedMobCompanion = i - 2;
 						menuNum = 3;
 						past4 = false;
 						playerTurn = true;
@@ -154,43 +153,29 @@ public class Main extends JPanel
 		if(menuNum == 3)
 		{	
 			System.out.println("In ticks");
+			
+			//If both the target of the player and the target of the companion are valid
+			//do damage to enemies with both player and companion
 			if(selectedMobPlayer != -1 && selectedMobCompanion != -1)
 			{
-				//do damage to enemies with both player and companion
-				if(isManaAttack)
-				{
-					//hopefully overridden by player
-					if(((Player) entities.get(0)).getMana() > 20)
-						hurting[selectedMobPlayer] += 30;
-					if(entities.get(selectedMobPlayer).takeDamage(entities.get(0).getMagicAttack()))
-					{
-						kills++;
-						((Player) entities.get(0)).refillMana();
-						entities.set(selectedMobPlayer, new Slime(xEntityPos[selectedMobPlayer],yEntityPos[selectedMobPlayer],(int)(Math.random()*3) + 1));
-					}
-						
-				}
-				else
-				{
-					hurting[selectedMobPlayer] += 30;
-					if(entities.get(selectedMobPlayer).takeDamage(entities.get(0).getAttack()))
-					{
-						kills++;
-						((Player) entities.get(0)).refillMana();
-						entities.set(selectedMobPlayer, new Slime(xEntityPos[selectedMobPlayer],yEntityPos[selectedMobPlayer],(int)(Math.random()*3) + 1));
-					}
-						
-				}
-				
-				hurting[selectedMobCompanion] += 30;
-				if(entities.get(selectedMobCompanion).takeDamage(entities.get(1).getAttack()))
+				//Do damage to enemy targeted by player
+				hurting[selectedMobPlayer + 2] += 30;
+				if(enemies[selectedMobPlayer].takeDamage(player.getAttack()))
 				{
 					kills++;
-					((Player) entities.get(0)).refillMana();
-					entities.set(selectedMobCompanion, new Slime(xEntityPos[selectedMobCompanion],yEntityPos[selectedMobCompanion],(int)(Math.random()*3) + 1));
+					player.refillMana();
+					enemies[selectedMobPlayer] = new Slime(xEntityPos[selectedMobPlayer + 2],yEntityPos[selectedMobPlayer + 2],(int)(Math.random()*3) + 1);
 				}
-					
 				
+				//Do damage to enemy targeted by companion
+				
+				hurting[selectedMobCompanion + 2] += 30;
+				if(enemies[selectedMobCompanion].takeDamage(companion.getAttack()))
+				{
+					kills++;
+					player.refillMana();
+					enemies[selectedMobCompanion] = new Slime(xEntityPos[selectedMobCompanion + 2],yEntityPos[selectedMobCompanion + 2],(int)(Math.random()*3) + 1);
+				}
 				
 				selectedMobPlayer = -1;
 				selectedMobCompanion = -1;
@@ -254,9 +239,13 @@ public class Main extends JPanel
 			}
 			g.drawImage(image, 0, 0, 672, 480, null);
 			g.drawString("Kills: " + kills, 32, 32);
-			//draw entities
-			for(int i = 0; i < entities.size(); i++)
-				entities.get(i).paintComponent(g);
+			//Draw player and companion
+			player.paintComponent(g);
+			companion.paintComponent(g);
+			for(int i = 0; i < enemies.length; i++)
+				enemies[i].paintComponent(g);
+			
+			//TODO: handle "hurting" frames by entity class
 			if(hurting[0] > 0)
 			{
 				try {
@@ -270,7 +259,7 @@ public class Main extends JPanel
 			if(hurting[1] > 0)
 			{
 				try {
-					image = ImageIO.read(new File("res/" + entities.get(1) + "Dmg.png"));
+					image = ImageIO.read(new File("res/" + companion.getName() + "Dmg.png"));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -280,23 +269,23 @@ public class Main extends JPanel
 			if(hurting[2] > 0)
 			{
 				try {
-					image = ImageIO.read(new File("res/slime/slime" + ((Slime) entities.get(2)).getSize() + "Dmg.png"));
+					image = ImageIO.read(new File("res/slime/slime" +  enemies[0].getSize() + "Dmg.png"));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				g.drawImage(image, xEntityPos[2] + ((Slime) entities.get(2)).getDisplacement(), yEntityPos[2] + ((Slime) entities.get(2)).getDisplacement(), 
-						((Slime) entities.get(2)).getResize(), ((Slime) entities.get(2)).getResize(), null);
+				g.drawImage(image, xEntityPos[2] + enemies[0].getDisplacement(), yEntityPos[2] + enemies[0].getDisplacement(), 
+						enemies[0].getResize(), enemies[0].getResize(), null);
 				hurting[2]--;
 			}
 			if(hurting[3] > 0)
 			{
 				try {
-					image = ImageIO.read(new File("res/slime/slime" + ((Slime) entities.get(3)).getSize() + "Dmg.png"));
+					image = ImageIO.read(new File("res/slime/slime" + enemies[1].getSize() + "Dmg.png"));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				g.drawImage(image, xEntityPos[3] + ((Slime) entities.get(3)).getDisplacement(), yEntityPos[3] + ((Slime) entities.get(3)).getDisplacement(), 
-						((Slime) entities.get(3)).getResize(), ((Slime) entities.get(3)).getResize(), null);
+				g.drawImage(image, xEntityPos[3] + enemies[1].getDisplacement(), yEntityPos[3] + enemies[1].getDisplacement(), 
+						enemies[1].getResize(), enemies[1].getResize(), null);
 				hurting[3]--;
 			}
 				

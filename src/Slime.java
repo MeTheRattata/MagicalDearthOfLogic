@@ -12,7 +12,7 @@ public class Slime extends Entity
 	int resize; //size of sprite
 	public Slime(double xPos, double yPos, int newSize) 
 	{
-		super(xPos, yPos, assignHealth(newSize), "", 0);
+		super(xPos, yPos, assignHealth(newSize), "slime/slimeLarge100", 0);
 		size = newSize;
 		setAttack(getPower(size));
 		setName(getName(size, getHealth(), getMaxHealth()));
@@ -95,7 +95,7 @@ public class Slime extends Entity
 		
 		BufferedImage image = null;
 		try {
-			image = ImageIO.read(new File("res/" + imagePath + ".png"));
+			image = ImageIO.read(new File("res/" + name + ".png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -13,6 +13,7 @@ public class Entity
 	private int maxHealth;
 	private int attackPower;
 	String name; //path of image used as sprite, change to change sprite
+	BufferedImage image = null;
 	
 	public Entity(double xPos, double yPos, int entHealth, String entName, int newAttackPower)
 	{
@@ -22,6 +23,12 @@ public class Entity
 		maxHealth = entHealth;
 		name = entName;
 		attackPower = newAttackPower;
+
+		try {
+			image = ImageIO.read(new File("res/" + name + ".png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	//Methods using position
@@ -49,10 +56,6 @@ public class Entity
 		else
 			return false;
 	}
-	public int getMagicAttack()
-	{
-		return 0;
-	}
 	public int getAttack()
 	{
 		return attackPower;
@@ -76,20 +79,23 @@ public class Entity
 	public void setName(String newName)
 	{
 		name = newName;
+		updateImage();
 	}
 	public String getName()
 	{
 		return name;
 	}
-	
-	public void paintComponent(Graphics g)
+	public void updateImage()
 	{
-		BufferedImage image = null;
 		try {
 			image = ImageIO.read(new File("res/" + name + ".png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void paintComponent(Graphics g)
+	{
 		//multiplied by 256 to make image 4 times larger
 		g.drawImage(image, (int) x, (int) y, 128, 128, null);
 		

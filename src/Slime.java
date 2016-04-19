@@ -13,11 +13,11 @@ public class Slime extends Entity
 		setName(size, getHealth(), getMaxHealth());
 		//If slimes are smaller than 32 by 32, puts them in the center of the 32 by 32 square where they are
 		//Also updates size the sprite is resized to to keep proportions consistent
-		if(size == 2)
-			resize = 64;
-		else if(size == 1)
+		if(size == 1)
 			resize = 32;
-		else
+		else if(size == 1)
+			resize = 64;
+		else if(size == 3)
 			resize = 128;
 	}
 	
@@ -28,8 +28,9 @@ public class Slime extends Entity
 			return 50;
 		else if(size == 2)
 			return 75;
-		else
+		else if(size == 3)
 			return 100;
+		return -1;
 	}
 	private int getPower(int size)
 	{
@@ -37,8 +38,9 @@ public class Slime extends Entity
 			return 5;
 		else if(size == 2)
 			return 10;
-		else
+		else if(size == 3)
 			return 15;
+		return -1;
 	}
 	private void setName(int size, int health, int maxHealth)
 	{
@@ -47,7 +49,7 @@ public class Slime extends Entity
 			restOfName += "Small";
 		else if(size == 2)
 			restOfName += "Medium";
-		else
+		else if(size == 3)
 			restOfName += "Large";
 		
 		if((((double) health / (double) maxHealth) * 100) > 75) //health is above 75%
@@ -56,7 +58,7 @@ public class Slime extends Entity
 			restOfName += "75";
 		else if((((double) health / (double) maxHealth) * 100) > 25)//health is above 25%
 			restOfName += "50";
-		else //health is below 25%
+		else if(((((double) health / (double) maxHealth) * 100) <= 25))//health is below 25%
 			restOfName += "25";
 		super.setName(restOfName);
 	}
@@ -76,8 +78,9 @@ public class Slime extends Entity
 			return "Small";
 		else if(size == 2)
 			return "Medium";
-		else
+		else if(size == 3)
 			return "Large";
+		return "";
 	}
 	public int getResize()
 	{
@@ -88,13 +91,13 @@ public class Slime extends Entity
 	public void paintComponent(Graphics g)
 	{
 		//multiplied by 256 to make image 8 times larger
-		if(size == 2)
-			//32 = displacement needed to get medium slime in center
-			g.drawImage(getImage(), (int) getX() + 32, (int) getY() + 32, resize, resize, null);
-		else if(size == 1)
-			//48 = displacement needed to get small slime in center
+		if(size == 1)
+			//48 = displacement needed to get medium slime in center
 			g.drawImage(getImage(), (int) getX() + 48, (int) getY() + 48, resize, resize, null);
-		else
+		else if(size == 2)
+			//32 = displacement needed to get small slime in center
+			g.drawImage(getImage(), (int) getX() + 32, (int) getY() + 32, resize, resize, null);
+		else if(size == 3)
 			g.drawImage(getImage(), (int) getX(), (int) getY(), resize, resize, null);
 		
 		//Draw Health Bar
@@ -109,9 +112,11 @@ public class Slime extends Entity
 	{
 		if(size == 1)
 			return 48;
-		if(size == 2)
+		else if(size == 2)
 			return 32;
-		else
+		else if(size == 3)
 			return 0;
+		else
+			return -1;
 	}
 }

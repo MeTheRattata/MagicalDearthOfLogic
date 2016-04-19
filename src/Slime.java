@@ -91,14 +91,7 @@ public class Slime extends Entity
 	public void paintComponent(Graphics g)
 	{
 		//multiplied by 256 to make image 8 times larger
-		if(size == 1)
-			//48 = displacement needed to get medium slime in center
-			g.drawImage(getImage(), (int) getX() + 48, (int) getY() + 48, resize, resize, null);
-		else if(size == 2)
-			//32 = displacement needed to get small slime in center
-			g.drawImage(getImage(), (int) getX() + 32, (int) getY() + 32, resize, resize, null);
-		else if(size == 3)
-			g.drawImage(getImage(), (int) getX(), (int) getY(), resize, resize, null);
+		g.drawImage(getImage(), (int) getX() + getDisplacement(), (int) getY() + getDisplacement(), resize, resize, null);
 		
 		//Draw Health Bar
 		

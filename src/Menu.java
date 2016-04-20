@@ -9,7 +9,6 @@ import java.awt.event.MouseEvent;
  */
 public class Menu 
 {
-	//Array of menu options
 	private String[] texts;
 	//Array that stores the four corners of the square that makes up the menu button
 	//Corresponds with array of menu options (texts[0] is the text for the button 
@@ -18,8 +17,8 @@ public class Menu
 	
 	/**
 	 * Constructor for a Menu object
-	 * @param newTexts
-	 * @param newBounds
+	 * @param newTexts: array of menu options
+	 * @param newBounds: array that stores the four corners of the square that makes up the menu button
 	 */
 	public Menu(String[] newTexts, int[][] newBounds)
 	{

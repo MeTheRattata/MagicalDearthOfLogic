@@ -18,6 +18,9 @@ DONE 1. Get main class set up
 	n. write pair attacks
 	o. write special attacks
 	DONE p. put in new slimes once the old ones die
+	q. create menu class
+	r. use menu class to handle mouse events from menu
+	s. let entities handle their own damage frames
 3. Visual Things:
 	DONE a. create background
 	DONE b. position sprites on background

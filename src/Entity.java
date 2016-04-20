@@ -5,6 +5,12 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+/**
+ * Entity class for MagicalDearthOfLogic
+ * @author Metherat
+ *
+ * Used to create subclasses representing objects that have a position, health, attack power, a name and a BufferedImage.
+ */
 public class Entity 
 {
 	private double x;
@@ -15,6 +21,14 @@ public class Entity
 	String name; //path of image used as sprite, change to change sprite
 	BufferedImage image = null;
 	
+	/**
+	 * Constructor for Entity class.
+	 * @param xPos: x position of entity
+	 * @param yPos: y position of entity
+	 * @param entHealth: health of the entity (when full)
+	 * @param entName: name of the entity, used to determine which sprite image it uses
+	 * @param newAttackPower: attack power of the entity
+	 */
 	public Entity(double xPos, double yPos, int entHealth, String entName, int newAttackPower)
 	{
 		x = xPos;
@@ -24,6 +38,7 @@ public class Entity
 		name = entName;
 		attackPower = newAttackPower;
 
+		//Create a new BufferedImage object using "res/" + name + ".png"
 		try {
 			image = ImageIO.read(new File("res/" + name + ".png"));
 		} catch (IOException e) {
@@ -31,23 +46,37 @@ public class Entity
 		}
 	}
 	
-	//Methods using position
+	/**
+	 * Get x
+	 * @return x coordinate
+	 */
 	public double getX()
 	{
 		return x;
 	}
+	/**
+	 * Get y
+	 * @return y coordinate
+	 */
 	public double getY()
 	{
 		return y;
 	}
+	/**
+	 * Update the position of the entity
+	 * @param newX: new x coordinate
+	 * @param newY: new y coordinate
+	 */
 	public void updatePosition(double newX, double newY)
 	{
 		x = newX;
 		y = newY;
 	}
-	//Methods using health
-	
-	//Returns whether the entity is dead (true = dead, false = still alive)
+	/**
+	 * Decrements health based on the damage taken, then returns a boolean of whether the entity has died or not
+	 * @param damage: damage dealt to the entity
+	 * @return: true if dead, false if not dead
+	 */
 	public boolean takeDamage(int damage)
 	{
 		health -= damage;
@@ -56,40 +85,74 @@ public class Entity
 		else
 			return false;
 	}
+	/**
+	 * Get attack
+	 * @return attack power
+	 */
 	public int getAttack()
 	{
 		return attackPower;
 	}
+	/**
+	 * Set attack power
+	 * @param attack: new attack power
+	 */
 	public void setAttack(int attack)
 	{
 		attackPower = attack;
 	}
+	/**
+	 * Get health
+	 * @return return entity's current health
+	 */
 	public int getHealth()
 	{
 		return health;
 	}
+	/**
+	 * Set health
+	 * @param newHealth: new health 
+	 */
 	public void setHealth(int newHealth)
 	{
 		health = newHealth;
 	}
+	/**
+	 * Get max health
+	 * @return maxHealth
+	 */
 	public int getMaxHealth()
 	{
 		return maxHealth;
 	}
-	//setName always updates the image
+	/**
+	 * Sets name of entity and updates its BufferedImage
+	 * @param newName: new name
+	 */
 	public void setName(String newName)
 	{
 		name = newName;
 		updateImage();
 	}
+	/**
+	 * Return entity name
+	 * @return name
+	 */
 	public String getName()
 	{
 		return name;
 	}
+	/**
+	 * Get image
+	 * @return entity's BufferedImage
+	 */
 	public BufferedImage getImage()
 	{
 		return image;
 	}
+	/**
+	 * Updates the entity's BufferedImage
+	 */
 	public void updateImage()
 	{
 		try {
@@ -98,7 +161,11 @@ public class Entity
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Paints the image with the selected Graphics object
+	 * Paints sprite and then health bar based on health percentage
+	 * @param g: what the image is painted with
+	 */
 	public void paintComponent(Graphics g)
 	{
 		//multiplied by 256 to make image 4 times larger

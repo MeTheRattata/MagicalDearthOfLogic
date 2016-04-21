@@ -37,12 +37,11 @@ public class Main extends JPanel
 			"Magic Attack", "Melee Attack"};
 	int selectedMobPlayer = -1;
 	int selectedMobCompanion = -1;
-	boolean isManaAttack = false;
 	boolean past4 = false;
 	int[] hurting = {0,0,0,0};
 	int kills = 0;
 	//Boundaries for menus that take up the entire screen, used to create Menu objects for such menus
-	double[][] fullScreenMenuBounds = new double[][]{{0, 0, 336, 240}, {0, 240, 336, 480}, {336, 0, 672, 240}, {336, 240, 672, 480}};
+	double[][] fullScreenMenuBounds = new double[][]{{0, 0, 336, 240}, {336, 0, 672, 240}, {0, 240, 336, 480}, {336, 240, 672, 480}};
 	
 	private static final long serialVersionUID = 1L;
 
@@ -76,31 +75,14 @@ public class Main extends JPanel
 				{
 					if(menuNum == 0)
 					{
-						Menu playerSelect = new Menu(new String[]{"Life", "Light", "Rock", "Water"},
-						new double[][]{{0, 0, 336, 240}, {0, 240, 336, 480}, {336, 0, 672, 240}, {336, 240, 672, 480}});
-						
-						String name = playerSelect.optionSelected(e);
-						//If click is in top left box, name stays life
-						/*if(e.getX() > 336 && e.getY() < 240) //top right
-							name = "Light";
-						else if(e.getX() < 336 && e.getY() > 240) //bottom left
-							name = "Rock";
-						else if(e.getX() > 336 && e.getY() > 240) //bottom right
-							name = "Water";*/
-						player = new Player(xEntityPos[0],yEntityPos[0],name);
+						Menu playerSelect = new Menu(new String[]{"Life", "Light", "Rock", "Water"}, fullScreenMenuBounds);
+						player = new Player(xEntityPos[0], yEntityPos[0], playerSelect.optionSelected(e));
 						menuNum = 1;
 					}
 					else if(menuNum == 1)
 					{
-						String name = "cat";
-						//If click is in top left box, name stays cat
-						if(e.getX() > 336 && e.getY() < 240) //top right
-							name = "dog";
-						else if(e.getX() < 336 && e.getY() > 240) //bottom left
-							name = "lizard";
-						else if(e.getX() > 336 && e.getY() > 240) //bottom right
-							name = "emu";
-						companion = new Companion(xEntityPos[1],yEntityPos[1],name);
+						Menu companionSelect = new Menu(new String[]{"cat", "dog", "lizard", "emu"}, fullScreenMenuBounds);
+						companion = new Companion(xEntityPos[1], yEntityPos[1], companionSelect.optionSelected(e));
 						menuNum = 4;
 						outOfInitialMenus = true;
 					}	
@@ -117,7 +99,6 @@ public class Main extends JPanel
 						
 					else if(e.getX() > 336 && e.getX() < 672 && e.getY() > 352 && e.getY() < 480)
 					{
-						isManaAttack = false;
 						past4 = true;
 						menuNum = 2;
 					}	
@@ -189,7 +170,11 @@ public class Main extends JPanel
 			gameMenuNum = 0; //Go back to player attacking
 		}
 	}
-	//Draws images 4 times larger, factor this into the other classes draw methods
+
+	//TODO: Fix "slime in bottom right corner doesn't paint randomly" bug. Why, code, why.
+	//Update: It's also happening to the top left slime now. Wtf is this madness?
+	
+		//Draws images 4 times larger, factor this into the other classes draw methods
 	public void paintComponent(Graphics g)//already happens forever and ever
 	{
 		if(!outOfInitialMenus)

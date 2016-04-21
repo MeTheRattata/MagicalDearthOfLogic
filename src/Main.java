@@ -75,13 +75,15 @@ public class Main extends JPanel
 				{
 					if(menuNum == 0)
 					{
-						Menu playerSelect = new Menu(new String[]{"Life", "Light", "Rock", "Water"}, fullScreenMenuBounds);
+						Menu playerSelect = new Menu(fullScreenMenuBounds, new String[]{"Life", "Light", "Rock", "Water"}, 
+								new String[] {"Life Wizard", "Light Wizard", "Rock Wizard", "Water Wizard"});
 						player = new Player(xEntityPos[0], yEntityPos[0], playerSelect.optionSelected(e));
 						menuNum = 1;
 					}
 					else if(menuNum == 1)
 					{
-						Menu companionSelect = new Menu(new String[]{"cat", "dog", "lizard", "emu"}, fullScreenMenuBounds);
+						Menu companionSelect = new Menu(fullScreenMenuBounds, new String[]{"cat", "dog", "lizard", "emu"}, 
+								new String[]{"Cat", "Dog", "Lizard", "Emu"});
 						companion = new Companion(xEntityPos[1], yEntityPos[1], companionSelect.optionSelected(e));
 						menuNum = 4;
 						outOfInitialMenus = true;
@@ -89,19 +91,15 @@ public class Main extends JPanel
 				}
 				else if(menuNum == 4 && !past4)
 				{
+					//TODO: Change Menu to be able to accept booleans as options for 2 slot menus
+					Menu isMagicSelect = new Menu(new double[][] {{0, 352, 336, 480}, {336, 352, 672, 480}}, 
+							new String[]{"true", "false"}, new String[]{"Magic Attack", "Melee Attack"});
 					System.out.print("inFour");
-					if(e.getX() > 0 && e.getX() < 336 && e.getY() > 352 && e.getY() < 480)
-					{
+					int intSelected = isMagicSelect.intSelected(e);
+					if(intSelected == 0)
 						player.setMagicAttack(true);
-						past4 = true;
-						menuNum = 2;
-					}
-						
-					else if(e.getX() > 336 && e.getX() < 672 && e.getY() > 352 && e.getY() < 480)
-					{
-						past4 = true;
-						menuNum = 2;
-					}	
+					menuNum = 2;
+					past4 = true;
 				}
 				//Used for Getting location of targets for player and companion
 				else if(past4 && menuNum == 2)

@@ -38,7 +38,6 @@ public class Main extends JPanel
 	int selectedMobPlayer = -1;
 	int selectedMobCompanion = -1;
 	boolean past4 = false;
-	int[] hurting = {0,0,0,0};
 	int kills = 0;
 	//Boundaries for menus that take up the entire screen, used to create Menu objects for such menus
 	double[][] fullScreenMenuBounds = new double[][]{{0, 0, 336, 240}, {336, 0, 672, 240}, {0, 240, 336, 480}, {336, 240, 672, 480}};
@@ -73,23 +72,17 @@ public class Main extends JPanel
 			{
 				if(!outOfInitialMenus)
 				{
-					if(menuNum == 0)
-					{
-						Menu playerSelect = new Menu(fullScreenMenuBounds, new String[]{"Life", "Light", "Rock", "Water"}, 
-								new String[] {"Life Wizard", "Light Wizard", "Rock Wizard", "Water Wizard"});
-						player = new Player(xEntityPos[0], yEntityPos[0], playerSelect.optionSelected(e));
-						menuNum = 1;
-					}
-					else if(menuNum == 1)
-					{
-						Menu companionSelect = new Menu(fullScreenMenuBounds, new String[]{"cat", "dog", "lizard", "emu"}, 
-								new String[]{"Cat", "Dog", "Lizard", "Emu"});
-						companion = new Companion(xEntityPos[1], yEntityPos[1], companionSelect.optionSelected(e));
-						menuNum = 4;
-						outOfInitialMenus = true;
-					}	
+					
+					Menu playerSelect = new Menu(fullScreenMenuBounds, new String[]{"Life", "Light", "Rock", "Water"}, 
+										new String[] {"Life Wizard", "Light Wizard", "Rock Wizard", "Water Wizard"});
+					player = new Player(xEntityPos[0], yEntityPos[0], playerSelect.optionSelected(e));
+					Menu companionSelect = new Menu(fullScreenMenuBounds, new String[]{"cat", "dog", "lizard", "emu"}, 
+										   new String[]{"Cat", "Dog", "Lizard", "Emu"});
+					companion = new Companion(xEntityPos[1], yEntityPos[1], companionSelect.optionSelected(e));
+					menuNum = 4;
+					outOfInitialMenus = true;	
 				}
-				else if(menuNum == 4 && !past4)
+				if(menuNum == 4 && !past4)
 				{
 					//TODO: Change Menu to be able to accept booleans as options for 2 slot menus
 					Menu isMagicSelect = new Menu(new double[][] {{0, 352, 336, 480}, {336, 352, 672, 480}}, 
@@ -105,7 +98,6 @@ public class Main extends JPanel
 				//Used for Getting location of targets for player and companion
 				else if(past4 && menuNum == 2)
 				{
-					System.out.println("In main");
 					//TODO: Change selected mob to target, let the player and companion classes handle it
 					Menu enemySelected = new Menu(new double[][]{{xEntityPos[2], yEntityPos[2], xEntityPos[2] + 128, yEntityPos[2] + 128},
 					{xEntityPos[3], yEntityPos[3], xEntityPos[3] + 128, yEntityPos[3] +128}}, new String[]{"Enemy1", "Enemy2"}, new String[]{"Enemy1", "Enemy2"});
@@ -130,15 +122,12 @@ public class Main extends JPanel
 	{
 		//if both player and mob have selected an enemy to fight
 		if(menuNum == 3)
-		{	
-			System.out.println("In ticks");
-			
+		{
 			//If both the target of the player and the target of the companion are valid
 			//do damage to enemies with both player and companion
 			if(selectedMobPlayer != -1 && selectedMobCompanion != -1)
 			{
 				//Do damage to enemy targeted by player
-				hurting[selectedMobPlayer + 2] += 30;
 				if(enemies[selectedMobPlayer].takeDamage(player.getAttack()))
 				{
 					kills++;
@@ -147,7 +136,6 @@ public class Main extends JPanel
 				}
 				
 				//Do damage to enemy targeted by companion
-				hurting[selectedMobCompanion + 2] += 30;
 				if(enemies[selectedMobCompanion].takeDamage(companion.getAttack()))
 				{
 					kills++;

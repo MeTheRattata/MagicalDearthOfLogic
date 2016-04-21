@@ -18,8 +18,9 @@ public class Entity
 	private int health;
 	private int maxHealth;
 	private int attackPower;
-	String name; //path of image used as sprite, change to change sprite
-	BufferedImage image = null;
+	private String name; //path of image used as sprite, change to change sprite
+	private BufferedImage image = null;
+	private int damageFrames = 0;
 	
 	/**
 	 * Constructor for Entity class.
@@ -80,6 +81,8 @@ public class Entity
 	public boolean takeDamage(int damage)
 	{
 		health -= damage;
+		damageFrames += 30;
+		setName(name + "Dmg");
 		if(health <= 0)
 			return true;
 		else
@@ -143,6 +146,29 @@ public class Entity
 		return name;
 	}
 	/**
+	 * Returns remaining damage frame number.
+	 * @return damageFrames
+	 */
+	public int getDamageFrames()
+	{
+		return damageFrames;
+	}
+	/**
+	 * Set damage frames to newDamageFrames
+	 * @param newDamageFrames
+	 */
+	public void setDamageFrames(int newDamageFrames)
+	{
+		damageFrames = newDamageFrames;
+	}
+	/**
+	 * Decrements damage frame counter.
+	 */
+	public void decrementDamageFrames()
+	{
+		damageFrames--;
+	}
+	/**
 	 * Get image
 	 * @return entity's BufferedImage
 	 */
@@ -170,6 +196,12 @@ public class Entity
 	{
 		//multiplied by 256 to make image 4 times larger
 		g.drawImage(image, (int) x, (int) y, 128, 128, null);
+		if(damageFrames > 0)
+		{
+			damageFrames--;
+			if(damageFrames == 0)
+				setName(name.replaceAll("Dmg", ""));
+		}
 		
 		//Draw Health Bar
 		g.setColor(Color.RED);

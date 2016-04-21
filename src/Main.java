@@ -148,7 +148,6 @@ public class Main extends JPanel
 				}
 				
 				//Do damage to enemy targeted by companion
-				
 				hurting[selectedMobCompanion + 2] += 30;
 				if(enemies[selectedMobCompanion].takeDamage(companion.getAttack()))
 				{

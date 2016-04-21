@@ -14,14 +14,14 @@ public class Menu
 	//Corresponds with array of menu options: texts[0] is the text for the button 
 	//[0][0] = x coordinate of top left corner, [0][1] = y coordinate of top left corner,
 	//[0][2] = x coordinate of bottom right corner, [0][3] = y coordinate of bottom right corner
-	private int[][] bounds;
+	private double[][] bounds;
 	
 	/**
 	 * Constructor for a Menu object
 	 * @param newTexts: array of menu options
 	 * @param newBounds: array that stores the four corners of the square that makes up the menu button
 	 */
-	public Menu(String[] newTexts, int[][] newBounds)
+	public Menu(String[] newTexts, double[][] newBounds)
 	{
 		texts = newTexts;
 		bounds = newBounds;

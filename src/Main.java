@@ -41,6 +41,8 @@ public class Main extends JPanel
 	boolean past4 = false;
 	int[] hurting = {0,0,0,0};
 	int kills = 0;
+	//Boundaries for menus that take up the entire screen, used to create Menu objects for such menus
+	double[][] fullScreenMenuBounds = new double[][]{{0, 0, 336, 240}, {0, 240, 336, 480}, {336, 0, 672, 240}, {336, 240, 672, 480}};
 	
 	private static final long serialVersionUID = 1L;
 
@@ -74,15 +76,17 @@ public class Main extends JPanel
 				{
 					if(menuNum == 0)
 					{
-						//TODO: Find out why this doesnt work out nicely for us
-						String name = "Life";
+						Menu playerSelect = new Menu(new String[]{"Life", "Light", "Rock", "Water"},
+						new double[][]{{0, 0, 336, 240}, {0, 240, 336, 480}, {336, 0, 672, 240}, {336, 240, 672, 480}});
+						
+						String name = playerSelect.optionSelected(e);
 						//If click is in top left box, name stays life
-						if(e.getX() > 336 && e.getY() < 240) //top right
+						/*if(e.getX() > 336 && e.getY() < 240) //top right
 							name = "Light";
 						else if(e.getX() < 336 && e.getY() > 240) //bottom left
 							name = "Rock";
 						else if(e.getX() > 336 && e.getY() > 240) //bottom right
-							name = "Water";
+							name = "Water";*/
 						player = new Player(xEntityPos[0],yEntityPos[0],name);
 						menuNum = 1;
 					}

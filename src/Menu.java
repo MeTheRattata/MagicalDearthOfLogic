@@ -26,11 +26,21 @@ public class Menu
 		bounds = newBounds;
 	}
 	
+	/**
+	 * Determines which menu option was selected and returns its corresponding string
+	 * @param e: MouseClick event with coordinates
+	 * @return the string corresponding to which menu option was clicked
+	 */
 	public String optionSelected(MouseEvent e)
 	{
 		
 	}
-	
+	/**
+	 * 
+	 * @param e
+	 * @param recLoc: row in bounds that the rectangle being checked is stored in
+	 * @return true if the mouseEvent's coordinates are within the rectangle, false if not
+	 */
 	private boolean isWithinRectangle(MouseEvent e, int recLoc)
 	{
 		

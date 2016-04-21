@@ -10,9 +10,10 @@ import java.awt.event.MouseEvent;
 public class Menu 
 {
 	private String[] texts;
-	//Array that stores the four corners of the square that makes up the menu button
-	//Corresponds with array of menu options (texts[0] is the text for the button 
-	//which has corners at bounds[0][0], bounds[0][1], bounds[0][2], and bounds[0][3])
+	//Array that stores 2 opposite corners of the menu
+	//Corresponds with array of menu options: texts[0] is the text for the button 
+	//[0][0] = x coordinate of top left corner, [0][1] = y coordinate of top left corner,
+	//[0][2] = x coordinate of bottom right corner, [0][3] = y coordinate of bottom right corner
 	private int[][] bounds;
 	
 	/**
@@ -33,7 +34,10 @@ public class Menu
 	 */
 	public String optionSelected(MouseEvent e)
 	{
-		
+		for(int i = 0; i < texts.length; i++)
+			if(isWithinRectangle(e, i))
+				return texts[i];
+		return "";
 	}
 	/**
 	 * 
@@ -43,6 +47,7 @@ public class Menu
 	 */
 	private boolean isWithinRectangle(MouseEvent e, int recLoc)
 	{
-		
+		return (e.getX() > bounds[recLoc][0] && e.getY() > bounds[recLoc][1] && 
+				e.getX() < bounds[recLoc][2] && e.getY() < bounds[recLoc][3]);
 	}
 }

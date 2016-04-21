@@ -9,22 +9,24 @@ import java.awt.event.MouseEvent;
  */
 public class Menu 
 {
-	private String[] texts;
 	//Array that stores 2 opposite corners of the menu
 	//Corresponds with array of menu options: texts[0] is the text for the button 
 	//[0][0] = x coordinate of top left corner, [0][1] = y coordinate of top left corner,
 	//[0][2] = x coordinate of bottom right corner, [0][3] = y coordinate of bottom right corner
 	private double[][] bounds;
+	private String[] options;
+	private String[] texts;
 	
 	/**
 	 * Constructor for a Menu object
 	 * @param newTexts: array of menu options
 	 * @param newBounds: array that stores the four corners of the square that makes up the menu button
 	 */
-	public Menu(String[] newTexts, double[][] newBounds)
+	public Menu(double[][] newBounds, String[] newOptions, String[] newTexts)
 	{
-		texts = newTexts;
 		bounds = newBounds;
+		options = newOptions;
+		texts = newTexts;
 	}
 	
 	/**
@@ -34,9 +36,9 @@ public class Menu
 	 */
 	public String optionSelected(MouseEvent e)
 	{
-		for(int i = 0; i < texts.length; i++)
+		for(int i = 0; i < options.length; i++)
 			if(isWithinRectangle(e, i))
-				return texts[i];
+				return options[i];
 		return "";
 	}
 	/**

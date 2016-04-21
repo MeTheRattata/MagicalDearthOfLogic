@@ -94,7 +94,6 @@ public class Main extends JPanel
 					//TODO: Change Menu to be able to accept booleans as options for 2 slot menus
 					Menu isMagicSelect = new Menu(new double[][] {{0, 352, 336, 480}, {336, 352, 672, 480}}, 
 							new String[]{"true", "false"}, new String[]{"Magic Attack", "Melee Attack"});
-					System.out.print("inFour");
 					int intSelected = isMagicSelect.intSelected(e);
 					//TODO: Fix player select selecting melee if the click wasn't inside the menu box
 					if(intSelected == 0)
@@ -224,50 +223,6 @@ public class Main extends JPanel
 			companion.paintComponent(g);
 			for(int i = 0; i < enemies.length; i++)
 				enemies[i].paintComponent(g);
-			
-			//TODO: handle "hurting" frames by entity class
-			if(hurting[0] > 0)
-			{
-				try {
-					image = ImageIO.read(new File("res/wizardDmg.png"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				g.drawImage(image, xEntityPos[0], yEntityPos[0], 128, 128, null);
-				hurting[0]--;
-			}	
-			if(hurting[1] > 0)
-			{
-				try {
-					image = ImageIO.read(new File("res/" + companion.getName() + "Dmg.png"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				g.drawImage(image, xEntityPos[1], yEntityPos[1], 128, 128, null);
-				hurting[1]--;
-			}
-			if(hurting[2] > 0)
-			{
-				try {
-					image = ImageIO.read(new File("res/slime/slime" +  enemies[0].getSize() + "Dmg.png"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				g.drawImage(image, xEntityPos[2] + enemies[0].getDisplacement(), yEntityPos[2] + enemies[0].getDisplacement(), 
-						enemies[0].getResize(), enemies[0].getResize(), null);
-				hurting[2]--;
-			}
-			if(hurting[3] > 0)
-			{
-				try {
-					image = ImageIO.read(new File("res/slime/slime" + enemies[1].getSize() + "Dmg.png"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				g.drawImage(image, xEntityPos[3] + enemies[1].getDisplacement(), yEntityPos[3] + enemies[1].getDisplacement(), 
-						enemies[1].getResize(), enemies[1].getResize(), null);
-				hurting[3]--;
-			}
 				
 			if(menuNum == 4)
 			{

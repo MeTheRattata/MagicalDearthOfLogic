@@ -66,7 +66,9 @@ public class Slime extends Entity
 	public boolean takeDamage(int damage)
 	{
 		setHealth(getHealth() - damage);
-		this.setName(size, getHealth(), getMaxHealth());
+		setDamageFrames(30);
+		setName("slime/slime" + getSize() + "Dmg");
+		//setName(size, getHealth(), getMaxHealth());
 		if(getHealth() <= 0)
 			return true;
 		else
@@ -93,8 +95,14 @@ public class Slime extends Entity
 		//multiplied by 256 to make image 8 times larger
 		g.drawImage(getImage(), (int) getX() + getDisplacement(), (int) getY() + getDisplacement(), resize, resize, null);
 		
-		//Draw Health Bar
+		if(getDamageFrames() > 0)
+		{
+			decrementDamageFrames();
+			if(getDamageFrames() == 0)
+				setName(size, getHealth(), getMaxHealth());
+		}
 		
+		//Draw Health Bar
 		g.setColor(Color.RED);
 		g.fillRect((int)getX(), (int) getY() + 132, 128, 8);
 		g.setColor(Color.GREEN);

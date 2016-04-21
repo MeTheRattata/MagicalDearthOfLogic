@@ -59,7 +59,7 @@ public class Player extends Entity
 		{
 			decrementDamageFrames();
 			if(getDamageFrames() == 0)
-				setName(getName().replaceAll("Dmg", ""));
+				setName("wizard" + type);
 		}
 		
 		//Draw Health Bar

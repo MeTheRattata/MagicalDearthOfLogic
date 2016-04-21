@@ -96,8 +96,10 @@ public class Main extends JPanel
 							new String[]{"true", "false"}, new String[]{"Magic Attack", "Melee Attack"});
 					System.out.print("inFour");
 					int intSelected = isMagicSelect.intSelected(e);
+					//TODO: Fix player select selecting melee if the click wasn't inside the menu box
 					if(intSelected == 0)
 						player.setMagicAttack(true);
+						
 					menuNum = 2;
 					past4 = true;
 				}
@@ -105,23 +107,18 @@ public class Main extends JPanel
 				else if(past4 && menuNum == 2)
 				{
 					System.out.println("In main");
-					
 					//TODO: Change selected mob to target, let the player and companion classes handle it
+					Menu enemySelected = new Menu(new double[][]{{xEntityPos[2], yEntityPos[2], xEntityPos[2] + 128, yEntityPos[2] + 128},
+					{xEntityPos[3], yEntityPos[3], xEntityPos[3] + 128, yEntityPos[3] +128}}, new String[]{"Enemy1", "Enemy2"}, new String[]{"Enemy1", "Enemy2"});
 					if(gameMenuNum == 0)
 					{
-						for(int i = 2; i < 4; i++)
-							if(e.getX() > xEntityPos[i] && e.getX() < xEntityPos[i] + 128 && 
-							   e.getY() > yEntityPos[i] && e.getY() < yEntityPos[i] + 128)
-								selectedMobPlayer = i - 2;
+						selectedMobPlayer = enemySelected.intSelected(e);
 						gameMenuNum = 1;
 						playerTurn = false;
 					} 
 					else if(gameMenuNum == 1)
 					{
-						for(int i = 2; i < 4; i++)
-							if(e.getX() > xEntityPos[i] && e.getX() < xEntityPos[i] + 128 && 
-							   e.getY() > yEntityPos[i] && e.getY() < yEntityPos[i] + 128)
-								selectedMobCompanion = i - 2;
+						selectedMobCompanion = enemySelected.intSelected(e);
 						menuNum = 3;
 						past4 = false;
 						playerTurn = true;
@@ -168,11 +165,8 @@ public class Main extends JPanel
 			gameMenuNum = 0; //Go back to player attacking
 		}
 	}
-
-	//TODO: Fix "slime in bottom right corner doesn't paint randomly" bug. Why, code, why.
-	//Update: It's also happening to the top left slime now. Wtf is this madness?
 	
-		//Draws images 4 times larger, factor this into the other classes draw methods
+	//Draws images 4 times larger, factor this into the other classes draw methods
 	public void paintComponent(Graphics g)//already happens forever and ever
 	{
 		if(!outOfInitialMenus)

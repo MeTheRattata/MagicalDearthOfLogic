@@ -15,7 +15,7 @@ public class Slime extends Entity
 		//Also updates size the sprite is resized to to keep proportions consistent
 		if(size == 1)
 			resize = 32;
-		else if(size == 1)
+		else if(size == 2)
 			resize = 64;
 		else if(size == 3)
 			resize = 128;

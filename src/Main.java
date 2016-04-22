@@ -88,21 +88,24 @@ public class Main extends JPanel
 						outOfInitialMenus = true;
 					}	
 				}
-				else if(menuNum == 4 && !past4)
+				else if(menuNum == 4)
 				{
 					//TODO: Change Menu to be able to accept booleans as options for 2 slot menus
 					Menu isMagicSelect = new Menu(new double[][] {{0, 352, 336, 480}, {336, 352, 672, 480}}, 
 							new String[]{"true", "false"}, new String[]{"Magic Attack", "Melee Attack"});
 					int intSelected = isMagicSelect.intSelected(e);
-					//TODO: Fix player select selecting melee if the click wasn't inside the menu box
 					if(intSelected == 0)
+					{
 						player.setMagicAttack(true);
-						
-					menuNum = 2;
-					past4 = true;
+						menuNum = 2;
+					}
+					else if(intSelected == 1)
+					{
+						menuNum = 2;
+					}
 				}
 				//Used for Getting location of targets for player and companion
-				else if(past4 && menuNum == 2)
+				else if(menuNum == 2)
 				{
 					System.out.println("In main");
 					//TODO: Change selected mob to target, let the player and companion classes handle it

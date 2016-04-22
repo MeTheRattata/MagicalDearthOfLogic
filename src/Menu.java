@@ -1,5 +1,8 @@
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
 /**
@@ -70,11 +73,23 @@ public class Menu
 	
 	public void paintComponent(Graphics g)
 	{
+		g.setColor(Color.BLACK);
+		Font font = new Font("Arial", Font.BOLD, 32);
 		for(int i = 0; i < bounds.length; i++)
 		{
-			g.setColor(Color.BLACK);
-			g.drawRect((int) bounds[i][0], (int) bounds[i][1], (int) (bounds[i][2] - bounds[i][0]), (int) (bounds[i][3] - bounds[i][1]));
-			g.drawString(labels[i], (int) (bounds[i][2] - (bounds[i][2] - bounds[i][0])/2), (int) (bounds[i][3] -(bounds[i][3] - bounds[i][1])/2));
+			Rectangle rect = new Rectangle((int) bounds[i][0], (int) bounds[i][1], (int) (bounds[i][2] - bounds[i][0]), (int) (bounds[i][3] - bounds[i][1]));
+			g.drawRect((int)rect.getX(), (int)rect.getY(), (int)rect.getWidth(), (int)rect.getHeight());
+			//g.drawString(labels[i], (int) (bounds[i][2] - (bounds[i][2] - bounds[i][0])/2), (int) (bounds[i][3] -(bounds[i][3] - bounds[i][1])/2));
+			drawCenteredString(g, labels[i], rect, font);
 		}
+	}
+	public void drawCenteredString(Graphics g, String text, Rectangle rect, Font font) 
+	{
+	    FontMetrics metrics = g.getFontMetrics(font);
+	    //Fix by adding displacement from position of rectangle
+	    int x = (rect.width - metrics.stringWidth(text)) / 2 + rect.x;
+	    int y = ((rect.height) / 2) + rect.y;
+	    g.setFont(font);
+	    g.drawString(text, x, y);
 	}
 }

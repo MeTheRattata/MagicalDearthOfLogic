@@ -72,9 +72,9 @@ public class Menu
 	{
 		for(int i = 0; i < bounds.length; i++)
 		{
-			g.drawRect((int) bounds[i][0], (int) bounds[i][1], (int) (bounds[i][2] - bounds[i][0]), (int) (bounds[i][3] - bounds[i][1]));
 			g.setColor(Color.BLACK);
-			g.drawString(labels[i], (int) (bounds[i][2] - bounds[i][0])/2, (int) (bounds[i][3] - bounds[i][1])/2);
+			g.drawRect((int) bounds[i][0], (int) bounds[i][1], (int) (bounds[i][2] - bounds[i][0]), (int) (bounds[i][3] - bounds[i][1]));
+			g.drawString(labels[i], (int) (bounds[i][2] - (bounds[i][2] - bounds[i][0])/2), (int) (bounds[i][3] -(bounds[i][3] - bounds[i][1])/2));
 		}
 	}
 }

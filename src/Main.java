@@ -183,11 +183,12 @@ public class Main extends JPanel
 			//Draw Player Select
 			if(menuNum == 0)
 			{
-				for(int i = 0; i < 4; i++)
+				playerSelect.paintComponent(g);
+				/*for(int i = 0; i < 4; i++)
 				{
 					str = menuTexts[i];
 					g.drawString(str, xMenuPos[i], yMenuPos[i]);
-				}
+				}*/
 			}
 			//Draw Companion Select
 			else if(menuNum == 1)

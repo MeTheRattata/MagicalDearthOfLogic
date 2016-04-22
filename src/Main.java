@@ -72,17 +72,23 @@ public class Main extends JPanel
 			{
 				if(!outOfInitialMenus)
 				{
-					
-					Menu playerSelect = new Menu(fullScreenMenuBounds, new String[]{"Life", "Light", "Rock", "Water"}, 
-										new String[] {"Life Wizard", "Light Wizard", "Rock Wizard", "Water Wizard"});
-					player = new Player(xEntityPos[0], yEntityPos[0], playerSelect.optionSelected(e));
-					Menu companionSelect = new Menu(fullScreenMenuBounds, new String[]{"cat", "dog", "lizard", "emu"}, 
-										   new String[]{"Cat", "Dog", "Lizard", "Emu"});
-					companion = new Companion(xEntityPos[1], yEntityPos[1], companionSelect.optionSelected(e));
-					menuNum = 4;
-					outOfInitialMenus = true;	
+					if(menuNum == 0)
+					{
+						Menu playerSelect = new Menu(fullScreenMenuBounds, new String[]{"Life", "Light", "Rock", "Water"}, 
+								new String[] {"Life Wizard", "Light Wizard", "Rock Wizard", "Water Wizard"});
+						player = new Player(xEntityPos[0], yEntityPos[0], playerSelect.optionSelected(e));
+						menuNum = 1;
+					}
+					else if(menuNum == 1)
+					{
+						Menu companionSelect = new Menu(fullScreenMenuBounds, new String[]{"cat", "dog", "lizard", "emu"}, 
+								new String[]{"Cat", "Dog", "Lizard", "Emu"});
+						companion = new Companion(xEntityPos[1], yEntityPos[1], companionSelect.optionSelected(e));
+						menuNum = 4;
+						outOfInitialMenus = true;
+					}	
 				}
-				if(menuNum == 4 && !past4)
+				else if(menuNum == 4 && !past4)
 				{
 					//TODO: Change Menu to be able to accept booleans as options for 2 slot menus
 					Menu isMagicSelect = new Menu(new double[][] {{0, 352, 336, 480}, {336, 352, 672, 480}}, 
@@ -98,6 +104,7 @@ public class Main extends JPanel
 				//Used for Getting location of targets for player and companion
 				else if(past4 && menuNum == 2)
 				{
+					System.out.println("In main");
 					//TODO: Change selected mob to target, let the player and companion classes handle it
 					Menu enemySelected = new Menu(new double[][]{{xEntityPos[2], yEntityPos[2], xEntityPos[2] + 128, yEntityPos[2] + 128},
 					{xEntityPos[3], yEntityPos[3], xEntityPos[3] + 128, yEntityPos[3] +128}}, new String[]{"Enemy1", "Enemy2"}, new String[]{"Enemy1", "Enemy2"});

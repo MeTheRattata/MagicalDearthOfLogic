@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
@@ -69,6 +70,11 @@ public class Menu
 	
 	public void paintComponent(Graphics g)
 	{
-		
+		for(int i = 0; i < bounds.length; i++)
+		{
+			g.drawRect((int) bounds[i][0], (int) bounds[i][1], (int) (bounds[i][2] - bounds[i][0]), (int) (bounds[i][3] - bounds[i][1]));
+			g.setColor(Color.BLACK);
+			g.drawString(labels[i], (int) (bounds[i][2] - bounds[i][0])/2, (int) (bounds[i][3] - bounds[i][1])/2);
+		}
 	}
 }

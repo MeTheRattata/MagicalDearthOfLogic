@@ -170,35 +170,11 @@ public class Main extends JPanel
 			g.setColor(Color.WHITE);
 			g.fillRect(0,0,672,480);
 			g.setColor(Color.BLACK);
-			java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
-			g2.setStroke(new java.awt.BasicStroke(4)); // thickness of 3.0f
-			g2.setColor(Color.BLACK);
-			g2.drawLine(0,240,672,240);
-			g2.drawLine(336, 0, 336, 480);
 			
-			String str;
-			Font font = new Font("Arial", Font.BOLD, 32);
-			g.setFont(font);
-			
-			//Draw Player Select
 			if(menuNum == 0)
-			{
 				playerSelect.paintComponent(g);
-				/*for(int i = 0; i < 4; i++)
-				{
-					str = menuTexts[i];
-					g.drawString(str, xMenuPos[i], yMenuPos[i]);
-				}*/
-			}
-			//Draw Companion Select
 			else if(menuNum == 1)
-			{
-				for(int i = 4; i < 8; i++)
-				{
-					str = menuTexts[i];
-					g.drawString(str, xMenuPos[i - 4], yMenuPos[i - 4]);
-				}
-			}
+				companionSelect.paintComponent(g);
 		}
 		else
 		{
@@ -223,17 +199,7 @@ public class Main extends JPanel
 				enemies[i].paintComponent(g);
 				
 			if(menuNum == 4)
-			{
-				g.setColor(Color.BLACK);
-				g.setFont(font);
-				java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
-				g2.setStroke(new java.awt.BasicStroke(4)); // thickness of 3.0f
-				g2.setColor(Color.BLACK);
-				g2.drawLine(336, 354, 336, 480);
-				g.drawString(gameMenuTexts[2], 64, 434);
-				g.drawString(gameMenuTexts[3], 400, 432);
-				
-			}
+				isMagicSelect.paintComponent(g);
 			else if(menuNum == 2) //Enemy select for attacks
 			{
 				g.setColor(Color.BLACK);

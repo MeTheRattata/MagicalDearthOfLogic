@@ -41,6 +41,14 @@ public class Main extends JPanel
 	int kills = 0;
 	//Boundaries for menus that take up the entire screen, used to create Menu objects for such menus
 	double[][] fullScreenMenuBounds = new double[][]{{0, 0, 336, 240}, {336, 0, 672, 240}, {0, 240, 336, 480}, {336, 240, 672, 480}};
+	Menu playerSelect = new Menu(fullScreenMenuBounds, new String[]{"Life", "Light", "Rock", "Water"}, 
+			new String[] {"Life Wizard", "Light Wizard", "Rock Wizard", "Water Wizard"});
+	Menu companionSelect = new Menu(fullScreenMenuBounds, new String[]{"cat", "dog", "lizard", "emu"}, 
+			new String[]{"Cat", "Dog", "Lizard", "Emu"});
+	Menu isMagicSelect = new Menu(new double[][] {{0, 352, 336, 480}, {336, 352, 672, 480}}, 
+			new String[]{"true", "false"}, new String[]{"Magic Attack", "Melee Attack"});
+	Menu enemySelected = new Menu(new double[][]{{xEntityPos[2], yEntityPos[2], xEntityPos[2] + 128, yEntityPos[2] + 128},
+		{xEntityPos[3], yEntityPos[3], xEntityPos[3] + 128, yEntityPos[3] +128}}, new String[]{"Enemy1", "Enemy2"}, new String[]{"Enemy1", "Enemy2"});
 	
 	private static final long serialVersionUID = 1L;
 
@@ -74,15 +82,11 @@ public class Main extends JPanel
 				{
 					if(menuNum == 0)
 					{
-						Menu playerSelect = new Menu(fullScreenMenuBounds, new String[]{"Life", "Light", "Rock", "Water"}, 
-								new String[] {"Life Wizard", "Light Wizard", "Rock Wizard", "Water Wizard"});
 						player = new Player(xEntityPos[0], yEntityPos[0], playerSelect.optionSelected(e));
 						menuNum = 1;
 					}
 					else if(menuNum == 1)
 					{
-						Menu companionSelect = new Menu(fullScreenMenuBounds, new String[]{"cat", "dog", "lizard", "emu"}, 
-								new String[]{"Cat", "Dog", "Lizard", "Emu"});
 						companion = new Companion(xEntityPos[1], yEntityPos[1], companionSelect.optionSelected(e));
 						menuNum = 4;
 						outOfInitialMenus = true;
@@ -91,8 +95,6 @@ public class Main extends JPanel
 				else if(menuNum == 4)
 				{
 					//TODO: Change Menu to be able to accept booleans as options for 2 slot menus
-					Menu isMagicSelect = new Menu(new double[][] {{0, 352, 336, 480}, {336, 352, 672, 480}}, 
-							new String[]{"true", "false"}, new String[]{"Magic Attack", "Melee Attack"});
 					int intSelected = isMagicSelect.intSelected(e);
 					if(intSelected == 0)
 					{
@@ -107,10 +109,7 @@ public class Main extends JPanel
 				//Used for Getting location of targets for player and companion
 				else if(menuNum == 2)
 				{
-					System.out.println("In main");
 					//TODO: Change selected mob to target, let the player and companion classes handle it
-					Menu enemySelected = new Menu(new double[][]{{xEntityPos[2], yEntityPos[2], xEntityPos[2] + 128, yEntityPos[2] + 128},
-					{xEntityPos[3], yEntityPos[3], xEntityPos[3] + 128, yEntityPos[3] +128}}, new String[]{"Enemy1", "Enemy2"}, new String[]{"Enemy1", "Enemy2"});
 					if(gameMenuNum == 0)
 					{
 						selectedMobPlayer = enemySelected.intSelected(e);

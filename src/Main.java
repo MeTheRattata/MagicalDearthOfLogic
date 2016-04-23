@@ -24,7 +24,6 @@ public class Main extends JPanel
 	private Companion companion;
 	private Slime[] enemies = new Slime[2];
 	private boolean outOfInitialMenus = false;
-	//MenuNum : 0 = player select, 1 = companion select, 2 = game menu
 	int menuNum = 0; //which menu you're in
 	//0 = select player, 1 = select companion, 2 = select attack target, 3 = temp to let tick method do damage and things,
 	//4 = select attack
@@ -49,6 +48,7 @@ public class Main extends JPanel
 			new String[]{"true", "false"}, new String[]{"Magic Attack", "Melee Attack"});
 	Menu enemySelected = new Menu(new double[][]{{xEntityPos[2], yEntityPos[2], xEntityPos[2] + 128, yEntityPos[2] + 128},
 		{xEntityPos[3], yEntityPos[3], xEntityPos[3] + 128, yEntityPos[3] +128}}, new String[]{"Enemy1", "Enemy2"}, new String[]{"Enemy1", "Enemy2"});
+	BufferedImage selectionBorder, background;
 	
 	private static final long serialVersionUID = 1L;
 
@@ -74,8 +74,19 @@ public class Main extends JPanel
 	{
 		enemies[0] = new Slime(xEntityPos[2],yEntityPos[2],(int)(Math.random()*3) + 1);
 		enemies[1] = new Slime(xEntityPos[3],yEntityPos[3],(int)(Math.random()*3) + 1);
+		try {
+			background = ImageIO.read(new File("res/background.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			selectionBorder = ImageIO.read(new File("res/redSelectionBorder.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		this.addMouseListener(new MouseAdapter(){
+			//TODO: Fix or reinvent this mess of if statements
 			public void mouseClicked(MouseEvent e)
 			{
 				if(!outOfInitialMenus)
@@ -184,13 +195,7 @@ public class Main extends JPanel
 			g.setFont(font);
 			
 			//draw background
-			BufferedImage image = null;
-			try {
-				image = ImageIO.read(new File("res/background.png"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			g.drawImage(image, 0, 0, 672, 480, null);
+			g.drawImage(background, 0, 0, 672, 480, null);
 			g.drawString("Kills: " + kills, 32, 32);
 			//Draw player and companion
 			player.paintComponent(g);
@@ -215,13 +220,8 @@ public class Main extends JPanel
 				g.drawString(str, 16, 424);
 				
 				//draw selection squares around monsters
-				try {
-					image = ImageIO.read(new File("res/redSelectionBorder.png"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
 				for(int j = 2; j < 4; j++)
-					g.drawImage(image, xEntityPos[j], yEntityPos[j], 128, 128, null);
+					g.drawImage(selectionBorder, xEntityPos[j], yEntityPos[j], 128, 128, null);
 			}
 			
 		}

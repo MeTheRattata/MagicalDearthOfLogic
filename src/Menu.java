@@ -1,8 +1,11 @@
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 
 /**
@@ -60,7 +63,7 @@ public class Menu
 		return "";
 	}
 	/**
-	 * 
+	 * isWithinRectangle: checks if a mouseclick is within a rectangle
 	 * @param e
 	 * @param recLoc: row in bounds that the rectangle being checked is stored in
 	 * @return true if the mouseEvent's coordinates are within the rectangle, false if not
@@ -71,6 +74,10 @@ public class Menu
 				e.getX() < bounds[recLoc][2] && e.getY() < bounds[recLoc][3]);
 	}
 	
+	/**
+	 * Paint method for a Menu object
+	 * @param g: the graphics object to draw the menu on
+	 */
 	public void paintComponent(Graphics g)
 	{
 		g.setColor(Color.BLACK);
@@ -78,17 +85,26 @@ public class Menu
 		for(int i = 0; i < bounds.length; i++)
 		{
 			Rectangle rect = new Rectangle((int) bounds[i][0], (int) bounds[i][1], (int) (bounds[i][2] - bounds[i][0]), (int) (bounds[i][3] - bounds[i][1]));
-			g.drawRect((int)rect.getX(), (int)rect.getY(), (int)rect.getWidth(), (int)rect.getHeight());
-			//g.drawString(labels[i], (int) (bounds[i][2] - (bounds[i][2] - bounds[i][0])/2), (int) (bounds[i][3] -(bounds[i][3] - bounds[i][1])/2));
+			Graphics2D g2 = (Graphics2D) g;
+			Stroke oldStroke = g2.getStroke();
+			g2.setStroke(new BasicStroke(4));
+			g2.drawRect((int)rect.getX(), (int)rect.getY(), (int)rect.getWidth(), (int)rect.getHeight());
 			drawCenteredString(g, labels[i], rect, font);
+			g2.setStroke(oldStroke);
 		}
 	}
+	/**
+	 * Draw a string in the center of a rectangle
+	 * @param g: the graphics object in which to draw the string
+	 * @param text: string to be drawn
+	 * @param rect: rectangle to draw the string in
+	 * @param font: font of the string
+	 */
 	public void drawCenteredString(Graphics g, String text, Rectangle rect, Font font) 
 	{
 	    FontMetrics metrics = g.getFontMetrics(font);
-	    //Fix by adding displacement from position of rectangle
 	    int x = (rect.width - metrics.stringWidth(text)) / 2 + rect.x;
-	    int y = ((rect.height) / 2) + rect.y;
+	    int y = ((rect.height) / 2) + rect.y + metrics.getAscent() / 2;
 	    g.setFont(font);
 	    g.drawString(text, x, y);
 	}

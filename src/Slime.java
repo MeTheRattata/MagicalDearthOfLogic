@@ -3,14 +3,19 @@ import java.awt.Graphics;
 
 public class Slime extends Entity
 {
-	int size;
-	int resize; //size of sprite
+	int size; //size of slime
+	int resize; //amount to resize sprite by
+	/**
+	 * Constructor for a slime object
+	 * @param xPos: x coordinate
+	 * @param yPos: y coordinate
+	 */
 	public Slime(double xPos, double yPos, int newSize) 
 	{
 		super(xPos, yPos, assignHealth(newSize), "slime/slimeLarge100", 0);
 		size = newSize;
-		setAttack(getPower(size));
-		setName(size, getHealth(), getMaxHealth());
+		setAttack(getPower());
+		setName();
 		//If slimes are smaller than 32 by 32, puts them in the center of the 32 by 32 square where they are
 		//Also updates size the sprite is resized to to keep proportions consistent
 		if(size == 1)
@@ -20,8 +25,11 @@ public class Slime extends Entity
 		else if(size == 3)
 			resize = 128;
 	}
-	
-	//Health, attack power, and image name based on size
+	/**
+	 * Assign max health based on size
+	 * @param size: the size of the slime
+	 * @return: max health
+	 */
 	private static int assignHealth(int size)
 	{
 		if(size == 1)
@@ -32,7 +40,11 @@ public class Slime extends Entity
 			return 100;
 		return -1;
 	}
-	private int getPower(int size)
+	/**
+	 * Get Power: return AttackPower based on slime size
+	 * @return: attack power based on size
+	 */
+	private int getPower()
 	{
 		if(size == 1)
 			return 5;
@@ -42,7 +54,10 @@ public class Slime extends Entity
 			return 15;
 		return -1;
 	}
-	private void setName(int size, int health, int maxHealth)
+	/**
+	 * Set a slime's name based on size and health percentage
+	 */
+	private void setName()
 	{
 		String restOfName = "slime/slime";
 		if(size == 1)
@@ -51,29 +66,41 @@ public class Slime extends Entity
 			restOfName += "Medium";
 		else if(size == 3)
 			restOfName += "Large";
-		
-		if((((double) health / (double) maxHealth) * 100) > 75) //health is above 75%
+		if(getDamageFrames() > 0)
+		{
+			restOfName += "Dmg";
+		}
+		else if(getDamageFrames() == 0)
+		{
+			if((((double) getHealth() / (double) getMaxHealth()) * 100) > 75) //health is above 75%
 			restOfName += "100";
-		else if((((double) health / (double) maxHealth) * 100) > 50)//health is above 50%
+		else if((((double) getHealth() / (double) getMaxHealth()) * 100) > 50)//health is above 50%
 			restOfName += "75";
-		else if((((double) health / (double) maxHealth) * 100) > 25)//health is above 25%
+		else if((((double) getHealth() / (double) getMaxHealth()) * 100) > 25)//health is above 25%
 			restOfName += "50";
-		else if(((((double) health / (double) maxHealth) * 100) <= 25))//health is below 25%
+		else if(((((double) getHealth() / (double) getMaxHealth()) * 100) <= 25))//health is below 25%
 			restOfName += "25";
+		}
 		super.setName(restOfName);
 	}
-	
+	/**
+	 * Decrement 
+	 * @return: if the slime is dead- true, if not- false
+	 */
 	public boolean takeDamage(int damage)
 	{
 		setHealth(getHealth() - damage);
 		setDamageFrames(30);
 		setName("slime/slime" + getSize() + "Dmg");
-		//setName(size, getHealth(), getMaxHealth());
 		if(getHealth() <= 0)
 			return true;
 		else
 			return false;
 	}
+	/**
+	 * Returns a string based on the slime's size
+	 * @return: size
+	 */
 	public String getSize()
 	{
 		if(size == 1)
@@ -84,12 +111,9 @@ public class Slime extends Entity
 			return "Large";
 		return "";
 	}
-	public int getResize()
-	{
-		return resize;
-	}
-	
-	//Overridden from parent to resize slimes properly
+	/**
+	 * Paint a slime's sprite, centered and with health bar + damage frames
+	 */
 	public void paintComponent(Graphics g)
 	{
 		//multiplied by 256 to make image 8 times larger
@@ -99,7 +123,7 @@ public class Slime extends Entity
 		{
 			decrementDamageFrames();
 			if(getDamageFrames() == 0)
-				setName(size, getHealth(), getMaxHealth());
+				setName();
 		}
 		
 		//Draw Health Bar
@@ -109,6 +133,9 @@ public class Slime extends Entity
 		double barLength =  ((double) getHealth() / getMaxHealth()) * 128;
 		g.fillRect((int)getX(), (int) getY() + 132, (int) barLength, 8);
 	}
+	/**
+	 * Get displacement for centering all sizes of slimes
+	 */
 	public int getDisplacement()
 	{
 		if(size == 1)

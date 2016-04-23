@@ -21,6 +21,7 @@ public class Entity
 	private String name; //path of image used as sprite, change to change sprite
 	private BufferedImage image = null;
 	private int damageFrames = 0;
+	private int target = 0;
 	
 	/**
 	 * Constructor for Entity class.
@@ -167,6 +168,22 @@ public class Entity
 	public void decrementDamageFrames()
 	{
 		damageFrames--;
+	}
+	/**
+	 * Set the entity's target 
+	 * @param newTarget: entity's new target
+	 */
+	public void setTarget(int newTarget)
+	{
+		target = newTarget;
+	}
+	/**
+	 * Return the entity's current target
+	 * @return: target
+	 */
+	public int getTarget()
+	{
+		return target;
 	}
 	/**
 	 * Get image

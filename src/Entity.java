@@ -21,7 +21,7 @@ public class Entity
 	private String name; //path of image used as sprite, change to change sprite
 	private BufferedImage image = null;
 	private int damageFrames = 0;
-	private int target = 0;
+	private int target = -1;
 	
 	/**
 	 * Constructor for Entity class.
@@ -88,6 +88,16 @@ public class Entity
 			return true;
 		else
 			return false;
+	}
+	/**
+	 * Do damage: does damage to the entity passed
+	 * @param damage: amount of damage to be done
+	 * @param entity: the entity damage is being done to
+	 * @return: if the entity is alive or not
+	 */
+	public boolean doDamage(Entity entity)
+	{
+		return entity.takeDamage(getAttack());
 	}
 	/**
 	 * Get attack

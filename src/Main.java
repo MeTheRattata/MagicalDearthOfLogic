@@ -27,15 +27,12 @@ public class Main extends JPanel
 	int menuNum = 0; //which menu you're in
 	//0 = select player, 1 = select companion, 2 = select attack target, 3 = temp to let tick method do damage and things,
 	//4 = select attack
-	
 	boolean playerTurn = true;
 	String[] menuTexts = {"Life Wizard", "Light Wizard", "Earth Wizard", "Water Wizard", "Cat", "Dog", "Lizard", "Emu"};
 	int gameMenuNum = 0; //Which game menu you're in, 0 = select enemy to attack with player, 1 = select
 	//an enemy to attack with companion
 	String[] gameMenuTexts = {"Select an enemy to target with wizard:", "Select an enemy to target with companion:", 
 			"Magic Attack", "Melee Attack"};
-	int selectedMobPlayer = -1;
-	int selectedMobCompanion = -1;
 	boolean past4 = false;
 	int kills = 0;
 	//Boundaries for menus that take up the entire screen, used to create Menu objects for such menus
@@ -123,13 +120,13 @@ public class Main extends JPanel
 					//TODO: Change selected mob to target, let the player and companion classes handle it
 					if(gameMenuNum == 0)
 					{
-						selectedMobPlayer = enemySelected.intSelected(e);
+						player.setTarget(enemySelected.intSelected(e));
 						gameMenuNum = 1;
 						playerTurn = false;
 					} 
 					else if(gameMenuNum == 1)
 					{
-						selectedMobCompanion = enemySelected.intSelected(e);
+						companion.setTarget(enemySelected.intSelected(e));
 						menuNum = 3;
 						past4 = false;
 						playerTurn = true;
@@ -145,26 +142,26 @@ public class Main extends JPanel
 		{
 			//If both the target of the player and the target of the companion are valid
 			//do damage to enemies with both player and companion
-			if(selectedMobPlayer != -1 && selectedMobCompanion != -1)
+			if(player.getTarget() != -1 && companion.getTarget() != -1)
 			{
 				//Do damage to enemy targeted by player
-				if(enemies[selectedMobPlayer].takeDamage(player.getAttack()))
+				if(player.doDamage(enemies[player.getTarget()]))
 				{
 					kills++;
 					player.refillMana();
-					enemies[selectedMobPlayer] = new Slime(xEntityPos[selectedMobPlayer + 2],yEntityPos[selectedMobPlayer + 2],(int)(Math.random()*3) + 1);
+					enemies[player.getTarget()] = new Slime(xEntityPos[player.getTarget() + 2],yEntityPos[player.getTarget() + 2],(int)(Math.random()*3) + 1);
 				}
 				
 				//Do damage to enemy targeted by companion
-				if(enemies[selectedMobCompanion].takeDamage(companion.getAttack()))
+				if(companion.doDamage(enemies[companion.getTarget()]))
 				{
 					kills++;
 					player.refillMana();
-					enemies[selectedMobCompanion] = new Slime(xEntityPos[selectedMobCompanion + 2],yEntityPos[selectedMobCompanion + 2],(int)(Math.random()*3) + 1);
+					enemies[companion.getTarget()] = new Slime(xEntityPos[companion.getTarget() + 2],yEntityPos[companion.getTarget() + 2],(int)(Math.random()*3) + 1);
 				}
 				
-				selectedMobPlayer = -1;
-				selectedMobCompanion = -1;
+				player.setTarget(-1);
+				companion.setTarget(-1);
 			}
 			
 			menuNum = 4; //Go back into selecting wizards attack
@@ -213,9 +210,9 @@ public class Main extends JPanel
 				//select with both wizard and companion
 				
 				//Draw menu string for selection
-				if(selectedMobPlayer == -1)
+				if(player.getTarget() == -1)
 					str = gameMenuTexts[0];
-				else if(selectedMobCompanion == -1)
+				else if(companion.getTarget() == -1)
 					str = gameMenuTexts[1];
 				g.drawString(str, 16, 424);
 				

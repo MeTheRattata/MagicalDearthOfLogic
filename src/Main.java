@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.imageio.ImageIO;
@@ -160,8 +161,16 @@ public class Main extends JPanel
 					enemies[companion.getTarget()] = new Slime(xEntityPos[companion.getTarget() + 2],yEntityPos[companion.getTarget() + 2],(int)(Math.random()*3) + 1);
 				}
 				
+				Random generator = new Random();
 				player.setTarget(-1);
 				companion.setTarget(-1);
+				for(int i = 0; i < 2; i++)
+				{
+					if(generator.nextDouble() > 0.5)
+						enemies[i].doDamage(player);
+					else
+						enemies[i].doDamage(companion);
+				}
 			}
 			
 			menuNum = 4; //Go back into selecting wizards attack

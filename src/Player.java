@@ -3,12 +3,12 @@ import java.awt.Graphics;
 
 public class Player extends Entity
 {
-	int magicAttack = 40;
-	int mana;
-	int maxMana;
-	int manaSpent;
-	boolean isMagicAttack = false;
-	String type;
+	private int mana;
+	private int maxMana;
+	private int manaSpent;
+	private boolean isMagicAttack = false;
+	private String type;
+	
 	
 	/**
 	 * Constructor for player class

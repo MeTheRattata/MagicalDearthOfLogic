@@ -3,8 +3,8 @@ import java.awt.Graphics;
 
 public class Slime extends Entity
 {
-	int size; //size of slime
-	int resize; //amount to resize sprite by
+	private int size; //size of slime
+	private int resize; //amount to resize sprite by
 	/**
 	 * Constructor for a slime object
 	 * @param xPos: x coordinate
@@ -18,12 +18,7 @@ public class Slime extends Entity
 		setName();
 		//If slimes are smaller than 32 by 32, puts them in the center of the 32 by 32 square where they are
 		//Also updates size the sprite is resized to to keep proportions consistent
-		if(size == 1)
-			resize = 32;
-		else if(size == 2)
-			resize = 64;
-		else if(size == 3)
-			resize = 128;
+		resize = (int) (16 * Math.pow(2, size));
 	}
 	/**
 	 * Assign max health based on size

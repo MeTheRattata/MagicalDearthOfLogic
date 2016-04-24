@@ -183,6 +183,8 @@ public class Main extends JPanel
 		}
 	}
 	
+	//TODO: Fix random errors with companion setImage happening somewhere in here
+	
 	//Draws images 4 times larger, factor this into the other classes draw methods
 	public void paintComponent(Graphics g)//already happens forever and ever
 	{

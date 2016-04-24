@@ -1,7 +1,9 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -47,6 +49,7 @@ public class Main extends JPanel
 	Menu enemySelected = new Menu(new double[][]{{xEntityPos[2], yEntityPos[2], xEntityPos[2] + 128, yEntityPos[2] + 128},
 		{xEntityPos[3], yEntityPos[3], xEntityPos[3] + 128, yEntityPos[3] +128}}, new String[]{"Enemy1", "Enemy2"}, new String[]{"Enemy1", "Enemy2"});
 	BufferedImage selectionBorder, background;
+	boolean gameOver = false;
 	
 	private static final long serialVersionUID = 1L;
 
@@ -171,6 +174,8 @@ public class Main extends JPanel
 					else
 						enemies[i].doDamage(companion);
 				}
+				if(player.getHealth() <= 0 || companion.getHealth() <= 0)
+					gameOver = true;
 			}
 			
 			menuNum = 4; //Go back into selecting wizards attack
@@ -181,25 +186,27 @@ public class Main extends JPanel
 	//Draws images 4 times larger, factor this into the other classes draw methods
 	public void paintComponent(Graphics g)//already happens forever and ever
 	{
-		if(!outOfInitialMenus)
+		g.setColor(Color.WHITE);
+		g.fillRect(0,0,672,480);
+		g.setColor(Color.BLACK);
+		Font font = new Font("Arial", Font.BOLD, 32);
+		g.setFont(font);
+		
+		if(gameOver)
+		{
+			Rectangle rect = new Rectangle(0,0,672,480);
+			drawCenteredString(g, "Game Over", rect, font);
+		}
+		else if(!outOfInitialMenus)
 		{
 			//Prep to draw menus
-			g.setColor(Color.WHITE);
-			g.fillRect(0,0,672,480);
-			g.setColor(Color.BLACK);
-			
 			if(menuNum == 0)
 				playerSelect.paintComponent(g);
 			else if(menuNum == 1)
 				companionSelect.paintComponent(g);
 		}
 		else
-		{
-			//Clean background, set up for game menu printing
-			g.setColor(Color.BLACK);
-			Font font = new Font("Arial", Font.BOLD, 32);
-			g.setFont(font);
-			
+		{	
 			//draw background
 			g.drawImage(background, 0, 0, 672, 480, null);
 			g.drawString("Kills: " + kills, 32, 32);
@@ -231,5 +238,20 @@ public class Main extends JPanel
 			}
 			
 		}
+	}
+	/**
+	 * Draw a string in the center of a rectangle
+	 * @param g: the graphics object in which to draw the string
+	 * @param text: string to be drawn
+	 * @param rect: rectangle to draw the string in
+	 * @param font: font of the string
+	 */
+	public void drawCenteredString(Graphics g, String text, Rectangle rect, Font font) 
+	{
+	    FontMetrics metrics = g.getFontMetrics(font);
+	    int x = (rect.width - metrics.stringWidth(text)) / 2 + rect.x;
+	    int y = ((rect.height) / 2) + rect.y + metrics.getAscent() / 2;
+	    g.setFont(font);
+	    g.drawString(text, x, y);
 	}
 }

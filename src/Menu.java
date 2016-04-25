@@ -37,6 +37,15 @@ public class Menu
 		options = newOptions;
 		labels = newLabels;
 	}
+	/**
+	 * Constructor for a four option menu
+	 * @param startX: x coordinate start point
+	 * @param startY: y coordinate start point
+	 * @param endX: x coordinate end point
+	 * @param endY: y coordinate end point
+	 * @param newOptions: menu options
+	 * @param newLabels: menu option labels
+	 */
 	public Menu(int startX, int startY, int endX, int endY, String[] newOptions, String[] newLabels) 
 	{
 		options = newOptions;

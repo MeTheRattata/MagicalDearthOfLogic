@@ -8,6 +8,7 @@ public class Player extends Entity
 	private int manaSpent;
 	private boolean isMagicAttack = false;
 	private String type;
+	private Menu moveSelect;
 	
 	/**
 	 * Constructor for player class
@@ -24,6 +25,9 @@ public class Player extends Entity
 		mana = 50;
 		maxMana = mana;
 		manaSpent = 20;
+		//Strings for options useless here, since intSelected will be used to determine attack to use
+		moveSelect = new Menu(0, 352, 672, 480, new String[]{"", "", "", ""}, 
+							  new String[]{"Strike", type + " Attack", "Team Heal", "Target Heal"});
 	}
 	/**
 	 * Take damage, add 30 damage frames and change sprite to hurt version

@@ -34,18 +34,16 @@ public class Main extends JPanel
 	//0 = select player, 1 = select companion, 2 = select attack target, 3 = temp to let tick method do damage and things,
 	//4 = select attack
 	boolean playerTurn = true;
-	String[] menuTexts = {"Life Wizard", "Light Wizard", "Earth Wizard", "Water Wizard", "Cat", "Dog", "Lizard", "Emu"};
 	int gameMenuNum = 0; //Which game menu you're in, 0 = select enemy to attack with player, 1 = select
 	//an enemy to attack with companion
-	String[] gameMenuTexts = {"Select an enemy to target with wizard:", "Select an enemy to target with companion:", 
-			"Magic Attack", "Melee Attack"};
+	String[] gameMenuTexts = {"Select an enemy to target with wizard:", "Select an enemy to target with companion:"};
 	boolean past4 = false;
 	int kills = 0;
 	//Boundaries for menus that take up the entire screen, used to create Menu objects for such menus
 	double[][] fullScreenMenuBounds = new double[][]{{0, 0, 336, 240}, {336, 0, 672, 240}, {0, 240, 336, 480}, {336, 240, 672, 480}};
-	Menu playerSelect = new Menu(fullScreenMenuBounds, new String[]{"Life", "Light", "Rock", "Water"}, 
+	Menu playerSelect = new Menu(0, 0, WIDTH, HEIGHT, new String[]{"Life", "Light", "Rock", "Water"}, 
 			new String[] {"Life Wizard", "Light Wizard", "Rock Wizard", "Water Wizard"});
-	Menu companionSelect = new Menu(fullScreenMenuBounds, new String[]{"cat", "dog", "lizard", "emu"}, 
+	Menu companionSelect = new Menu(0, 0, WIDTH, HEIGHT, new String[]{"cat", "dog", "lizard", "emu"}, 
 			new String[]{"Cat", "Dog", "Lizard", "Emu"});
 	Menu isMagicSelect = new Menu(new double[][] {{0, 352, 336, 480}, {336, 352, 672, 480}}, 
 			new String[]{"true", "false"}, new String[]{"Magic Attack", "Melee Attack"});

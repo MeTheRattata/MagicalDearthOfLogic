@@ -6,8 +6,6 @@ public class Player extends Entity
 {
 	private int mana;
 	private int maxMana;
-	private int manaSpent;
-	private boolean isMagicAttack = false;
 	private String type;
 	private Menu moveSelect;
 	private boolean isInCombatMenu = false;
@@ -26,7 +24,6 @@ public class Player extends Entity
 		type = newType;
 		mana = 50;
 		maxMana = mana;
-		manaSpent = 20;
 		//Strings for options useless here, since intSelected will be used to determine attack to use
 		moveSelect = new Menu(0, 352, 672, 480, new String[]{"", "", "", ""}, 
 							  new String[]{"Strike", type + " Attack", "Team Heal", "Target Heal"});
@@ -44,20 +41,6 @@ public class Player extends Entity
 		else
 			return false;
 	}
-	/**
-	 * Return attack power. If next attack is to be a magic attack, doubles attack power and resets magic attack boolean.
-	 * @deprecated
-	 */
-	/*public int getAttack()
-	{
-		if(isMagicAttack)
-		{
-			isMagicAttack = false;
-			mana -= manaSpent;
-			return super.getAttack() * 2;
-		}
-		return super.getAttack();
-	}*/
 	/**
 	 * Return attack power based on MouseEvent click in 4 option menu.
 	 */
@@ -91,14 +74,6 @@ public class Player extends Entity
 	public void setInCombatMenu(boolean bool)
 	{
 		isInCombatMenu = bool;
-	}
-	/**
-	 * Sets isMagicAttack to the passed value
-	 * @param bool: the boolean value that isMagicAttack is set to
-	 */
-	public void setMagicAttack(boolean bool)
-	{
-		isMagicAttack = bool;
 	}
 	/**
 	 * Get mana

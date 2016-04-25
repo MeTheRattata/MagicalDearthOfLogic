@@ -169,7 +169,12 @@ public class Main extends JPanel
 					if(generator.nextDouble() > 0.5)
 						enemies[i].doDamage(player);
 					else
+					{
+						System.out.println(companion.getName());
 						enemies[i].doDamage(companion);
+						System.out.println(companion.getName());
+					}
+						
 				}
 				if(player.getHealth() <= 0 || companion.getHealth() <= 0)
 					gameOver = true;

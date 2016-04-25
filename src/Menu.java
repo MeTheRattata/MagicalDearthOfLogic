@@ -37,6 +37,18 @@ public class Menu
 		options = newOptions;
 		labels = newLabels;
 	}
+	public Menu(int startX, int startY, int endX, int endY, String[] newOptions, String[] newLabels) 
+	{
+		options = newOptions;
+		labels = newLabels;
+		int width = endX - startX;
+		int height = endY - startY;
+		//Sets boundaries of menu to the square selected divided by 4
+		bounds = new double[][]{{startX, startY, startX + width / 2, startY + height / 2}, 
+								{startX + width / 2, startY, startX + width, startY + height / 2},
+								{startX, startY + height / 2, startX + width / 2, startY + height}, 
+								{startX + width / 2, startY + height / 2, startX + width, startY + height}};
+	}
 	
 	/**
 	 * Determines which menu option was selected and returns its corresponding integer
@@ -72,6 +84,15 @@ public class Menu
 	{
 		return (e.getX() > bounds[recLoc][0] && e.getY() > bounds[recLoc][1] && 
 				e.getX() < bounds[recLoc][2] && e.getY() < bounds[recLoc][3]);
+	}
+	
+	/**
+	 * Change menu boundaries
+	 * @param newBounds: new boundaries array
+	 */
+	public void setBounds(double[][] newBounds)
+	{
+		bounds = newBounds;
 	}
 	
 	/**

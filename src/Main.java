@@ -19,6 +19,9 @@ import javax.swing.JPanel;
 public class Main extends JPanel
 {
 	//0 = pos of menu string 1, etc, etc, etc
+	private final static int WIDTH = 672;
+	private final static int HEIGHT = 480;
+	
 	private int[] xMenuPos = {84, 396, 84, 396};
 	private int[] yMenuPos = {120, 120, 360, 360};
 	private int[] xEntityPos = {32, 160, 512, 384};
@@ -59,7 +62,7 @@ public class Main extends JPanel
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		Main panel = new Main();
-		frame.getContentPane().setPreferredSize(new Dimension(672, 480));
+		frame.getContentPane().setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		frame.getContentPane().add(panel);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
@@ -196,7 +199,7 @@ public class Main extends JPanel
 		
 		if(gameOver)
 		{
-			Rectangle rect = new Rectangle(0,0,672,480);
+			Rectangle rect = new Rectangle(0,0,WIDTH,HEIGHT);
 			drawCenteredString(g, "Game Over", rect, font);
 		}
 		else if(!outOfInitialMenus)
@@ -210,7 +213,7 @@ public class Main extends JPanel
 		else
 		{	
 			//draw background
-			g.drawImage(background, 0, 0, 672, 480, null);
+			g.drawImage(background, 0, 0, WIDTH, HEIGHT, null);
 			g.drawString("Kills: " + kills, 32, 32);
 			//Draw player and companion
 			player.paintComponent(g);
@@ -238,7 +241,6 @@ public class Main extends JPanel
 				for(int j = 2; j < 4; j++)
 					g.drawImage(selectionBorder, xEntityPos[j], yEntityPos[j], 128, 128, null);
 			}
-			
 		}
 	}
 	/**

@@ -9,7 +9,6 @@ public class Player extends Entity
 	private boolean isMagicAttack = false;
 	private String type;
 	
-	
 	/**
 	 * Constructor for player class
 	 * @param xPos

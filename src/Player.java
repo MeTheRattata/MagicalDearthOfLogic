@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
 
 public class Player extends Entity
 {
@@ -9,6 +10,7 @@ public class Player extends Entity
 	private boolean isMagicAttack = false;
 	private String type;
 	private Menu moveSelect;
+	private boolean isInCombatMenu = false;
 	
 	/**
 	 * Constructor for player class
@@ -44,8 +46,9 @@ public class Player extends Entity
 	}
 	/**
 	 * Return attack power. If next attack is to be a magic attack, doubles attack power and resets magic attack boolean.
+	 * @deprecated
 	 */
-	public int getAttack()
+	/*public int getAttack()
 	{
 		if(isMagicAttack)
 		{
@@ -54,6 +57,40 @@ public class Player extends Entity
 			return super.getAttack() * 2;
 		}
 		return super.getAttack();
+	}*/
+	/**
+	 * Return attack power based on MouseEvent click in 4 option menu.
+	 */
+	public int getAttack(MouseEvent e)
+	{
+		int attackSelected = moveSelect.intSelected(e);
+		int attackPower = -1;
+		switch(attackSelected)
+		{
+		//Strike
+		case 0: attackPower = 20;
+		//Magic Attack
+		case 1: attackPower = 40;
+		//Team Heal
+		case 2:
+			//TODO: heal all shits here
+			attackPower = 0;
+		//One Target Heal
+		case 3: 
+			//TODO: Heal one shit here
+			attackPower = 0;
+		}
+		isInCombatMenu = false;
+		//If all else fails
+		return attackPower;
+	}
+	/**
+	 * Sets isInCombatMenu to the passed boolean
+	 * @param bool: boolean that isInCombatMenu is set to
+	 */
+	public void setInCombatMenu(boolean bool)
+	{
+		isInCombatMenu = bool;
 	}
 	/**
 	 * Sets isMagicAttack to the passed value
@@ -107,5 +144,13 @@ public class Player extends Entity
 		g.setColor(Color.BLUE);
 		double manaBarLength =  ((double) mana / maxMana) * 128;
 		g.fillRect((int)getX(), (int)getY() + 140, (int) manaBarLength, 8);
+	}
+	/**
+	 * Paint the players move select menu
+	 * @param g: the graphics object to paint with
+	 */
+	public void paintMoveSelect(Graphics g)
+	{
+		moveSelect.paintComponent(g);
 	}
 }   

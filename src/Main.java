@@ -107,15 +107,11 @@ public class Main extends JPanel
 				}
 				else if(menuNum == 4)
 				{
-					//TODO: Change Menu to be able to accept booleans as options for 2 slot menus
-					int intSelected = isMagicSelect.intSelected(e);
-					if(intSelected == 0)
+					player.setInCombatMenu(true);
+					int playerAttackPower = player.getAttack(e);
+					if(playerAttackPower != -1)
 					{
-						player.setMagicAttack(true);
-						menuNum = 2;
-					}
-					else if(intSelected == 1)
-					{
+						player.setAttackPower(playerAttackPower);
 						menuNum = 2;
 					}
 				}
@@ -220,8 +216,8 @@ public class Main extends JPanel
 				enemies[i].paintComponent(g);
 				
 			if(menuNum == 4)
-				isMagicSelect.paintComponent(g);
-			else if(menuNum == 2) //Enemy select for attacks
+				player.paintMoveSelect(g);
+			if(menuNum == 2) //Enemy select for attacks
 			{
 				g.setColor(Color.BLACK);
 				g.setFont(font);

@@ -83,6 +83,7 @@ public class Entity
 	{
 		health -= damage;
 		damageFrames += 30;
+		//TODO: There's a problem with this in companion, fix it
 		setName(name + "Dmg");
 		if(health <= 0)
 			return true;
@@ -111,7 +112,7 @@ public class Entity
 	 * Set attack power
 	 * @param attack: new attack power
 	 */
-	public void setAttack(int attack)
+	public void setAttackPower(int attack)
 	{
 		attackPower = attack;
 	}

@@ -18,18 +18,6 @@ public class FourOptionMenu extends Menu
 		options = newOptions;
 		labels = newLabels;
 	}
-	/**
-	 * Determines which menu option was selected and returns its corresponding string
-	 * @param e: MouseClick event with coordinates
-	 * @return the string corresponding to which menu option was clicked
-	 */
-	public String optionSelected(MouseEvent e)
-	{
-		for(int i = 0; i < options.length; i++)
-			if(isWithinRectangle(e, i))
-				return options[i];
-		return "";
-	}
 	public FourOptionMenu(int startX, int startY, int endX, int endY, String[] newOptions, String[] newLabels) 
 	{
 		super(new double[][]{});
@@ -42,6 +30,15 @@ public class FourOptionMenu extends Menu
 								{startX + width / 2, startY, startX + width, startY + height / 2},
 								{startX, startY + height / 2, startX + width / 2, startY + height}, 
 								{startX + width / 2, startY + height / 2, startX + width, startY + height}};
+	}
+	/**
+	 * Determines which menu option was selected and returns its corresponding string
+	 * @param e: MouseClick event with coordinates
+	 * @return the string corresponding to which menu option was clicked
+	 */
+	public String optionSelected(MouseEvent e)
+	{
+		return options[intSelected(e)];
 	}
 	/**
 	 * Paint method for a Menu object

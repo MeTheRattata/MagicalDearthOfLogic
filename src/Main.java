@@ -41,14 +41,14 @@ public class Main extends JPanel
 	int kills = 0;
 	//Boundaries for menus that take up the entire screen, used to create Menu objects for such menus
 	double[][] fullScreenMenuBounds = new double[][]{{0, 0, 336, 240}, {336, 0, 672, 240}, {0, 240, 336, 480}, {336, 240, 672, 480}};
-	Menu playerSelect = new Menu(0, 0, WIDTH, HEIGHT, new String[]{"Life", "Light", "Rock", "Water"}, 
+	FourOptionMenu playerSelect = new FourOptionMenu(0, 0, WIDTH, HEIGHT, new String[]{"Life", "Light", "Rock", "Water"}, 
 			new String[] {"Life Wizard", "Light Wizard", "Rock Wizard", "Water Wizard"});
-	Menu companionSelect = new Menu(0, 0, WIDTH, HEIGHT, new String[]{"cat", "dog", "lizard", "emu"}, 
+	FourOptionMenu companionSelect = new FourOptionMenu(0, 0, WIDTH, HEIGHT, new String[]{"cat", "dog", "lizard", "emu"}, 
 			new String[]{"Cat", "Dog", "Lizard", "Emu"});
-	Menu isMagicSelect = new Menu(new double[][] {{0, 352, 336, 480}, {336, 352, 672, 480}}, 
-			new String[]{"true", "false"}, new String[]{"Magic Attack", "Melee Attack"});
-	Menu enemySelected = new Menu(new double[][]{{xEntityPos[2], yEntityPos[2], xEntityPos[2] + 128, yEntityPos[2] + 128},
-		{xEntityPos[3], yEntityPos[3], xEntityPos[3] + 128, yEntityPos[3] +128}}, new String[]{"Enemy1", "Enemy2"}, new String[]{"Enemy1", "Enemy2"});
+	
+	//TODO: Change to a TargetSelectMenu
+	//Menu enemySelected = new Menu(new double[][]{{xEntityPos[2], yEntityPos[2], xEntityPos[2] + 128, yEntityPos[2] + 128},
+	//	{xEntityPos[3], yEntityPos[3], xEntityPos[3] + 128, yEntityPos[3] +128}}, new String[]{"Enemy1", "Enemy2"}, new String[]{"Enemy1", "Enemy2"});
 	BufferedImage selectionBorder, background;
 	boolean gameOver = false;
 	

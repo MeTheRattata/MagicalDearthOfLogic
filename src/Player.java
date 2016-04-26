@@ -7,7 +7,7 @@ public class Player extends Entity
 	private int mana;
 	private int maxMana;
 	private String type;
-	private Menu moveSelect;
+	private FourOptionMenu moveSelect;
 	private boolean isInCombatMenu = false;
 	//target for a healing spell, if it is -1 then the heal is an all heal, if not, target is companion
 	private int healTarget = -1; 
@@ -27,7 +27,7 @@ public class Player extends Entity
 		mana = 50;
 		maxMana = mana;
 		//Strings for options useless here, since intSelected will be used to determine attack to use
-		moveSelect = new Menu(0, 352, 672, 480, new String[]{"", "", "", ""}, 
+		moveSelect = new FourOptionMenu(0, 352, 672, 480, new String[]{"", "", "", ""}, 
 							  new String[]{"Strike", type + " Attack", "Team Heal", "Target Heal"});
 	}
 	/**

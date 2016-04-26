@@ -108,10 +108,9 @@ public class Main extends JPanel
 				else if(menuNum == 4)
 				{
 					player.setInCombatMenu(true);
-					int playerAttackPower = player.getAttack(e);
-					if(playerAttackPower != -1)
+					player.setAttackPower(e);
+					if(player.getAttackPower() != -1)
 					{
-						player.setAttackPower(playerAttackPower);
 						menuNum = 2;
 					}
 				}
@@ -146,7 +145,7 @@ public class Main extends JPanel
 			if(player.getTarget() != -1 && companion.getTarget() != -1)
 			{
 				//Do damage to enemy targeted by player
-				if(player.doDamage(enemies[player.getTarget()]))
+				if(enemies[player.getTarget()].takeDamage(player.getAttackPower()))
 				{
 					kills++;
 					player.refillMana();
@@ -154,7 +153,7 @@ public class Main extends JPanel
 				}
 				
 				//Do damage to enemy targeted by companion
-				if(companion.doDamage(enemies[companion.getTarget()]))
+				if(enemies[companion.getTarget()].takeDamage(companion.getAttackPower()))
 				{
 					kills++;
 					player.refillMana();
@@ -167,15 +166,14 @@ public class Main extends JPanel
 				for(int i = 0; i < 2; i++)
 				{
 					if(generator.nextDouble() > 0.5)
-						enemies[i].doDamage(player);
+						player.takeDamage(enemies[i].getAttackPower());
 					else
-						enemies[i].doDamage(companion);
+						companion.takeDamage(enemies[i].getAttackPower());
 						
 				}
 				if(player.getHealth() <= 0 || companion.getHealth() <= 0)
 					gameOver = true;
 			}
-			
 			menuNum = 4; //Go back into selecting wizards attack
 			gameMenuNum = 0; //Go back to player attacking
 		}

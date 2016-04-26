@@ -90,20 +90,10 @@ public class Entity
 			return false;
 	}
 	/**
-	 * Do damage: does damage to the entity passed
-	 * @param damage: amount of damage to be done
-	 * @param entity: the entity damage is being done to
-	 * @return: if the entity is alive or not
-	 */
-	public boolean doDamage(Entity entity)
-	{
-		return entity.takeDamage(getAttack());
-	}
-	/**
 	 * Get attack
 	 * @return attack power
 	 */
-	public int getAttack()
+	public int getAttackPower()
 	{
 		return attackPower;
 	}

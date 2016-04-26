@@ -44,28 +44,32 @@ public class Player extends Entity
 	/**
 	 * Return attack power based on MouseEvent click in 4 option menu.
 	 */
-	public int getAttack(MouseEvent e)
+	public void setAttackPower(MouseEvent e)
 	{
 		int attackSelected = moveSelect.intSelected(e);
-		int attackPower = -1;
+		setAttackPower(100);
 		switch(attackSelected)
 		{
 		//Strike
-		case 0: attackPower = 20;
+		case 0: 
+			setAttackPower(20);
+			break;
 		//Magic Attack
-		case 1: attackPower = 40;
+		case 1: 
+			setAttackPower(40);
+			break;
 		//Team Heal
 		case 2:
 			//TODO: heal all shits here
-			attackPower = 0;
+			setAttackPower(0);
+			break;
 		//One Target Heal
 		case 3: 
 			//TODO: Heal one shit here
-			attackPower = 0;
+			setAttackPower(0);
+			break;
 		}
 		isInCombatMenu = false;
-		//If all else fails
-		return attackPower;
 	}
 	/**
 	 * Sets isInCombatMenu to the passed boolean

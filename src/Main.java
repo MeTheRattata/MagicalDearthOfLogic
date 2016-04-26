@@ -144,6 +144,8 @@ public class Main extends JPanel
 			//do damage to enemies with both player and companion
 			if(player.getTarget() != -1 && companion.getTarget() != -1)
 			{
+				//TODO: Don't ask for a target for a team heal, ask for a target including only player and companion
+				//for a target heal
 				if(player.getAttackPower() == 0)
 				{
 					//Team Heal

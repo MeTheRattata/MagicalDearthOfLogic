@@ -58,7 +58,10 @@ public class Menu
 								{startX, startY + height / 2, startX + width / 2, startY + height}, 
 								{startX + width / 2, startY + height / 2, startX + width, startY + height}};
 	}
-	
+	public void setBounds(double[][] newBounds)
+	{
+		bounds = newBounds;
+	}
 	/**
 	 * Determines which menu option was selected and returns its corresponding integer
 	 * @param e: MouseClick event with coordinates

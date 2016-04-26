@@ -51,6 +51,11 @@ public class TargetSelectMenu extends Menu
 			return intSelected(e) + 2;
 		return intSelected(e);
 	}
+	public boolean isWithinRectangle(MouseEvent e, int recLoc)
+	{
+		return (e.getX() > bounds[recLoc][0] && e.getY() > bounds[recLoc][1] && 
+				e.getX() < bounds[recLoc][0] + 128 && e.getY() < bounds[recLoc][1] + 128);
+	}
 	public void paintComponent(Graphics g)
 	{
 		//Paints red selection borders around entities in the selection menu

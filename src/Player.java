@@ -49,7 +49,7 @@ public class Player extends Entity
 	public void setAttackPower(MouseEvent e)
 	{
 		int attackSelected = moveSelect.intSelected(e);
-		setAttackPower(100);
+		setAttackPower(-1);
 		switch(attackSelected)
 		{
 		//Strike

@@ -8,6 +8,7 @@ public class Player extends Entity
 	private int maxMana;
 	private String type;
 	private FourOptionMenu moveSelect;
+	int manaUsed;
 	private boolean isInCombatMenu = false;
 	//target for a healing spell, if it is -1 then the heal is an all heal, if not, target is companion
 	private int healTarget = -1; 
@@ -26,6 +27,7 @@ public class Player extends Entity
 		type = newType;
 		mana = 50;
 		maxMana = mana;
+		manaUsed = 0;
 		//Strings for options useless here, since intSelected will be used to determine attack to use
 		moveSelect = new FourOptionMenu(0, 352, 672, 480, new String[]{"", "", "", ""}, 
 							  new String[]{"Strike", type + " Attack", "Team Heal", "Target Heal"});
@@ -43,11 +45,17 @@ public class Player extends Entity
 		else
 			return false;
 	}
+	public int getAttackPower()
+	{
+		mana -= manaUsed;
+		return super.getAttackPower();
+	}
 	/**
 	 * Return attack power based on MouseEvent click in 4 option menu.
 	 */
 	public void setAttackPower(MouseEvent e)
 	{
+		//TODO: add a way to decrement mana based on if the attack uses mana
 		int attackSelected = moveSelect.intSelected(e);
 		setAttackPower(-1);
 		switch(attackSelected)
@@ -55,20 +63,24 @@ public class Player extends Entity
 		//Strike
 		case 0: 
 			setAttackPower(20);
+			manaUsed = 0;
 			break;
 		//Magic Attack
 		case 1: 
 			setAttackPower(40);
+			manaUsed = 30;
 			break;
 		//Team Heal
 		case 2:
 			setAttackPower(0);
+			manaUsed = 20;
 			//no heal target, so this is a team heal
 			healTarget = -1;
 			break;
 		//One Target Heal
 		case 3: 
 			setAttackPower(0);
+			manaUsed = 20;
 			//TODO: make healing selectable between player and companion
 			healTarget = 1; //Target = companion
 			break;

@@ -9,6 +9,8 @@ public class Player extends Entity
 	private String type;
 	private Menu moveSelect;
 	private boolean isInCombatMenu = false;
+	//target for a healing spell, if it is -1 then the heal is an all heal, if not, target is companion
+	private int healTarget = -1; 
 	
 	/**
 	 * Constructor for player class
@@ -60,13 +62,15 @@ public class Player extends Entity
 			break;
 		//Team Heal
 		case 2:
-			//TODO: heal all shits here
 			setAttackPower(0);
+			//no heal target, so this is a team heal
+			healTarget = -1;
 			break;
 		//One Target Heal
 		case 3: 
-			//TODO: Heal one shit here
 			setAttackPower(0);
+			//TODO: make healing selectable between player and companion
+			healTarget = 1; //Target = companion
 			break;
 		}
 		isInCombatMenu = false;
@@ -93,6 +97,14 @@ public class Player extends Entity
 	public void refillMana()
 	{
 		mana = maxMana;
+	}
+	/**
+	 * Get Heal Target
+	 * @return: healTarget
+	 */
+	public int getHealTarget()
+	{
+		return healTarget;
 	}
 	/**
 	 * Paints the sprite associated with a Player object onto its current coordinates, including health and mana bar

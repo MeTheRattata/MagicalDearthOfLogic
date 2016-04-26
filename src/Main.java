@@ -144,8 +144,23 @@ public class Main extends JPanel
 			//do damage to enemies with both player and companion
 			if(player.getTarget() != -1 && companion.getTarget() != -1)
 			{
+				if(player.getAttackPower() == 0)
+				{
+					//Team Heal
+					if(player.getHealTarget() == -1)
+					{
+						player.setHealth(player.getHealth() + 20);
+						companion.setHealth(companion.getHealth() + 20);
+					}
+					//If the players heal target is the player
+					else if(player.getHealTarget() == 0)
+						player.setHealth(player.getHealth() + 40);
+					//If the players heal target is the companion
+					else if(player.getHealTarget() == 1)
+						companion.setHealth(companion.getHealth() + 40);
+				}
 				//Do damage to enemy targeted by player
-				if(enemies[player.getTarget()].takeDamage(player.getAttackPower()))
+				else if(enemies[player.getTarget()].takeDamage(player.getAttackPower()))
 				{
 					kills++;
 					player.refillMana();

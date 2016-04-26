@@ -45,10 +45,7 @@ public class Main extends JPanel
 			new String[] {"Life Wizard", "Light Wizard", "Rock Wizard", "Water Wizard"});
 	FourOptionMenu companionSelect = new FourOptionMenu(0, 0, WIDTH, HEIGHT, new String[]{"cat", "dog", "lizard", "emu"}, 
 			new String[]{"Cat", "Dog", "Lizard", "Emu"});
-	
-	//TODO: Change to a TargetSelectMenu
-	//Menu enemySelected = new Menu(new double[][]{{xEntityPos[2], yEntityPos[2], xEntityPos[2] + 128, yEntityPos[2] + 128},
-	//	{xEntityPos[3], yEntityPos[3], xEntityPos[3] + 128, yEntityPos[3] +128}}, new String[]{"Enemy1", "Enemy2"}, new String[]{"Enemy1", "Enemy2"});
+	TargetSelectMenu enemySelected = new TargetSelectMenu("Enemies");
 	BufferedImage selectionBorder, background;
 	boolean gameOver = false;
 	

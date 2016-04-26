@@ -61,10 +61,6 @@ public class Slime extends Entity
 			restOfName += "Medium";
 		else if(size == 3)
 			restOfName += "Large";
-		if(getDamageFrames() > 0)
-		{
-			restOfName += "Dmg";
-		}
 		else if(getDamageFrames() == 0)
 		{
 			if((((double) getHealth() / (double) getMaxHealth()) * 100) > 75) //health is above 75%

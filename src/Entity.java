@@ -83,11 +83,7 @@ public class Entity
 	{
 		health -= damage;
 		damageFrames += 30;
-		//TODO: There's a problem with this in Companion or Slime, fix it
-		//It only happens when both player and companion have a slime selected
-		//OH THERES 2 DMGS AT THE END OF THE NAME 
-		name.replaceAll("Dmg", "");
-		setName(name + "Dmg");
+		setName(name.replaceAll("Dmg", "") + "Dmg");
 		if(health <= 0)
 			return true;
 		else

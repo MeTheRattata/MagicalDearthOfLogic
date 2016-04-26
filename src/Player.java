@@ -86,9 +86,9 @@ public class Player extends Entity
 		//TODO: prevent healing if mana is below required amount
 		if(mana <= manaUsed)
 			setAttackPower(0);
-		mana -= manaUsed;
-		if(mana < 0)
-			mana = 0;
+		else
+			mana -= manaUsed;
+		
 		isInCombatMenu = false;
 	}
 	/**

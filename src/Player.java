@@ -47,7 +47,6 @@ public class Player extends Entity
 	}
 	public int getAttackPower()
 	{
-		mana -= manaUsed;
 		return super.getAttackPower();
 	}
 	/**
@@ -55,7 +54,6 @@ public class Player extends Entity
 	 */
 	public void setAttackPower(MouseEvent e)
 	{
-		//TODO: add a way to decrement mana based on if the attack uses mana
 		int attackSelected = moveSelect.intSelected(e);
 		setAttackPower(-1);
 		switch(attackSelected)
@@ -85,6 +83,12 @@ public class Player extends Entity
 			healTarget = 1; //Target = companion
 			break;
 		}
+		//TODO: prevent healing if mana is below required amount
+		if(mana <= manaUsed)
+			setAttackPower(0);
+		mana -= manaUsed;
+		if(mana < 0)
+			mana = 0;
 		isInCombatMenu = false;
 	}
 	/**

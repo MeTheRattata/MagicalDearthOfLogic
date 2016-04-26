@@ -120,6 +120,8 @@ public class Entity
 	public void setHealth(int newHealth)
 	{
 		health = newHealth;
+		if(health > maxHealth)
+			health = maxHealth;
 	}
 	/**
 	 * Get max health

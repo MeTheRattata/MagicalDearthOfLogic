@@ -14,11 +14,19 @@ public class Slime extends Entity
 	{
 		super(xPos, yPos, assignHealth(newSize), "slime/slimeLarge100", 0);
 		size = newSize;
-		setAttackPower(getPower());
-		setName();
+		resize = (int) (16 * Math.pow(2, size));
 		//If slimes are smaller than 32 by 32, puts them in the center of the 32 by 32 square where they are
 		//Also updates size the sprite is resized to to keep proportions consistent
-		resize = (int) (16 * Math.pow(2, size));
+		setName();
+		switch (size)
+		{
+			case 1:
+				setAttackPower(5);
+			case 2:
+				setAttackPower(10);
+			case 3:
+				setAttackPower(15);	
+		}
 	}
 	/**
 	 * Assign max health based on size
@@ -33,20 +41,6 @@ public class Slime extends Entity
 			return 75;
 		else if(size == 3)
 			return 100;
-		return -1;
-	}
-	/**
-	 * Get Power: return AttackPower based on slime size
-	 * @return: attack power based on size
-	 */
-	private int getPower()
-	{
-		if(size == 1)
-			return 5;
-		else if(size == 2)
-			return 10;
-		else if(size == 3)
-			return 15;
 		return -1;
 	}
 	/**

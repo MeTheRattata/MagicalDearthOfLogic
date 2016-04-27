@@ -8,6 +8,7 @@ public class Player extends Entity
 	private int maxMana;
 	private String type;
 	private FourOptionMenu moveSelect;
+	int manaUsed;
 	private boolean isInCombatMenu = false;
 	//target for a healing spell, if it is -1 then the heal is an all heal, if not, target is companion
 	private int healTarget = -1;
@@ -27,6 +28,7 @@ public class Player extends Entity
 		type = newType;
 		mana = 50;
 		maxMana = mana;
+		manaUsed = 0;
 		//Strings for options useless here, since intSelected will be used to determine attack to use
 		moveSelect = new FourOptionMenu(0, 352, 672, 480, new String[]{"", "", "", ""}, 
 							  new String[]{"Strike", type + " Attack", "Team Heal", "Target Heal"});
@@ -45,6 +47,10 @@ public class Player extends Entity
 		else
 			return false;
 	}
+	public int getAttackPower()
+	{
+		return super.getAttackPower();
+	}
 	/**
 	 * Return attack power based on MouseEvent click in 4 option menu.
 	 */
@@ -57,9 +63,11 @@ public class Player extends Entity
 		//Strike
 		case 0: 
 			setAttackPower(20);
+			manaUsed = 0;
 			break;
 		//Magic Attack
 		case 1: 
+<<<<<<< HEAD
 			if(mana >= 15)
 			{
 				setAttackPower(40);
@@ -67,22 +75,40 @@ public class Player extends Entity
 			}
 			else
 				setAttackPower(0);
+=======
+			setAttackPower(40);
+			manaUsed = 30;
+>>>>>>> ec604480ca11e7ef35e2ad53528e5dc2c34ab338
 			break;
 		//Team Heal
 		case 2:
 			setAttackPower(0);
+<<<<<<< HEAD
 			mana -= 15;
+=======
+			manaUsed = 20;
+>>>>>>> ec604480ca11e7ef35e2ad53528e5dc2c34ab338
 			//no heal target, so this is a team heal
 			healTarget = -1;
 			break;
 		//One Target Heal
 		case 3: 
 			setAttackPower(0);
+<<<<<<< HEAD
 			mana -= 15;
+=======
+			manaUsed = 20;
+>>>>>>> ec604480ca11e7ef35e2ad53528e5dc2c34ab338
 			//TODO: make healing selectable between player and companion
 			healTarget = 1; //Target = companion
 			break;
 		}
+		//TODO: prevent healing if mana is below required amount
+		if(mana <= manaUsed)
+			setAttackPower(0);
+		else
+			mana -= manaUsed;
+		
 		isInCombatMenu = false;
 	}
 	/**
@@ -116,6 +142,24 @@ public class Player extends Entity
 	{
 		return healTarget;
 	}
+	/**
+	 * Activate entity
+	 */
+	public void activate() {
+		super.activate();
+		moveSelect.activate();
+	}	
+	/**
+	 * Deactivate entity
+	 */
+	public void deActivate() {
+		super.deActivate();
+		moveSelect.deActivate();
+	}
+	/**
+	 * Return if the entity is active or not
+	 * @return: boolean value active
+	 */
 	/**
 	 * Paints the sprite associated with a Player object onto its current coordinates, including health and mana bar
 	 * @param g: the graphics object on which to paint the sprite on

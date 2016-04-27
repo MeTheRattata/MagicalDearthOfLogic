@@ -67,38 +67,20 @@ public class Player extends Entity
 			break;
 		//Magic Attack
 		case 1: 
-<<<<<<< HEAD
-			if(mana >= 15)
-			{
-				setAttackPower(40);
-				mana -= 15;
-			}
-			else
-				setAttackPower(0);
-=======
 			setAttackPower(40);
 			manaUsed = 30;
->>>>>>> ec604480ca11e7ef35e2ad53528e5dc2c34ab338
 			break;
 		//Team Heal
 		case 2:
 			setAttackPower(0);
-<<<<<<< HEAD
-			mana -= 15;
-=======
 			manaUsed = 20;
->>>>>>> ec604480ca11e7ef35e2ad53528e5dc2c34ab338
 			//no heal target, so this is a team heal
 			healTarget = -1;
 			break;
 		//One Target Heal
 		case 3: 
 			setAttackPower(0);
-<<<<<<< HEAD
-			mana -= 15;
-=======
 			manaUsed = 20;
->>>>>>> ec604480ca11e7ef35e2ad53528e5dc2c34ab338
 			//TODO: make healing selectable between player and companion
 			healTarget = 1; //Target = companion
 			break;

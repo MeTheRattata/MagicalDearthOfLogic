@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
  *
  * Used to create subclasses representing objects that have a position, health, attack power, a name and a BufferedImage.
  */
-public class Entity implements Activateable
+public class Entity
 {
 	private double x;
 	private double y;

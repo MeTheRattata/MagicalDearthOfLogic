@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
  * A class that represents a menu. Stores the menu options in an array of strings
  * and the menu button boundaries in an array of integers.
  */
-public class Menu implements Activateable
+public class Menu
 {
 	//Array that stores 2 opposite corners of the menu
 	//Corresponds with array of menu options: texts[0] is the text for the button 

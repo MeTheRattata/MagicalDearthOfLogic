@@ -48,6 +48,7 @@ public class Slime extends Entity
 	 */
 	private void setName()
 	{
+		//TODO: Fix health percentages not working properly
 		String restOfName = "slime/slime";
 		if(size == 1)
 			restOfName += "Small";

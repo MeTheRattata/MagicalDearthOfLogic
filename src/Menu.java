@@ -21,16 +21,14 @@ public class Menu implements Activateable
 	 * @param newBounds: array that stores the four corners of the square that makes up the menu button
 	 * @param newTexts: array of Strings to be printed as the menu option labels
 	 */
-	public Menu(double[][] newBounds)
-	{
+	public Menu(double[][] newBounds) {
 		bounds = newBounds;
 	}
 	/**
 	 * Set menu boundaries
 	 * @param newBounds: new menu boundaries 
 	 */
-	public void setBounds(double[][] newBounds)
-	{
+	public void setBounds(double[][] newBounds) {
 		bounds = newBounds;
 	}
 	/**

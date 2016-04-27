@@ -36,8 +36,7 @@ public class FourOptionMenu extends Menu
 	 * @param e: MouseClick event with coordinates
 	 * @return the string corresponding to which menu option was clicked
 	 */
-	public String optionSelected(MouseEvent e)
-	{
+	public String optionSelected(MouseEvent e) {
 		return options[intSelected(e)];
 	}
 	/**

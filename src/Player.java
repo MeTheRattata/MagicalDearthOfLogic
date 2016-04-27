@@ -13,6 +13,7 @@ public class Player extends Entity implements Activateable
 	//target for a healing spell, if it is -1 then the heal is an all heal, if not, target is companion
 	private int healTarget = -1;
 	TargetSelectMenu healSelect;
+	TargetSelectMenu combatSelect;
 	
 	/**
 	 * Constructor for player class
@@ -47,8 +48,7 @@ public class Player extends Entity implements Activateable
 		else
 			return false;
 	}
-	public int getAttackPower()
-	{
+	public int getAttackPower() {
 		return super.getAttackPower();
 	}
 	/**
@@ -97,31 +97,31 @@ public class Player extends Entity implements Activateable
 	 * Sets isInCombatMenu to the passed boolean
 	 * @param bool: boolean that isInCombatMenu is set to
 	 */
-	public void setInCombatMenu(boolean bool)
-	{
+	public void setInCombatMenu(boolean bool) {
 		isInCombatMenu = bool;
 	}
 	/**
 	 * Get mana
 	 * @return current amount of mana
 	 */
-	public int getMana() 
-	{
+	public int getMana() {
 		return mana;
 	}
 	/**
 	 * Refills mana back to maximum amount.
 	 */
-	public void refillMana()
-	{
+	public void refillMana() {
 		mana = maxMana;
+	}
+	//TODO: Figure out how to fangle this with activating and deactivating all de menus
+	public void setHealTarget(MouseEvent e) {
+		healTarget = healSelect.intSelected(e);
 	}
 	/**
 	 * Get Heal Target
 	 * @return: healTarget
 	 */
-	public int getHealTarget()
-	{
+	public int getHealTarget() {
 		return healTarget;
 	}
 	/**
@@ -136,7 +136,6 @@ public class Player extends Entity implements Activateable
 	 */
 	public void deActivate() {
 		super.deActivate();
-		moveSelect.deActivate();
 	}
 	/**
 	 * Paints the sprite associated with a Player object onto its current coordinates, including health and mana bar

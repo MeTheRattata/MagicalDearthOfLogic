@@ -53,16 +53,14 @@ public class Entity implements Activateable
 	 * Get x
 	 * @return x coordinate
 	 */
-	public double getX()
-	{
+	public double getX() {
 		return x;
 	}
 	/**
 	 * Get y
 	 * @return y coordinate
 	 */
-	public double getY()
-	{
+	public double getY() {
 		return y;
 	}
 	/**
@@ -70,8 +68,7 @@ public class Entity implements Activateable
 	 * @param newX: new x coordinate
 	 * @param newY: new y coordinate
 	 */
-	public void updatePosition(double newX, double newY)
-	{
+	public void updatePosition(double newX, double newY) {
 		x = newX;
 		y = newY;
 	}
@@ -94,24 +91,21 @@ public class Entity implements Activateable
 	 * Get attack
 	 * @return attack power
 	 */
-	public int getAttackPower()
-	{
+	public int getAttackPower() {
 		return attackPower;
 	}
 	/**
 	 * Set attack power
 	 * @param attack: new attack power
 	 */
-	public void setAttackPower(int attack)
-	{
+	public void setAttackPower(int attack) {
 		attackPower = attack;
 	}
 	/**
 	 * Get health
 	 * @return return entity's current health
 	 */
-	public int getHealth()
-	{
+	public int getHealth() {
 		return health;
 	}
 	/**
@@ -128,16 +122,14 @@ public class Entity implements Activateable
 	 * Get max health
 	 * @return maxHealth
 	 */
-	public int getMaxHealth()
-	{
+	public int getMaxHealth() {
 		return maxHealth;
 	}
 	/**
 	 * Sets name of entity and updates its BufferedImage
 	 * @param newName: new name
 	 */
-	public void setName(String newName)
-	{
+	public void setName(String newName) {
 		name = newName;
 		updateImage();
 	}
@@ -145,55 +137,48 @@ public class Entity implements Activateable
 	 * Return entity name
 	 * @return name
 	 */
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 	/**
 	 * Returns remaining damage frame number.
 	 * @return damageFrames
 	 */
-	public int getDamageFrames()
-	{
+	public int getDamageFrames() {
 		return damageFrames;
 	}
 	/**
 	 * Set damage frames to newDamageFrames
 	 * @param newDamageFrames
 	 */
-	public void setDamageFrames(int newDamageFrames)
-	{
+	public void setDamageFrames(int newDamageFrames) {
 		damageFrames = newDamageFrames;
 	}
 	/**
 	 * Decrements damage frame counter.
 	 */
-	public void decrementDamageFrames()
-	{
+	public void decrementDamageFrames() {
 		damageFrames--;
 	}
 	/**
 	 * Set the entity's target 
 	 * @param newTarget: entity's new target
 	 */
-	public void setTarget(int newTarget)
-	{
+	public void setTarget(int newTarget) {
 		target = newTarget;
 	}
 	/**
 	 * Return the entity's current target
 	 * @return: target
 	 */
-	public int getTarget()
-	{
+	public int getTarget() {
 		return target;
 	}
 	/**
 	 * Get image
 	 * @return entity's BufferedImage
 	 */
-	public BufferedImage getImage()
-	{
+	public BufferedImage getImage() {
 		return image;
 	}
 	/**

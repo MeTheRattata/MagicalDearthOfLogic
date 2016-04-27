@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
-public class Player extends Entity
+public class Player extends Entity implements Activateable
 {
 	private int mana;
 	private int maxMana;
@@ -138,10 +138,6 @@ public class Player extends Entity
 		super.deActivate();
 		moveSelect.deActivate();
 	}
-	/**
-	 * Return if the entity is active or not
-	 * @return: boolean value active
-	 */
 	/**
 	 * Paints the sprite associated with a Player object onto its current coordinates, including health and mana bar
 	 * @param g: the graphics object on which to paint the sprite on

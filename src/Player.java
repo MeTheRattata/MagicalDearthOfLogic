@@ -10,7 +10,8 @@ public class Player extends Entity
 	private FourOptionMenu moveSelect;
 	private boolean isInCombatMenu = false;
 	//target for a healing spell, if it is -1 then the heal is an all heal, if not, target is companion
-	private int healTarget = -1; 
+	private int healTarget = -1;
+	TargetSelectMenu healSelect;
 	
 	/**
 	 * Constructor for player class
@@ -29,6 +30,7 @@ public class Player extends Entity
 		//Strings for options useless here, since intSelected will be used to determine attack to use
 		moveSelect = new FourOptionMenu(0, 352, 672, 480, new String[]{"", "", "", ""}, 
 							  new String[]{"Strike", type + " Attack", "Team Heal", "Target Heal"});
+		healSelect = new TargetSelectMenu("Playable");
 	}
 	/**
 	 * Take damage, add 30 damage frames and change sprite to hurt version
@@ -58,17 +60,25 @@ public class Player extends Entity
 			break;
 		//Magic Attack
 		case 1: 
-			setAttackPower(40);
+			if(mana >= 15)
+			{
+				setAttackPower(40);
+				mana -= 15;
+			}
+			else
+				setAttackPower(0);
 			break;
 		//Team Heal
 		case 2:
 			setAttackPower(0);
+			mana -= 15;
 			//no heal target, so this is a team heal
 			healTarget = -1;
 			break;
 		//One Target Heal
 		case 3: 
 			setAttackPower(0);
+			mana -= 15;
 			//TODO: make healing selectable between player and companion
 			healTarget = 1; //Target = companion
 			break;

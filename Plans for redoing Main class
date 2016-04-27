@@ -1,0 +1,10 @@
+1. Use Activateable interface methods to determine whether an object is active or not.
+   If an object is active, give it the next MouseClick event until it deactivates.
+   Paint an object if its active, don't paint it if its not.
+2. Set up a quick array of "Set up" menus (player select, companion select), activate
+   and deactivate them one by one as you go through them.
+3. Set up an arrayList / other type of list to go through all of the other active and 
+   inactive objects, giving them MouseClick events in turn.
+4. Determine how much MouseClicks each entity needs.
+   Example: a Player has 2 menus, a moveSelect and a targetSelect menu. It needs 2 MouseClicks.
+   However, a Companion only has a targetSelect, so it only needs one MouseClick.

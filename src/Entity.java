@@ -21,7 +21,7 @@ public class Entity implements Activateable
 	private String name; //path of image used as sprite, change to change sprite
 	private BufferedImage image = null;
 	private int damageFrames = 0;
-	private int target = -1;
+	private int attackTarget = -1;
 	private boolean active = true;
 	
 	/**
@@ -164,15 +164,15 @@ public class Entity implements Activateable
 	 * Set the entity's target 
 	 * @param newTarget: entity's new target
 	 */
-	public void setTarget(int newTarget) {
-		target = newTarget;
+	public void setAttackTarget(int newTarget) {
+		attackTarget = newTarget;
 	}
 	/**
 	 * Return the entity's current target
 	 * @return: target
 	 */
-	public int getTarget() {
-		return target;
+	public int getAttackTarget() {
+		return attackTarget;
 	}
 	/**
 	 * Get image

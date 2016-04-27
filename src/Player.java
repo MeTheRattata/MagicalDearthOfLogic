@@ -13,7 +13,7 @@ public class Player extends Entity implements Activateable
 	//target for a healing spell, if it is -1 then the heal is an all heal, if not, target is companion
 	private int healTarget = -1;
 	TargetSelectMenu healSelect;
-	TargetSelectMenu combatSelect;
+	TargetSelectMenu enemySelect;
 	
 	/**
 	 * Constructor for player class
@@ -114,6 +114,19 @@ public class Player extends Entity implements Activateable
 		mana = maxMana;
 	}
 	//TODO: Figure out how to fangle this with activating and deactivating all de menus
+	/**
+	 * Set attack target
+	 * @param e: MouseClick either on an enemy or nowhere
+	 * If nowhere, attackTarget is -1 and this method still waits
+	 */
+	public void setAttackTarget(MouseEvent e) {
+		super.setAttackTarget(enemySelect.intSelected(e));
+	}
+	/**
+	 * Set heal target
+	 * @param e: MouseClick that is possibly on a target.
+	 * If MouseClick is on a target, sets to that targets ID, if not, sets to -1
+	 */
 	public void setHealTarget(MouseEvent e) {
 		healTarget = healSelect.intSelected(e);
 	}

@@ -117,13 +117,13 @@ public class Main extends JPanel
 					//TODO: Change selected mob to target, let the player and companion classes handle it
 					if(gameMenuNum == 0)
 					{
-						player.setTarget(enemySelected.intSelected(e));
+						player.setAttackTarget(enemySelected.intSelected(e));
 						gameMenuNum = 1;
 						playerTurn = false;
 					} 
 					else if(gameMenuNum == 1)
 					{
-						companion.setTarget(enemySelected.intSelected(e));
+						companion.setAttackTarget(enemySelected.intSelected(e));
 						menuNum = 3;
 						past4 = false;
 						playerTurn = true;
@@ -139,7 +139,7 @@ public class Main extends JPanel
 		{
 			//If both the target of the player and the target of the companion are valid
 			//do damage to enemies with both player and companion
-			if(player.getTarget() != -1 && companion.getTarget() != -1)
+			if(player.getAttackTarget() != -1 && companion.getAttackTarget() != -1)
 			{
 				//TODO: Don't ask for a target for a team heal, ask for a target including only player and companion
 				//for a target heal
@@ -159,24 +159,24 @@ public class Main extends JPanel
 						companion.setHealth(companion.getHealth() + 40);
 				}
 				//Do damage to enemy targeted by player
-				else if(enemies[player.getTarget()].takeDamage(player.getAttackPower()))
+				else if(enemies[player.getAttackTarget()].takeDamage(player.getAttackPower()))
 				{
 					kills++;
 					player.refillMana();
-					enemies[player.getTarget()] = new Slime(xEntityPos[player.getTarget() + 2],yEntityPos[player.getTarget() + 2],(int)(Math.random()*3) + 1);
+					enemies[player.getAttackTarget()] = new Slime(xEntityPos[player.getAttackTarget() + 2],yEntityPos[player.getAttackTarget() + 2],(int)(Math.random()*3) + 1);
 				}
 				
 				//Do damage to enemy targeted by companion
-				if(enemies[companion.getTarget()].takeDamage(companion.getAttackPower()))
+				if(enemies[companion.getAttackTarget()].takeDamage(companion.getAttackPower()))
 				{
 					kills++;
 					player.refillMana();
-					enemies[companion.getTarget()] = new Slime(xEntityPos[companion.getTarget() + 2],yEntityPos[companion.getTarget() + 2],(int)(Math.random()*3) + 1);
+					enemies[companion.getAttackTarget()] = new Slime(xEntityPos[companion.getAttackTarget() + 2],yEntityPos[companion.getAttackTarget() + 2],(int)(Math.random()*3) + 1);
 				}
 				
 				Random generator = new Random();
-				player.setTarget(-1);
-				companion.setTarget(-1);
+				player.setAttackTarget(-1);
+				companion.setAttackTarget(-1);
 				for(int i = 0; i < 2; i++)
 				{
 					if(generator.nextDouble() > 0.5)
@@ -238,9 +238,9 @@ public class Main extends JPanel
 				//select with both wizard and companion
 				
 				//Draw menu string for selection
-				if(player.getTarget() == -1)
+				if(player.getAttackTarget() == -1)
 					str = gameMenuTexts[0];
-				else if(companion.getTarget() == -1)
+				else if(companion.getAttackTarget() == -1)
 					str = gameMenuTexts[1];
 				g.drawString(str, 16, 424);
 				

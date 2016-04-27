@@ -7,13 +7,14 @@ import java.awt.event.MouseEvent;
  * A class that represents a menu. Stores the menu options in an array of strings
  * and the menu button boundaries in an array of integers.
  */
-public class Menu 
+public class Menu implements Activateable
 {
 	//Array that stores 2 opposite corners of the menu
 	//Corresponds with array of menu options: texts[0] is the text for the button 
 	//[0][0] = x coordinate of top left corner, [0][1] = y coordinate of top left corner,
 	//[0][2] = x coordinate of bottom right corner, [0][3] = y coordinate of bottom right corner
 	protected double[][] bounds;
+	private boolean active;
 	/**
 	 * Constructor for a Menu object
 	 * @param newOptions: array of menu options
@@ -54,5 +55,24 @@ public class Menu
 	{
 		return (e.getX() > bounds[recLoc][0] && e.getY() > bounds[recLoc][1] && 
 				e.getX() < bounds[recLoc][2] && e.getY() < bounds[recLoc][3]);
+	}
+	/**
+	 * Activate Menu
+	 */
+	public void activate() {
+		active = true;
+	}	
+	/**
+	 * Deactivate Menu
+	 */
+	public void deActivate() {
+		active = false;	
+	}
+	/**
+	 * Return if the entity is active or not
+	 * @return: boolean value active
+	 */
+	public boolean isActive() {
+		return active;
 	}
 }

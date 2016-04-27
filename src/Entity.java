@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
  *
  * Used to create subclasses representing objects that have a position, health, attack power, a name and a BufferedImage.
  */
-public class Entity 
+public class Entity implements Activateable
 {
 	private double x;
 	private double y;
@@ -22,6 +22,7 @@ public class Entity
 	private BufferedImage image = null;
 	private int damageFrames = 0;
 	private int target = -1;
+	private boolean active = true;
 	
 	/**
 	 * Constructor for Entity class.
@@ -205,6 +206,25 @@ public class Entity
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	/**
+	 * Activate entity
+	 */
+	public void activate() {
+		active = true;
+	}	
+	/**
+	 * Deactivate entity
+	 */
+	public void deActivate() {
+		active = false;	
+	}
+	/**
+	 * Return if the entity is active or not
+	 * @return: boolean value active
+	 */
+	public boolean isActive() {
+		return active;
 	}
 	/**
 	 * Paints the image with the selected Graphics object

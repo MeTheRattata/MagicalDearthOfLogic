@@ -123,6 +123,24 @@ public class Player extends Entity
 		return healTarget;
 	}
 	/**
+	 * Activate entity
+	 */
+	public void activate() {
+		super.activate();
+		moveSelect.activate();
+	}	
+	/**
+	 * Deactivate entity
+	 */
+	public void deActivate() {
+		super.deActivate();
+		moveSelect.deActivate();
+	}
+	/**
+	 * Return if the entity is active or not
+	 * @return: boolean value active
+	 */
+	/**
 	 * Paints the sprite associated with a Player object onto its current coordinates, including health and mana bar
 	 * @param g: the graphics object on which to paint the sprite on
 	 */

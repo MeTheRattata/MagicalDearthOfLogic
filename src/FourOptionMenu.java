@@ -39,8 +39,26 @@ public class FourOptionMenu extends Menu
 	 * @param e: MouseClick event with coordinates
 	 * @return the string corresponding to which menu option was clicked
 	 */
-	public String optionSelected(MouseEvent e) {
-		return options[intSelected(e)];
+	public String optionSelected(MouseEvent e) 
+	{
+		if(intSelected(e) != -1)
+			return options[intSelected(e)];
+		//No option selected
+		else
+			return null;
+	}
+	/**
+	 * Get attack power by parsing the options string selected to an integer
+	 * @param e: the MouseClick within or not within the menu window
+	 * @return: the attack power associated with
+	 */
+	public int getAttackPower(MouseEvent e)
+	{
+		if(intSelected(e) != -1)
+			return Integer.parseInt(options[intSelected(e)]);
+		//No attack selected
+		else
+			return -1;
 	}
 	/**
 	 * Paint method for a Menu object

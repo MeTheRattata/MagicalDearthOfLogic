@@ -2,18 +2,15 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
-public class Player extends Entity implements Activateable
+public class Player extends Playable implements Activateable
 {
 	private int mana;
 	private int maxMana;
 	private String type;
-	private FourOptionMenu moveSelect;
 	int manaUsed;
-	private boolean isInCombatMenu = false;
 	//target for a healing spell, if it is -1 then the heal is an all heal, if not, target is companion
 	private int healTarget = -1;
 	TargetSelectMenu healSelect;
-	TargetSelectMenu enemySelect;
 	
 	/**
 	 * Constructor for player class
@@ -25,14 +22,13 @@ public class Player extends Entity implements Activateable
 	{
 		//Players start with a health of 100 and an attack power of 20
 		//Name is specified upon player select, is "wizard" + "Rock", "Life", "Light" or "Water"
-		super(xPos, yPos, 100, "wizard" + newType, 20);
+		super(xPos, yPos, 100, "wizard" + newType);
 		type = newType;
 		mana = 50;
 		maxMana = mana;
 		manaUsed = 0;
 		//Strings for options useless here, since intSelected will be used to determine attack to use
-		moveSelect = new FourOptionMenu(0, 352, 672, 480, new String[]{"", "", "", ""}, 
-							  new String[]{"Strike", type + " Attack", "Team Heal", "Target Heal"});
+		setMoves(new String[]{"Strike", type + " Attack", "Team Heal", "Target Heal"}, new int[]{20, 40, 0, 0});
 		healSelect = new TargetSelectMenu("Playable");
 	}
 	/**
@@ -56,49 +52,15 @@ public class Player extends Entity implements Activateable
 	 */
 	public void setAttackPower(MouseEvent e)
 	{
-		int attackSelected = moveSelect.intSelected(e);
-		setAttackPower(-1);
-		switch(attackSelected)
+		setAttackPower(moveSelect.getAttackPower(e));
+		if(getAttackPower() != -1)
 		{
-		//Strike
-		case 0: 
-			setAttackPower(20);
-			manaUsed = 0;
-			break;
-		//Magic Attack
-		case 1: 
-			setAttackPower(40);
-			manaUsed = 30;
-			break;
-		//Team Heal
-		case 2:
-			setAttackPower(0);
-			manaUsed = 20;
-			//no heal target, so this is a team heal
-			healTarget = -1;
-			break;
-		//One Target Heal
-		case 3: 
-			setAttackPower(0);
-			manaUsed = 20;
-			//TODO: make healing selectable between player and companion
-			healTarget = 1; //Target = companion
-			break;
+			moveSelect.deActivate();
+			if(getAttackPower() == 0) //If healing move, activates heal select to set heal target
+				healSelect.activate();
+			else //If not a healing move, activates enemy select to set attack target
+				enemySelect.activate();
 		}
-		//TODO: prevent healing if mana is below required amount
-		if(mana <= manaUsed)
-			setAttackPower(0);
-		else
-			mana -= manaUsed;
-		
-		isInCombatMenu = false;
-	}
-	/**
-	 * Sets isInCombatMenu to the passed boolean
-	 * @param bool: boolean that isInCombatMenu is set to
-	 */
-	public void setInCombatMenu(boolean bool) {
-		isInCombatMenu = bool;
 	}
 	/**
 	 * Get mana
@@ -115,20 +77,15 @@ public class Player extends Entity implements Activateable
 	}
 	//TODO: Figure out how to fangle this with activating and deactivating all de menus
 	/**
-	 * Set attack target
-	 * @param e: MouseClick either on an enemy or nowhere
-	 * If nowhere, attackTarget is -1 and this method still waits
-	 */
-	public void setAttackTarget(MouseEvent e) {
-		super.setAttackTarget(enemySelect.intSelected(e));
-	}
-	/**
 	 * Set heal target
 	 * @param e: MouseClick that is possibly on a target.
-	 * If MouseClick is on a target, sets to that targets ID, if not, sets to -1
+	 * If MouseClick is on a target, exits with a legitimate target, if not, stays and waits for a MouseClick
 	 */
-	public void setHealTarget(MouseEvent e) {
+	public void setHealTarget(MouseEvent e) 
+	{
 		healTarget = healSelect.intSelected(e);
+		if(healTarget != -1)
+			healSelect.deActivate();
 	}
 	/**
 	 * Get Heal Target
@@ -137,19 +94,7 @@ public class Player extends Entity implements Activateable
 	public int getHealTarget() {
 		return healTarget;
 	}
-	/**
-	 * Activate entity
-	 */
-	public void activate() {
-		super.activate();
-		moveSelect.activate();
-	}	
-	/**
-	 * Deactivate entity
-	 */
-	public void deActivate() {
-		super.deActivate();
-	}
+	
 	/**
 	 * Paints the sprite associated with a Player object onto its current coordinates, including health and mana bar
 	 * @param g: the graphics object on which to paint the sprite on
@@ -179,13 +124,13 @@ public class Player extends Entity implements Activateable
 		g.setColor(Color.BLUE);
 		double manaBarLength =  ((double) mana / maxMana) * 128;
 		g.fillRect((int)getX(), (int)getY() + 140, (int) manaBarLength, 8);
-	}
-	/**
-	 * Paint the players move select menu
-	 * @param g: the graphics object to paint with
-	 */
-	public void paintMoveSelect(Graphics g)
-	{
-		moveSelect.paintComponent(g);
+		
+		//Paint active menu (should only be one)
+		if(moveSelect.isActive())
+			moveSelect.paintComponent(g);
+		else if(healSelect.isActive())
+			healSelect.paintComponent(g);
+		else if(enemySelect.isActive())
+			enemySelect.paintComponent(g);
 	}
 }   

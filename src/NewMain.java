@@ -19,6 +19,12 @@ public class NewMain
 {
 	final static int WIDTH = 672;
 	final static int HEIGHT = 480;
+	private int[] xEntityPos = {32, 160, 512, 384};
+	private int[] yEntityPos = {192, 32, 192, 32};
+	double[][] fullScreenMenuBounds = {{0, 0, 336, 240}, {336, 0, 672, 240}, {0, 240, 336, 480}, {336, 240, 672, 480}};
+	FourOptionMenu playerSelect, companionSelect;
+	Player player;
+	Companion companion;
 	
 	public static void main(String[] args) 
 	{
@@ -38,16 +44,65 @@ public class NewMain
 		}, 0, 1000/60);
 	}
 	
-	public Main()
+	public NewMain()
 	{
-	
+		playerSelect = new FourOptionMenu(0, 0, WIDTH, HEIGHT, new String[]{"Life", "Light", "Rock", "Water"}, 
+				new String[] {"Life Wizard", "Light Wizard", "Rock Wizard", "Water Wizard"});
+		companionSelect = new FourOptionMenu(0, 0, WIDTH, HEIGHT, new String[]{"cat", "dog", "lizard", "emu"}, 
+				new String[]{"Cat", "Dog", "Lizard", "Emu"});
+		
+		this.addMouseListener(new MouseAdapter(){
+			//TODO: Fix or reinvent this mess of if statements
+			public void mouseClicked(MouseEvent e)
+			{
+				if(!outOfInitialMenus)
+				{
+					if(menuNum == 0)
+					{
+						player = new Player(xEntityPos[0], yEntityPos[0], playerSelect.optionSelected(e));
+						menuNum = 1;
+					}
+					else if(menuNum == 1)
+					{
+						companion = new Companion(xEntityPos[1], yEntityPos[1], companionSelect.optionSelected(e));
+						menuNum = 4;
+						outOfInitialMenus = true;
+					}	
+				}
+				/*else if(menuNum == 4)
+				{
+					player.setInCombatMenu(true);
+					player.setAttackPower(e);
+					if(player.getAttackPower() != -1)
+					{
+						menuNum = 2;
+					}
+				}*/
+				//Used for Getting location of targets for player and companion
+				/*else if(menuNum == 2)
+				{
+					//TODO: Change selected mob to target, let the player and companion classes handle it
+					if(gameMenuNum == 0)
+					{
+						player.setAttackTarget(enemySelected.intSelected(e));
+						gameMenuNum = 1;
+						playerTurn = false;
+					} 
+					else if(gameMenuNum == 1)
+					{
+						companion.setAttackTarget(enemySelected.intSelected(e));
+						menuNum = 3;
+						past4 = false;
+						playerTurn = true;
+					}
+				}	*/	
+			}
+		});
 	}
 	public void tick() //happens 60 times a second, things happen
 	{
-		
-	}
-	
-	//TODO: Fix random errors with companion setImage happening somewhere in here
+		//DO NOT WAAANT
+	} 
 	
 	//Draws images 4 times larger, factor this into the other classes draw methods
 	public void paintComponent(Graphics g)//already happens forever and ever

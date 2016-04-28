@@ -1,5 +1,3 @@
-import java.awt.event.MouseEvent;
-
 /**
  * Companion class for MagicalDearthOfLogic
  * @author Metherat
@@ -7,7 +5,7 @@ import java.awt.event.MouseEvent;
  * 
  * Class that represents the player's animal companion. Subclass of Entity.
  */
-public class Companion extends Entity
+public class Companion extends Playable
 {
 	TargetSelectMenu enemySelect;
 	/**
@@ -18,16 +16,9 @@ public class Companion extends Entity
 	 */
 	public Companion(double xPos, double yPos, String name) {
 		//Companions start with an hp of 100 and an attack power of 20
-		super(xPos, yPos, 100, name, 15);
+		super(xPos, yPos, 100, name);
 		enemySelect = new TargetSelectMenu("Enemies");
-	}
-	/**
-	 * Set attack target
-	 * @param e: MouseClick either on an enemy or nowhere
-	 * If nowhere, attackTarget is -1 and this method still waits
-	 */
-	public void setAttackTarget(MouseEvent e)
-	{
-		super.setAttackTarget(enemySelect.intSelected(e));
+		//TODO: Change default moves based on name
+		setMoves(new String[]{"Tackle",  "Bite", "Swipe", "Tail Slap"}, new int[]{20, 40, 15, 5});
 	}
 }

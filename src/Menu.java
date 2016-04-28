@@ -23,6 +23,7 @@ public class Menu implements Activateable
 	 */
 	public Menu(double[][] newBounds) {
 		bounds = newBounds;
+		active = false;
 	}
 	/**
 	 * Set menu boundaries

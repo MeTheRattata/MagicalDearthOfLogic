@@ -14,9 +14,11 @@ import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-public class NewMain 
+public class NewMain extends JPanel
 {
+	private static final long serialVersionUID = 2396845939365144090L;
 	final static int WIDTH = 672;
 	final static int HEIGHT = 480;
 	private int[] xEntityPos = {32, 160, 512, 384};
@@ -50,25 +52,24 @@ public class NewMain
 				new String[] {"Life Wizard", "Light Wizard", "Rock Wizard", "Water Wizard"});
 		companionSelect = new FourOptionMenu(0, 0, WIDTH, HEIGHT, new String[]{"cat", "dog", "lizard", "emu"}, 
 				new String[]{"Cat", "Dog", "Lizard", "Emu"});
+		playerSelect.activate();
 		
-		this.addMouseListener(new MouseAdapter(){
+		this.addMouseListener(new MouseAdapter()
+		{
 			//TODO: Fix or reinvent this mess of if statements
 			public void mouseClicked(MouseEvent e)
 			{
-				if(!outOfInitialMenus)
+				if(playerSelect.isActive())
 				{
-					if(menuNum == 0)
-					{
-						player = new Player(xEntityPos[0], yEntityPos[0], playerSelect.optionSelected(e));
-						menuNum = 1;
-					}
-					else if(menuNum == 1)
+					player = new Player(xEntityPos[0], yEntityPos[0], playerSelect.optionSelected(e));
+					playerSelect.deActivate(); }
+					else if(companionSelect.isActive())
 					{
 						companion = new Companion(xEntityPos[1], yEntityPos[1], companionSelect.optionSelected(e));
-						menuNum = 4;
-						outOfInitialMenus = true;
-					}	
+						companionSelect.deActivate();
+					}
 				}
+		});
 				/*else if(menuNum == 4)
 				{
 					player.setInCombatMenu(true);
@@ -95,9 +96,7 @@ public class NewMain
 						past4 = false;
 						playerTurn = true;
 					}
-				}	*/	
-			}
-		});
+				}	*/
 	}
 	public void tick() //happens 60 times a second, things happen
 	{

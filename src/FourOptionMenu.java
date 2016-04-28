@@ -12,6 +12,9 @@ public class FourOptionMenu extends Menu
 {
 	private String[] options;
 	private String[] labels;
+	private int width;
+	private int height;
+	
 	public FourOptionMenu(double[][] newBounds, String[] newOptions, String[] newLabels) 
 	{
 		super(newBounds);
@@ -24,8 +27,8 @@ public class FourOptionMenu extends Menu
 		options = newOptions;
 		labels = newLabels;
 		//Sets boundaries of menu to the square selected divided by 4
-		int width = endX - startX;
-		int height = endY - startY;
+		width = endX - startX;
+		height = endY - startY;
 		bounds = new double[][]{{startX, startY, startX + width / 2, startY + height / 2}, 
 								{startX + width / 2, startY, startX + width, startY + height / 2},
 								{startX, startY + height / 2, startX + width / 2, startY + height}, 
@@ -45,6 +48,8 @@ public class FourOptionMenu extends Menu
 	 */
 	public void paintComponent(Graphics g)
 	{
+		g.setColor(Color.WHITE);
+		g.fillRect((int) bounds[0][0], (int) bounds[0][1], width, height);
 		g.setColor(Color.BLACK);
 		Font font = new Font("Arial", Font.BOLD, 32);
 		for(int i = 0; i < bounds.length; i++)

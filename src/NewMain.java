@@ -27,7 +27,7 @@ public class NewMain extends JPanel
 	private Player player;
 	private Companion companion;
 	private int menuNum = 1;
-	private boolean attackReady = false;
+	private boolean attackReady = false, outOfInitialMenus = false;
 	
 	public static void main(String[] args) 
 	{
@@ -76,6 +76,7 @@ public class NewMain extends JPanel
 						companionSelect.deActivate();
 						player.moveSelect.activate();
 						menuNum = 3;
+						outOfInitialMenus = true;
 						break;
 					
 				//Attack select menu for player
@@ -118,6 +119,7 @@ public class NewMain extends JPanel
 				if(attackReady)
 				{
 					//Attack things
+					attackReady = false;
 				}
 			}
 		});
@@ -135,6 +137,19 @@ public class NewMain extends JPanel
 		g.setColor(Color.BLACK);
 		Font font = new Font("Arial", Font.BOLD, 32);
 		g.setFont(font);
+		
+		if(outOfInitialMenus)
+		{
+			player.paintComponent(g);
+			companion.paintComponent(g);
+		}
+		else //Not out of initial menus
+		{
+			if(playerSelect.isActive())
+				playerSelect.paintComponent(g);
+			else if(companionSelect.isActive())
+				companionSelect.paintComponent(g);
+		}
 	}
 	/**
 	 * Draw a string in the center of a rectangle

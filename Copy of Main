@@ -104,7 +104,8 @@ public class Main extends JPanel
 				}
 				else if(menuNum == 4)
 				{
-					player.setInCombatMenu(true);
+					System.out.println("Bullshit");
+					//player.setInCombatMenu(true);
 					player.setAttackPower(e);
 					if(player.getAttackPower() != -1)
 					{
@@ -198,7 +199,7 @@ public class Main extends JPanel
 	//Draws images 4 times larger, factor this into the other classes draw methods
 	public void paintComponent(Graphics g)//already happens forever and ever
 	{
-		g.setColor(Color.WHITE);
+		/*g.setColor(Color.WHITE);
 		g.fillRect(0,0,672,480);
 		g.setColor(Color.BLACK);
 		Font font = new Font("Arial", Font.BOLD, 32);
@@ -229,7 +230,8 @@ public class Main extends JPanel
 				enemies[i].paintComponent(g);
 				
 			if(menuNum == 4)
-				player.paintMoveSelect(g);
+				System.out.println("Bullshit");
+				//player.paintMoveSelect(g);
 			if(menuNum == 2) //Enemy select for attacks
 			{
 				g.setColor(Color.BLACK);
@@ -248,7 +250,7 @@ public class Main extends JPanel
 				for(int j = 2; j < 4; j++)
 					g.drawImage(selectionBorder, xEntityPos[j], yEntityPos[j], 128, 128, null);
 			}
-		}
+		}*/
 	}
 	/**
 	 * Draw a string in the center of a rectangle

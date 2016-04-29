@@ -34,7 +34,7 @@ public class NewMain extends JPanel
 		JFrame frame = new JFrame("Magical Dearth of Logic");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		Main panel = new Main();
+		NewMain panel = new NewMain();
 		frame.getContentPane().setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		frame.getContentPane().add(panel);
 		frame.pack();

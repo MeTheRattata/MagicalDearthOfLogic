@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -24,9 +23,11 @@ public class NewMain extends JPanel
 	private int[] xEntityPos = {32, 160, 512, 384};
 	private int[] yEntityPos = {192, 32, 192, 32};
 	double[][] fullScreenMenuBounds = {{0, 0, 336, 240}, {336, 0, 672, 240}, {0, 240, 336, 480}, {336, 240, 672, 480}};
-	FourOptionMenu playerSelect, companionSelect;
-	Player player;
-	Companion companion;
+	private FourOptionMenu playerSelect, companionSelect;
+	private Player player;
+	private Companion companion;
+	private int menuNum = 1;
+	private boolean attackReady = false;
 	
 	public static void main(String[] args) 
 	{
@@ -59,44 +60,67 @@ public class NewMain extends JPanel
 			//TODO: Fix or reinvent this mess of if statements
 			public void mouseClicked(MouseEvent e)
 			{
-				if(playerSelect.isActive())
+				//Menus stay active until they receive acceptable input.
+				//
+				switch (menuNum)
 				{
-					player = new Player(xEntityPos[0], yEntityPos[0], playerSelect.optionSelected(e));
-					playerSelect.deActivate(); }
-					else if(companionSelect.isActive())
-					{
-						companion = new Companion(xEntityPos[1], yEntityPos[1], companionSelect.optionSelected(e));
-						companionSelect.deActivate();
-					}
-				}
-		});
-				/*else if(menuNum == 4)
-				{
-					player.setInCombatMenu(true);
-					player.setAttackPower(e);
-					if(player.getAttackPower() != -1)
-					{
+				//Player Select menu
+				case 1: player = new Player(xEntityPos[0], yEntityPos[0], playerSelect.optionSelected(e));
+						playerSelect.deActivate(); 
+						companionSelect.activate();
 						menuNum = 2;
-					}
-				}*/
-				//Used for Getting location of targets for player and companion
-				/*else if(menuNum == 2)
-				{
-					//TODO: Change selected mob to target, let the player and companion classes handle it
-					if(gameMenuNum == 0)
-					{
-						player.setAttackTarget(enemySelected.intSelected(e));
-						gameMenuNum = 1;
-						playerTurn = false;
-					} 
-					else if(gameMenuNum == 1)
-					{
-						companion.setAttackTarget(enemySelected.intSelected(e));
+						break;
+				
+				//Companion select menu
+				case 2: companion = new Companion(xEntityPos[1], yEntityPos[1], companionSelect.optionSelected(e));
+						companionSelect.deActivate();
+						player.moveSelect.activate();
 						menuNum = 3;
-						past4 = false;
-						playerTurn = true;
-					}
-				}	*/
+						break;
+					
+				//Attack select menu for player
+				case 3: player.setAttackPower(e);
+						if(!player.moveSelect.isActive() && player.healSelect.isActive())
+							menuNum = 4;
+						else if(!player.moveSelect.isActive() && player.enemySelect.isActive())
+							menuNum = 5;
+						break;
+				
+				//Heal target select for player
+				case 4: player.setHealTarget(e);
+						if(!player.healSelect.isActive())
+							menuNum = 6;
+						break;
+						
+				//Combat target select for player
+				case 5: player.setAttackTarget(e);
+						if(!player.enemySelect.isActive())
+							menuNum = 6;
+						break;
+				
+				//Move select for companion
+				case 6: companion.setAttackPower(e);
+						if(!companion.moveSelect.isActive())
+							menuNum = 7;
+						break;
+				
+				//Combat target select for companion
+				case 7: companion.setAttackTarget(e);
+						if(!companion.enemySelect.isActive())
+						{
+							menuNum = 3;
+							attackReady = true;
+						}
+						break;	
+				}
+				//End Switch case
+				
+				if(attackReady)
+				{
+					//Attack things
+				}
+			}
+		});
 	}
 	public void tick() //happens 60 times a second, things happen
 	{

@@ -51,6 +51,10 @@ public abstract class Playable extends Entity implements Activateable
 		//If this mouse click fails, attack power is set to -1 through the moveSelect menu
 		setAttackPower(moveSelect.getAttackPower(e));
 		if(getAttackPower() != -1)
+		{
 			moveSelect.deActivate();
+			enemySelect.activate();
+		}
+			
 	}
 }

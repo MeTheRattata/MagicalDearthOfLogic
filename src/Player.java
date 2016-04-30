@@ -57,9 +57,17 @@ public class Player extends Playable implements Activateable
 		{
 			moveSelect.deActivate();
 			if(getAttackPower() == 0) //If healing move, activates heal select to set heal target
+			{
 				healSelect.activate();
+				System.out.println("heal select active");
+			}
+				
 			else //If not a healing move, activates enemy select to set attack target
+			{
 				enemySelect.activate();
+				System.out.println("Enemy select active");
+			}
+				
 		}
 	}
 	/**
@@ -101,22 +109,7 @@ public class Player extends Playable implements Activateable
 	 */
 	public void paintComponent(Graphics g)
 	{
-		//multiplied by 256 to make image 4 times larger
-		g.drawImage(getImage(), (int)getX(), (int)getY(), 128, 128, null);
-		
-		if(getDamageFrames() > 0)
-		{
-			decrementDamageFrames();
-			if(getDamageFrames() == 0)
-				setName("wizard" + type);
-		}
-		
-		//Draw Health Bar
-		g.setColor(Color.RED);
-		g.fillRect((int)getX(), (int)getY() + 132, 128, 8);
-		g.setColor(Color.GREEN);
-		double barLength =  ((double) getHealth() / getMaxHealth()) * 128;
-		g.fillRect((int)getX(), (int)getY() + 132, (int) barLength, 8);
+		super.paintComponent(g);
 		
 		//draw mana bar
 		g.setColor(Color.WHITE);
@@ -126,11 +119,7 @@ public class Player extends Playable implements Activateable
 		g.fillRect((int)getX(), (int)getY() + 140, (int) manaBarLength, 8);
 		
 		//Paint active menu (should only be one)
-		if(moveSelect.isActive())
-			moveSelect.paintComponent(g);
-		else if(healSelect.isActive())
-			healSelect.paintComponent(g);
-		else if(enemySelect.isActive())
+		if(enemySelect.isActive())
 			enemySelect.paintComponent(g);
 	}
 }   

@@ -96,7 +96,10 @@ public class NewMain extends JPanel
 				//Combat target select for player
 				case 5: player.setAttackTarget(e);
 						if(!player.enemySelect.isActive())
+						{
 							menuNum = 6;
+							companion.moveSelect.isActive();
+						}	
 						break;
 				
 				//Move select for companion

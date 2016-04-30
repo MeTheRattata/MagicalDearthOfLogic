@@ -99,7 +99,10 @@ public class NewMain extends JPanel
 				//Heal target select for player
 				case 4: player.setHealTarget(e);
 						if(!player.healSelect.isActive())
+						{
 							menuNum = 6;
+							companion.moveSelect.activate();
+						}
 						break;
 						
 				//Combat target select for player
@@ -107,7 +110,7 @@ public class NewMain extends JPanel
 						if(!player.enemySelect.isActive())
 						{
 							menuNum = 6;
-							companion.moveSelect.isActive();
+							companion.moveSelect.activate();
 						}	
 						break;
 				
@@ -122,6 +125,7 @@ public class NewMain extends JPanel
 						if(!companion.enemySelect.isActive())
 						{
 							menuNum = 3;
+							player.moveSelect.activate();
 							attackReady = true;
 						}
 						break;	

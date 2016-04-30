@@ -10,7 +10,7 @@ public class Player extends Playable implements Activateable
 	int manaUsed;
 	//target for a healing spell, if it is -1 then the heal is an all heal, if not, target is companion
 	private int healTarget = -1;
-	TargetSelectMenu healSelect;
+	protected TargetSelectMenu healSelect;
 	
 	/**
 	 * Constructor for player class
@@ -128,9 +128,9 @@ public class Player extends Playable implements Activateable
 		//Paint active menu (should only be one)
 		if(moveSelect.isActive())
 			moveSelect.paintComponent(g);
-		else if(healSelect.isActive())
+		if(healSelect.isActive())
 			healSelect.paintComponent(g);
-		else if(enemySelect.isActive())
+		if(enemySelect.isActive())
 			enemySelect.paintComponent(g);
 	}
 }   

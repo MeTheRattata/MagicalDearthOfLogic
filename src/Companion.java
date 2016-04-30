@@ -1,13 +1,12 @@
 /**
  * Companion class for MagicalDearthOfLogic
  * @author Metherat
- * @parent Entity
+ * @parent Playable
  * 
  * Class that represents the player's animal companion. Subclass of Entity.
  */
 public class Companion extends Playable
 {
-	TargetSelectMenu enemySelect;
 	/**
 	 * Constructor for Companion class.
 	 * @param xPos: x coordinate of the companion's current position

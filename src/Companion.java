@@ -1,7 +1,7 @@
 /**
  * Companion class for MagicalDearthOfLogic
  * @author Metherat
- * @parent Entity
+ * @parent Playable
  * 
  * Class that represents the player's animal companion. Subclass of Entity.
  */

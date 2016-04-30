@@ -8,7 +8,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.imageio.ImageIO;
@@ -28,6 +27,7 @@ public class NewMain extends JPanel
 	private Companion companion;
 	private int menuNum = 1;
 	private boolean attackReady = false, outOfInitialMenus = false;
+	private Slime[] enemies = new Slime[2];
 	
 	public static void main(String[] args) 
 	{
@@ -49,11 +49,18 @@ public class NewMain extends JPanel
 	
 	public NewMain()
 	{
+		
 		playerSelect = new FourOptionMenu(0, 0, WIDTH, HEIGHT, new String[]{"Life", "Light", "Rock", "Water"}, 
 				new String[] {"Life Wizard", "Light Wizard", "Rock Wizard", "Water Wizard"});
 		companionSelect = new FourOptionMenu(0, 0, WIDTH, HEIGHT, new String[]{"cat", "dog", "lizard", "emu"}, 
 				new String[]{"Cat", "Dog", "Lizard", "Emu"});
 		playerSelect.activate();
+		
+		enemies[0] = new Slime(xEntityPos[2],yEntityPos[2],(int)(Math.random()*3) + 1);
+		enemies[1] = new Slime(xEntityPos[3],yEntityPos[3],(int)(Math.random()*3) + 1);
+		//Allow enemies to be constructed deactivated
+		enemies[0].deActivate();
+		enemies[1].deActivate();
 		
 		this.addMouseListener(new MouseAdapter()
 		{
@@ -75,6 +82,8 @@ public class NewMain extends JPanel
 				case 2: companion = new Companion(xEntityPos[1], yEntityPos[1], companionSelect.optionSelected(e));
 						companionSelect.deActivate();
 						player.moveSelect.activate();
+						enemies[0].activate();
+						enemies[1].activate();
 						menuNum = 3;
 						outOfInitialMenus = true;
 						break;
@@ -141,10 +150,14 @@ public class NewMain extends JPanel
 		Font font = new Font("Arial", Font.BOLD, 32);
 		g.setFont(font);
 		
+		//Main paint loop
 		if(outOfInitialMenus)
 		{
 			player.paintComponent(g);
 			companion.paintComponent(g);
+			for(int i = 0; i < enemies.length; i++)
+				if(enemies[i].isActive())
+					enemies[i].paintComponent(g);
 		}
 		else //Not out of initial menus
 		{
@@ -152,6 +165,8 @@ public class NewMain extends JPanel
 				playerSelect.paintComponent(g);
 			else if(companionSelect.isActive())
 				companionSelect.paintComponent(g);
+			
+				
 		}
 	}
 	/**

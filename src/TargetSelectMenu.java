@@ -1,8 +1,11 @@
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -73,7 +76,13 @@ public class TargetSelectMenu extends Menu
 		}
 		g.setColor(Color.BLACK);
 		Font font = new Font("Arial", Font.BOLD, 32);
-		drawCenteredString(g, selectLabel, new Rectangle(0,352,672,480), font);
+		Rectangle rect = new Rectangle(0,352,672,128);
+		Graphics2D g2 = (Graphics2D) g;
+		Stroke oldStroke = g2.getStroke();
+		g2.setStroke(new BasicStroke(4));
+		g2.drawRect((int)rect.getX(), (int)rect.getY(), (int)rect.getWidth(), (int)rect.getHeight());
+		drawCenteredString(g, selectLabel, rect, font);
+		
 	}
 	/**
 	 * Draw a string in the center of a rectangle

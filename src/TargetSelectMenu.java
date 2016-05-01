@@ -81,6 +81,7 @@ public class TargetSelectMenu extends Menu
 		Stroke oldStroke = g2.getStroke();
 		g2.setStroke(new BasicStroke(4));
 		g2.drawRect((int)rect.getX(), (int)rect.getY(), (int)rect.getWidth(), (int)rect.getHeight());
+		g2.setStroke(oldStroke);
 		drawCenteredString(g, selectLabel, rect, font);
 		
 	}

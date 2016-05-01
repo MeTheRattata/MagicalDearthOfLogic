@@ -108,7 +108,8 @@ public class Player extends Playable implements Activateable
 	 * @param g: the graphics object on which to paint the sprite on
 	 */
 	public void paintComponent(Graphics g)
-	{
+	{ 
+		//Change to changing name to wizard dmg
 		super.paintComponent(g);
 		
 		//draw mana bar

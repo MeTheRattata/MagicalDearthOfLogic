@@ -135,6 +135,17 @@ public class NewMain extends JPanel
 				if(attackReady)
 				{
 					//Attack things
+					enemies[player.getAttackTarget()].takeDamage(player.getAttackPower());
+					enemies[companion.getAttackTarget()].takeDamage(companion.getAttackPower());
+					for(int i = 0; i < enemies.length; i++)
+					{
+						enemies[i].setAttackTarget();
+						if(enemies[i].getAttackTarget() == 0)
+							player.takeDamage(enemies[i].getAttackPower());
+						else
+							companion.takeDamage(enemies[i].getAttackPower());
+					}
+					
 					attackReady = false;
 				}
 			}

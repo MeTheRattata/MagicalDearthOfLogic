@@ -28,7 +28,7 @@ public class Player extends Playable implements Activateable
 		maxMana = mana;
 		manaUsed = 0;
 		//Strings for options useless here, since intSelected will be used to determine attack to use
-		setMoves(new String[]{"Strike", type + " Attack", "Team Heal", "Target Heal"}, new int[]{20, 40, 0, 0});
+		setMoves(new String[]{"Strike", type + " Attack", "Team Heal", "Target Heal"}, new int[]{20, 40, 1, 0});
 		healSelect = new TargetSelectMenu("Playable");
 	}
 	/**
@@ -44,7 +44,9 @@ public class Player extends Playable implements Activateable
 		else
 			return false;
 	}
-	public int getAttackPower() {
+	public int getAttackPower() 
+	{	
+		mana -= manaUsed;
 		return super.getAttackPower();
 	}
 	/**
@@ -53,13 +55,30 @@ public class Player extends Playable implements Activateable
 	public void setAttackPower(MouseEvent e)
 	{
 		setAttackPower(moveSelect.getAttackPower(e));
-		if(getAttackPower() != -1)
+		int attack = getAttackPower();
+		if(attack != -1)
 		{
-			moveSelect.deActivate();
-			if(getAttackPower() == 0) //If healing move, activates heal select to set heal target
-				healSelect.activate();
-			else //If not a healing move, activates enemy select to set attack target
+			switch(attack)
+			{
+			case 20: //Strike
+				manaUsed = 0;
 				enemySelect.activate();
+				break;
+			case 40: //Magic attack
+				manaUsed = 30;
+				enemySelect.activate();
+				break;
+			case 1: //Team heal
+				setAttackPower(0);
+				healTarget = 2; //Healtarget is past playable entities, therefore this is a team heal
+				manaUsed = 20;
+				break;
+			case 0: //Target heal
+				manaUsed = 15;
+				healSelect.activate();
+				break;
+			}
+			moveSelect.deActivate();
 		}
 	}
 	/**

@@ -57,17 +57,9 @@ public class Player extends Playable implements Activateable
 		{
 			moveSelect.deActivate();
 			if(getAttackPower() == 0) //If healing move, activates heal select to set heal target
-			{
 				healSelect.activate();
-				System.out.println("heal select active");
-			}
-				
 			else //If not a healing move, activates enemy select to set attack target
-			{
 				enemySelect.activate();
-				System.out.println("Enemy select active");
-			}
-				
 		}
 	}
 	/**

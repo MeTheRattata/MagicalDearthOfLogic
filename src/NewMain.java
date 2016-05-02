@@ -137,13 +137,22 @@ public class NewMain extends JPanel
 					//Attack things
 					enemies[player.getAttackTarget()].takeDamage(player.getAttackPower());
 					enemies[companion.getAttackTarget()].takeDamage(companion.getAttackPower());
+					
 					for(int i = 0; i < enemies.length; i++)
 					{
-						enemies[i].setAttackTarget();
-						if(enemies[i].getAttackTarget() == 0)
-							player.takeDamage(enemies[i].getAttackPower());
+						//If enemy is dead, respawn a new enemy
+						if(enemies[i].getHealth() <= 0)
+							enemies [i] = new Slime(xEntityPos[i + 2],yEntityPos[i + 2],(int)(Math.random()*3) + 1);
+						//If enemy stays alive, it attacks
 						else
-							companion.takeDamage(enemies[i].getAttackPower());
+						{
+								enemies[i].setAttackTarget();
+							if(enemies[i].getAttackTarget() == 0)
+								player.takeDamage(enemies[i].getAttackPower());
+							else
+								companion.takeDamage(enemies[i].getAttackPower());
+						}
+						
 					}
 					
 					attackReady = false;

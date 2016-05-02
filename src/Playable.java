@@ -55,7 +55,6 @@ public abstract class Playable extends Entity implements Activateable
 		{
 			moveSelect.deActivate();
 			enemySelect.activate();
-			System.out.println("Enemy select active");
 		}
 			
 	}

@@ -109,8 +109,21 @@ public class Player extends Playable implements Activateable
 	 */
 	public void paintComponent(Graphics g)
 	{ 
-		//Change to changing name to wizard dmg
-		super.paintComponent(g);
+		//multiplied by 256 to make image 4 times larger
+		g.drawImage(getImage(), (int) getX(), (int) getY(), 128, 128, null);
+		if(getDamageFrames() > 0)
+		{
+			decrementDamageFrames();
+			if(getDamageFrames() == 0)
+				setName(getName().replaceAll("Dmg", "") + type);
+		}
+		
+		//Draw Health Bar
+		g.setColor(Color.RED);
+		g.fillRect((int) getX(), (int) getY() + 132, 128, 8);
+		g.setColor(Color.GREEN);
+		double barLength =  ((double) getHealth() / getMaxHealth()) * 128;
+		g.fillRect((int) getX(), (int) getY() + 132, (int) barLength, 8);
 		
 		//draw mana bar
 		g.setColor(Color.WHITE);
@@ -120,7 +133,11 @@ public class Player extends Playable implements Activateable
 		g.fillRect((int)getX(), (int)getY() + 140, (int) manaBarLength, 8);
 		
 		//Paint active menu (should only be one)
-		if(healSelect.isActive())
+		if(moveSelect.isActive())
+			moveSelect.paintComponent(g);
+		else if(enemySelect.isActive())
+			enemySelect.paintComponent(g);
+		else if(healSelect.isActive())
 			healSelect.paintComponent(g);
 
 	}

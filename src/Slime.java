@@ -135,6 +135,6 @@ public class Slime extends Entity
 	}
 	public void setAttackTarget()
 	{
-		super.setAttackTarget((int) (Math.random() + 0.5));
+		super.setAttackTarget((int) (Math.random()));
 	}
 }

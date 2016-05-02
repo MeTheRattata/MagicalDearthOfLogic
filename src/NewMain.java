@@ -26,7 +26,7 @@ public class NewMain extends JPanel
 	private Player player;
 	private Companion companion;
 	private int menuNum = 1;
-	private boolean attackReady = false, outOfInitialMenus = false;
+	private boolean attackReady = false, outOfInitialMenus = false, gameOver = false;
 	private Slime[] enemies = new Slime[2];
 	
 	public static void main(String[] args) 
@@ -140,20 +140,21 @@ public class NewMain extends JPanel
 					
 					for(int i = 0; i < enemies.length; i++)
 					{
+						//enemy attacks
+						enemies[i].setAttackTarget();
+						if(enemies[i].getAttackTarget() == 0)
+							player.takeDamage(enemies[i].getAttackPower());
+						else
+							companion.takeDamage(enemies[i].getAttackPower());
 						//If enemy is dead, respawn a new enemy
 						if(enemies[i].getHealth() <= 0)
 							enemies [i] = new Slime(xEntityPos[i + 2],yEntityPos[i + 2],(int)(Math.random()*3) + 1);
-						//If enemy stays alive, it attacks
-						else
-						{
-								enemies[i].setAttackTarget();
-							if(enemies[i].getAttackTarget() == 0)
-								player.takeDamage(enemies[i].getAttackPower());
-							else
-								companion.takeDamage(enemies[i].getAttackPower());
-						}
-						
 					}
+					
+					if(player.getHealth() <= 0)
+						gameOver = true;
+					else if(companion.getHealth() <= 0)
+						gameOver = true;
 					
 					attackReady = false;
 				}
@@ -175,7 +176,11 @@ public class NewMain extends JPanel
 		g.setFont(font);
 		
 		//Main paint loop
-		if(outOfInitialMenus)
+		if(gameOver)
+		{
+			drawCenteredString(g, "Game Over", new Rectangle(0, 0, 672, 480), font);
+		}
+		else if(outOfInitialMenus)
 		{
 			player.paintComponent(g);
 			companion.paintComponent(g);
@@ -189,9 +194,8 @@ public class NewMain extends JPanel
 				playerSelect.paintComponent(g);
 			else if(companionSelect.isActive())
 				companionSelect.paintComponent(g);
-			
-				
 		}
+		
 	}
 	/**
 	 * Draw a string in the center of a rectangle

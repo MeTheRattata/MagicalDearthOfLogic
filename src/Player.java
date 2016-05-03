@@ -73,6 +73,7 @@ public class Player extends Playable implements Activateable
 				setAttackPower(0);
 				isHeal = true;
 				healTarget = 2; //Healtarget is past playable entities, therefore this is a team heal
+				healSelect.activate();
 				manaUsed = 20;
 				break;
 			case 0: //Target heal
@@ -108,6 +109,7 @@ public class Player extends Playable implements Activateable
 		healTarget = healSelect.intSelected(e);
 		if(healTarget != -1)
 			healSelect.deActivate();
+			
 	}
 	/**
 	 * Get Heal Target

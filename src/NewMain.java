@@ -135,22 +135,7 @@ public class NewMain extends JPanel
 				if(attackReady)
 				{
 					//Attack things
-					if(player.isHealing())
-					{
-						int healTarget = player.getHealTarget();
-						switch(healTarget)
-						{
-						case 0: player.setHealth(player.getHealth() + player.getAttackPower());
-								break;
-						case 1: companion.setHealth(companion.getHealth() + player.getAttackPower());
-								break;
-						case 2: player.setHealth(player.getHealth() + player.getAttackPower());
-								companion.setHealth(companion.getHealth() + player.getAttackPower());
-								break;
-						}
-					}
-					else //Player is using an attack
-						enemies[player.getAttackTarget()].takeDamage(player.getAttackPower());
+					enemies[player.getAttackTarget()].takeDamage(player.getAttackPower());
 					
 					enemies[companion.getAttackTarget()].takeDamage(companion.getAttackPower());
 					

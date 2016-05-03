@@ -50,7 +50,6 @@ public class Player extends Playable implements Activateable
 	}
 	public int getAttackPower() 
 	{	
-		mana -= manaUsed;
 		return super.getAttackPower();
 	}
 	/**
@@ -115,6 +114,16 @@ public class Player extends Playable implements Activateable
 	}
 	public boolean isHealing(){
 		return isHeal;
+	}
+	public boolean canUseMana()
+	{
+		mana -= manaUsed;
+		if(mana <= 0)
+		{
+			mana = 0;
+			return false;
+		}
+		return true;
 	}
 	
 	/**

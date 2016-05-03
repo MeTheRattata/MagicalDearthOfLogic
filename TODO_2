@@ -5,9 +5,11 @@ DONE 1. Set up negative - positive move thingo
 	*negative moves = damage dealing moves
 	*just add the value to the entity's health and theres no need to check if its a heal or an attack
 	
-2. Make player use the universal attackTarget for all moves, not just damage dealing ones
+DONE 2. Make player use the universal attackTarget for all moves, not just damage dealing ones
 
-3. Start using an array of entities to handle all the things
+3. Find a way to make getAttackPwer and mana -= manaUsed separate, causes non mana attacks
+
+4. Start using an array of entities to handle all the things
 	*make a player object, and then put it into an array
 	*Player player = new Player();    entities[0] = player;
 	*Both are references to player, therefore both will work for using the player's methodss

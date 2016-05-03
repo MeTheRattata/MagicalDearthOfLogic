@@ -141,7 +141,8 @@ public class NewMain extends JPanel
 				if(attackReady)
 				{
 					//Attack things
-					entities[player.getAttackTarget()].takeDamage(player.getAttackPower());
+					if(player.canUseMana())
+						entities[player.getAttackTarget()].takeDamage(player.getAttackPower());
 					//enemies[player.getAttackTarget()].takeDamage(player.getAttackPower());
 					entities[companion.getAttackTarget()].takeDamage(companion.getAttackPower());
 					//enemies[companion.getAttackTarget()].takeDamage(companion.getAttackPower());

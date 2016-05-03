@@ -11,6 +11,7 @@ public class Player extends Playable implements Activateable
 	//target for a healing spell, if it is -1 then the heal is an all heal, if not, target is companion
 	private int healTarget = -1;
 	protected TargetSelectMenu healSelect;
+	private boolean isHeal = false;
 	
 	/**
 	 * Constructor for player class
@@ -70,11 +71,13 @@ public class Player extends Playable implements Activateable
 				break;
 			case 1: //Team heal
 				setAttackPower(0);
+				isHeal = true;
 				healTarget = 2; //Healtarget is past playable entities, therefore this is a team heal
 				manaUsed = 20;
 				break;
 			case 0: //Target heal
 				manaUsed = 15;
+				isHeal = true;
 				healSelect.activate();
 				break;
 			}
@@ -112,6 +115,9 @@ public class Player extends Playable implements Activateable
 	 */
 	public int getHealTarget() {
 		return healTarget;
+	}
+	public boolean isHealing(){
+		return isHeal;
 	}
 	
 	/**

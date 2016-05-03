@@ -1,6 +1,6 @@
 TODO 2:
 
-1. Set up negative - positive move thingo
+DONE 1. Set up negative - positive move thingo
 	*positive moves = healing moves
 	*negative moves = damage dealing moves
 	*just add the value to the entity's health and theres no need to check if its a heal or an attack

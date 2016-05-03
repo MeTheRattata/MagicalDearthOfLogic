@@ -103,7 +103,7 @@ public class NewMain extends JPanel
 						break;
 				
 				//Heal target select for player
-				case 4: player.setHealTarget(e);
+				case 4: player.setAttackTarget(e);
 						if(!player.healSelect.isActive())
 						{
 							menuNum = 6;
@@ -141,9 +141,10 @@ public class NewMain extends JPanel
 				if(attackReady)
 				{
 					//Attack things
-					enemies[player.getAttackTarget()].takeDamage(player.getAttackPower());
-					
-					enemies[companion.getAttackTarget()].takeDamage(companion.getAttackPower());
+					entities[player.getAttackTarget()].takeDamage(player.getAttackPower());
+					//enemies[player.getAttackTarget()].takeDamage(player.getAttackPower());
+					entities[companion.getAttackTarget()].takeDamage(companion.getAttackPower());
+					//enemies[companion.getAttackTarget()].takeDamage(companion.getAttackPower());
 					
 					for(int i = 0; i < enemies.length; i++)
 					{

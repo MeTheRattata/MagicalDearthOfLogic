@@ -39,9 +39,13 @@ public abstract class Playable extends Entity implements Activateable
 	 */
 	public void setAttackTarget(MouseEvent e)
 	{
-		super.setAttackTarget(enemySelect.intSelected(e));
-		if(getAttackTarget() != -1)
+		super.setAttackTarget(enemySelect.intSelected(e) + 2);
+		if(enemySelect.intSelected(e) != -1)
 			enemySelect.deActivate();
+	}
+	public void setAttackTarget(int target)
+	{
+		super.setAttackTarget(target);
 	}
 	/**
 	 * Set attack power based on attack selected.

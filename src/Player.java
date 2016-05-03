@@ -29,7 +29,7 @@ public class Player extends Playable implements Activateable
 		maxMana = mana;
 		manaUsed = 0;
 		//Strings for options useless here, since intSelected will be used to determine attack to use
-		setMoves(new String[]{"Strike", type + " Attack", "Team Heal", "Target Heal"}, new int[]{-20, -40, 1, 0});
+		setMoves(new String[]{"Strike", type + " Attack", "Team Heal", "Target Heal"}, new int[]{-20, -40, 10, 20});
 		healSelect = new TargetSelectMenu("Playable");
 	}
 	/**
@@ -72,14 +72,14 @@ public class Player extends Playable implements Activateable
 				manaUsed = 30;
 				enemySelect.activate();
 				break;
-			case 1: //Team heal
+			case 10: //Team heal
 				setAttackPower(0);
 				isHeal = true;
 				healTarget = 2; //Healtarget is past playable entities, therefore this is a team heal
 				healSelect.activate();
 				manaUsed = 20;
 				break;
-			case 0: //Target heal
+			case 20: //Target heal
 				manaUsed = 15;
 				isHeal = true;
 				healSelect.activate();
@@ -102,24 +102,16 @@ public class Player extends Playable implements Activateable
 		mana = maxMana;
 	}
 	//TODO: Figure out how to fangle this with activating and deactivating all de menus
-	/**
-	 * Set heal target
-	 * @param e: MouseClick that is possibly on a target.
-	 * If MouseClick is on a target, exits with a legitimate target, if not, stays and waits for a MouseClick
-	 */
-	public void setHealTarget(MouseEvent e) 
+	public void setAttackTarget(MouseEvent e)
 	{
-		healTarget = healSelect.intSelected(e);
-		if(healTarget != -1)
-			healSelect.deActivate();
-			
-	}
-	/**
-	 * Get Heal Target
-	 * @return: healTarget
-	 */
-	public int getHealTarget() {
-		return healTarget;
+		if(enemySelect.isActive())
+			super.setAttackTarget(e);
+		else if(healSelect.isActive())
+		{
+			super.setAttackTarget(healSelect.intSelected(e));
+			if(getAttackTarget() != -1)
+				healSelect.deActivate();
+		}		
 	}
 	public boolean isHealing(){
 		return isHeal;

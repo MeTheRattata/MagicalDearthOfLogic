@@ -21,11 +21,11 @@ public class Slime extends Entity
 		switch (size)
 		{
 			case 1:
-				setAttackPower(5);
+				setAttackPower(-5);
 			case 2:
-				setAttackPower(10);
+				setAttackPower(-10);
 			case 3:
-				setAttackPower(15);	
+				setAttackPower(-15);	
 		}
 	}
 	/**
@@ -75,9 +75,13 @@ public class Slime extends Entity
 	 */
 	public boolean takeDamage(int damage)
 	{
-		setHealth(getHealth() - damage);
-		setDamageFrames(30);
-		setName("slime/slime" + getSize() + "Dmg");
+		setHealth(getHealth() + damage);
+		if(damage < 0)
+		{
+			setDamageFrames(30);
+			setName("slime/slime" + getSize() + "Dmg");
+		}
+		
 		if(getHealth() <= 0)
 			return true;
 		else

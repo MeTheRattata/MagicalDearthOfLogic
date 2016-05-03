@@ -79,9 +79,12 @@ public class Entity implements Activateable
 	 */
 	public boolean takeDamage(int damage)
 	{
-		health -= damage;
-		damageFrames += 30;
-		setName(name.replaceAll("Dmg", "") + "Dmg");
+		health += damage;
+		if(damage < 0) //If is damage taken and not healing
+		{
+			damageFrames += 30;
+			setName(name.replaceAll("Dmg", "") + "Dmg");
+		}
 		if(health <= 0)
 			return true;
 		else

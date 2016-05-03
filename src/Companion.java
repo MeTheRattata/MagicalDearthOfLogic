@@ -18,6 +18,6 @@ public class Companion extends Playable
 		//Companions start with an hp of 100 and an attack power of 20
 		super(xPos, yPos, 100, name);
 		//TODO: Change default moves based on name
-		setMoves(new String[]{"Tackle",  "Bite", "Swipe", "Tail Slap"}, new int[]{20, 40, 15, 5});
+		setMoves(new String[]{"Tackle",  "Bite", "Swipe", "Tail Slap"}, new int[]{-20, -40, -15, -5});
 	}
 }

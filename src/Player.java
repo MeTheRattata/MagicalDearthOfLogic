@@ -29,7 +29,7 @@ public class Player extends Playable implements Activateable
 		maxMana = mana;
 		manaUsed = 0;
 		//Strings for options useless here, since intSelected will be used to determine attack to use
-		setMoves(new String[]{"Strike", type + " Attack", "Team Heal", "Target Heal"}, new int[]{20, 40, 1, 0});
+		setMoves(new String[]{"Strike", type + " Attack", "Team Heal", "Target Heal"}, new int[]{-20, -40, 1, 0});
 		healSelect = new TargetSelectMenu("Playable");
 	}
 	/**
@@ -37,9 +37,12 @@ public class Player extends Playable implements Activateable
 	 */
 	public boolean takeDamage(int damage)
 	{
-		setHealth(getHealth() - damage);
-		setDamageFrames(30);
-		setName("wizardDmg");
+		setHealth(getHealth() + damage);
+		if(damage < 0)
+		{
+			setDamageFrames(30);
+			setName("wizardDmg");
+		}
 		if(getHealth() <= 0)
 			return true;
 		else
@@ -61,11 +64,11 @@ public class Player extends Playable implements Activateable
 		{
 			switch(attack)
 			{
-			case 20: //Strike
+			case -20: //Strike
 				manaUsed = 0;
 				enemySelect.activate();
 				break;
-			case 40: //Magic attack
+			case -40: //Magic attack
 				manaUsed = 30;
 				enemySelect.activate();
 				break;

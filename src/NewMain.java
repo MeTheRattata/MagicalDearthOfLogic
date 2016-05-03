@@ -28,6 +28,7 @@ public class NewMain extends JPanel
 	private int menuNum = 1;
 	private boolean attackReady = false, outOfInitialMenus = false, gameOver = false;
 	private Slime[] enemies = new Slime[2];
+	private Entity[] entities = new Entity[4];
 	
 	public static void main(String[] args) 
 	{
@@ -62,6 +63,9 @@ public class NewMain extends JPanel
 		enemies[0].deActivate();
 		enemies[1].deActivate();
 		
+		entities[2] = enemies[0];
+		entities[3] = enemies[1];
+		
 		this.addMouseListener(new MouseAdapter()
 		{
 			//TODO: Fix or reinvent this mess of if statements
@@ -73,6 +77,7 @@ public class NewMain extends JPanel
 				{
 				//Player Select menu
 				case 1: player = new Player(xEntityPos[0], yEntityPos[0], playerSelect.optionSelected(e));
+						entities[0] = player;
 						playerSelect.deActivate(); 
 						companionSelect.activate();
 						menuNum = 2;
@@ -80,6 +85,7 @@ public class NewMain extends JPanel
 				
 				//Companion select menu
 				case 2: companion = new Companion(xEntityPos[1], yEntityPos[1], companionSelect.optionSelected(e));
+						entities[1] = companion;
 						companionSelect.deActivate();
 						player.moveSelect.activate();
 						enemies[0].activate();
@@ -183,11 +189,14 @@ public class NewMain extends JPanel
 		}
 		else if(outOfInitialMenus)
 		{
+			for(int i = 0; i < entities.length; i++)
+				entities[i].paintComponent(g);
+			/*
 			player.paintComponent(g);
 			companion.paintComponent(g);
 			for(int i = 0; i < enemies.length; i++)
 				if(enemies[i].isActive())
-					enemies[i].paintComponent(g);
+					enemies[i].paintComponent(g);*/
 		}
 		else //Not out of initial menus
 		{

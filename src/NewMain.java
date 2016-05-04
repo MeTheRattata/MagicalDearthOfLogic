@@ -142,9 +142,20 @@ public class NewMain extends JPanel
 				{
 					//Attack things
 					if(player.canUseMana())
-						if(entities[player.getAttackTarget()].takeDamage(player.getAttackPower()))
+					{
+						if(player.getAttackTarget() == 4)
+						{
+							companion.takeDamage(player.getAttackPower());
+							player.takeDamage(player.getAttackPower());
+						}
+						else
+						{
+							if(entities[player.getAttackTarget()].takeDamage(player.getAttackPower()))
 							entities[player.getAttackTarget()] = new Slime(xEntityPos[player.getAttackTarget()],
 									yEntityPos[player.getAttackTarget()],(int)(Math.random()*3) + 1);
+						}	
+					}
+						
 					
 					if(entities[companion.getAttackTarget()].takeDamage(companion.getAttackPower()))
 						entities[companion.getAttackTarget()] =  new Slime(xEntityPos[companion.getAttackTarget()],

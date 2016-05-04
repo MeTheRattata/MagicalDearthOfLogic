@@ -29,7 +29,7 @@ public class Player extends Playable implements Activateable
 		maxMana = mana;
 		manaUsed = 0;
 		//Strings for options useless here, since intSelected will be used to determine attack to use
-		setMoves(new String[]{"Strike", type + " Attack", "Team Heal", "Target Heal"}, new int[]{-20, -40, 10, 20});
+		setMoves(new String[]{"Strike", type + " Attack", "Team Heal", "Target Heal"}, new int[]{-20, -40, 25, 50});
 		healSelect = new TargetSelectMenu("Playable");
 	}
 	/**
@@ -71,14 +71,13 @@ public class Player extends Playable implements Activateable
 				manaUsed = 30;
 				enemySelect.activate();
 				break;
-			case 10: //Team heal
-				setAttackPower(0);
+			case 25: //Team heal
 				isHeal = true;
-				healTarget = 2; //Healtarget is past playable entities, therefore this is a team heal
+				super.setAttackTarget(4); //Healtarget is past playable entities, therefore this is a team heal
 				healSelect.activate();
 				manaUsed = 20;
 				break;
-			case 20: //Target heal
+			case 50: //Target heal
 				manaUsed = 15;
 				isHeal = true;
 				healSelect.activate();
@@ -107,7 +106,8 @@ public class Player extends Playable implements Activateable
 			super.setAttackTarget(e);
 		else if(healSelect.isActive())
 		{
-			super.setAttackTarget(healSelect.intSelected(e));
+			if(getAttackTarget() != 4)
+				super.setAttackTarget(healSelect.intSelected(e));
 			if(getAttackTarget() != -1)
 				healSelect.deActivate();
 		}		

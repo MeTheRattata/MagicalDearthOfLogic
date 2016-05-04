@@ -151,11 +151,10 @@ public class NewMain extends JPanel
 						else
 						{
 							if(entities[player.getAttackTarget()].takeDamage(player.getAttackPower()))
-							entities[player.getAttackTarget()] = new Slime(xEntityPos[player.getAttackTarget()],
+								entities[player.getAttackTarget()] = new Slime(xEntityPos[player.getAttackTarget()],
 									yEntityPos[player.getAttackTarget()],(int)(Math.random()*3) + 1);
 						}	
 					}
-						
 					
 					if(entities[companion.getAttackTarget()].takeDamage(companion.getAttackPower()))
 						entities[companion.getAttackTarget()] =  new Slime(xEntityPos[companion.getAttackTarget()],
@@ -165,13 +164,11 @@ public class NewMain extends JPanel
 					{
 						//enemy attacks
 						enemies[i].setAttackTarget();
-						if(enemies[i].getAttackTarget() == 0)
+						entities[enemies[i].getAttackTarget()].takeDamage(entities[i].getAttackPower());
+						/*if(enemies[i].getAttackTarget() == 0)
 							player.takeDamage(enemies[i].getAttackPower());
 						else
-							companion.takeDamage(enemies[i].getAttackPower());
-						//If enemy is dead, respawn a new enemy
-						if(enemies[i].getHealth() <= 0)
-							enemies [i] = new Slime(xEntityPos[i + 2],yEntityPos[i + 2],(int)(Math.random()*3) + 1);
+							companion.takeDamage(enemies[i].getAttackPower());*/
 					}
 					
 					if(player.getHealth() <= 0)
@@ -207,12 +204,6 @@ public class NewMain extends JPanel
 		{
 			for(int i = 0; i < entities.length; i++)
 				entities[i].paintComponent(g);
-			/*
-			player.paintComponent(g);
-			companion.paintComponent(g);
-			for(int i = 0; i < enemies.length; i++)
-				if(enemies[i].isActive())
-					enemies[i].paintComponent(g);*/
 		}
 		else //Not out of initial menus
 		{

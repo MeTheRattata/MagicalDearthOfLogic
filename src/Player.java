@@ -84,6 +84,8 @@ public class Player extends Playable implements Activateable
 				break;
 			}
 			moveSelect.deActivate();
+			if(!canUseMana())
+				super.setAttackPower(0);
 		}
 	}
 	/**

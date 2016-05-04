@@ -140,35 +140,27 @@ public class NewMain extends JPanel
 				
 				if(attackReady)
 				{
-					//Attack things
-					if(player.canUseMana())
+					for(int i = 0; i < entities.length; i++)
 					{
-						if(player.getAttackTarget() == 4)
+						if(i < 2) //Id of player and companion
 						{
-							companion.takeDamage(player.getAttackPower());
-							player.takeDamage(player.getAttackPower());
+							if(entities[i].getAttackTarget() == 4)
+							{
+								entities[0].takeDamage(entities[i].getAttackPower());
+								entities[1].takeDamage(entities[i].getAttackPower());
+							}
+							else
+							{
+								if(entities[entities[i].getAttackTarget()].takeDamage(entities[i].getAttackPower()))
+									entities[entities[i].getAttackTarget()] = new Slime(xEntityPos[entities[i].getAttackTarget()],
+										yEntityPos[entities[i].getAttackTarget()],(int)(Math.random()*3) + 1);
+							}
 						}
-						else
+						else //Enemy ids
 						{
-							if(entities[player.getAttackTarget()].takeDamage(player.getAttackPower()))
-								entities[player.getAttackTarget()] = new Slime(xEntityPos[player.getAttackTarget()],
-									yEntityPos[player.getAttackTarget()],(int)(Math.random()*3) + 1);
-						}	
-					}
-					
-					if(entities[companion.getAttackTarget()].takeDamage(companion.getAttackPower()))
-						entities[companion.getAttackTarget()] =  new Slime(xEntityPos[companion.getAttackTarget()],
-								yEntityPos[companion.getAttackTarget()],(int)(Math.random()*3) + 1);
-					
-					for(int i = 0; i < enemies.length; i++)
-					{
-						//enemy attacks
-						enemies[i].setAttackTarget();
-						entities[enemies[i].getAttackTarget()].takeDamage(entities[i].getAttackPower());
-						/*if(enemies[i].getAttackTarget() == 0)
-							player.takeDamage(enemies[i].getAttackPower());
-						else
-							companion.takeDamage(enemies[i].getAttackPower());*/
+							entities[i].setAttackTarget();
+							entities[entities[i].getAttackTarget()].takeDamage(entities[i].getAttackPower());
+						}
 					}
 					
 					if(player.getHealth() <= 0)

@@ -1,7 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Slime extends Character
+public class Slime extends Entity
 {
 	private int size; //size of slime
 	private int resize; //amount to resize sprite by
@@ -12,7 +12,7 @@ public class Slime extends Character
 	 */
 	public Slime(double xPos, double yPos, int newSize) 
 	{
-		super(xPos, yPos, "slime/slimeLarge100", assignHealth(newSize), 0);
+		super(xPos, yPos, "slime/slimeLarge100", assignHealth(newSize), 0, true);
 		size = newSize;
 		resize = (int) (16 * Math.pow(2, size));
 		//If slimes are smaller than 32 by 32, puts them in the center of the 32 by 32 square where they are

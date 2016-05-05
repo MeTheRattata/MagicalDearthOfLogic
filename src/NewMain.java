@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.imageio.ImageIO;
@@ -28,7 +29,7 @@ public class NewMain extends JPanel
 	private int menuNum = 1;
 	private boolean attackReady = false, outOfInitialMenus = false, gameOver = false;
 	private Slime[] enemies = new Slime[2];
-	private Entity[] entities = new Entity[4];
+	private ArrayList<Entity> entities = new ArrayList<Entity>(4);
 	
 	public static void main(String[] args) 
 	{
@@ -63,9 +64,6 @@ public class NewMain extends JPanel
 		enemies[0].deActivate();
 		enemies[1].deActivate();
 		
-		entities[2] = enemies[0];
-		entities[3] = enemies[1];
-		
 		this.addMouseListener(new MouseAdapter()
 		{
 			//TODO: Fix or reinvent this mess of if statements
@@ -77,7 +75,7 @@ public class NewMain extends JPanel
 				{
 				//Player Select menu
 				case 1: player = new Player(xEntityPos[0], yEntityPos[0], playerSelect.optionSelected(e));
-						entities[0] = player;
+						entities.add(player);
 						playerSelect.deActivate(); 
 						companionSelect.activate();
 						menuNum = 2;
@@ -85,7 +83,9 @@ public class NewMain extends JPanel
 				
 				//Companion select menu
 				case 2: companion = new Companion(xEntityPos[1], yEntityPos[1], companionSelect.optionSelected(e));
-						entities[1] = companion;
+						entities.add(companion);
+						entities.add(enemies[0]);
+						entities.add(enemies[1]);
 						companionSelect.deActivate();
 						player.moveSelect.activate();
 						enemies[0].activate();
@@ -140,26 +140,26 @@ public class NewMain extends JPanel
 				
 				if(attackReady)
 				{
-					for(int i = 0; i < entities.length; i++)
+					for(int i = 0; i < entities.size(); i++)
 					{
 						if(i < 2) //Id of player and companion
 						{
-							if(entities[i].getAttackTarget() == 4)
+							if(entities.get(i).getAttackTarget() == 4)
 							{
-								entities[0].takeDamage(entities[i].getAttackPower());
-								entities[1].takeDamage(entities[i].getAttackPower());
+								entities.get(0).takeDamage(entities.get(i).getAttackPower());
+								entities.get(1).takeDamage(entities.get(i).getAttackPower());
 							}
 							else
 							{
-								if(entities[entities[i].getAttackTarget()].takeDamage(entities[i].getAttackPower()))
-									entities[entities[i].getAttackTarget()] = new Slime(xEntityPos[entities[i].getAttackTarget()],
-										yEntityPos[entities[i].getAttackTarget()],(int)(Math.random()*3) + 1);
+								if(entities.get(entities.get(i).getAttackTarget()).takeDamage(entities.get(i).getAttackPower()))
+									entities.set(entities.get(i).getAttackTarget(), new Slime(xEntityPos[entities.get(i).getAttackTarget()],
+										yEntityPos[entities.get(i).getAttackTarget()],(int)(Math.random()*3) + 1));
 							}
 						}
 						else //Enemy ids
 						{
-							entities[i].setRandomAttackTarget();
-							entities[entities[i].getAttackTarget()].takeDamage(entities[i].getAttackPower());
+							entities.get(i).setRandomAttackTarget();
+							entities.get(entities.get(i).getAttackTarget()).takeDamage(entities.get(i).getAttackPower());
 						}
 					}
 					
@@ -194,8 +194,8 @@ public class NewMain extends JPanel
 		}
 		else if(outOfInitialMenus)
 		{
-			for(int i = 0; i < entities.length; i++)
-				entities[i].paintComponent(g);
+			for(int i = 0; i < entities.size(); i++)
+				entities.get(i).paintComponent(g);
 		}
 		else //Not out of initial menus
 		{

@@ -1,7 +1,7 @@
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
-public abstract class Playable extends Entity implements Activateable
+public abstract class Playable extends Character implements Activateable
 {
 	//Protected so its easy to use their isActive, activate and deActivate methods in subclasses
 	protected TargetSelectMenu enemySelect;
@@ -15,8 +15,8 @@ public abstract class Playable extends Entity implements Activateable
 	 * @param newAttackPower: attack power
 	 */
 	public Playable(double xPos, double yPos, int entHealth, String entName) {
-		//attackPower is instantiated as zero sice it is always set by a menu
-		super(xPos, yPos, entHealth, entName, 0);
+		//attackPower is instantiated as zero since it is always set by a menu
+		super(xPos, yPos, entName, entHealth, 0);
 		enemySelect = new TargetSelectMenu("Enemies");
 	}
 	/**

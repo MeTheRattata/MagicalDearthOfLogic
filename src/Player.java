@@ -41,7 +41,7 @@ public class Player extends Playable implements Activateable
 		if(damage < 0)
 		{
 			setDamageFrames(30);
-			setName("wizardDmg");
+			updateImage("wizardDmg");
 		}
 		if(getHealth() <= 0)
 			return true;
@@ -140,7 +140,7 @@ public class Player extends Playable implements Activateable
 		{
 			decrementDamageFrames();
 			if(getDamageFrames() == 0)
-				setName(getName().replaceAll("Dmg", "") + type);
+				updateImage(getName().replaceAll("Dmg", "") + type);
 		}
 		
 		//Draw Health Bar

@@ -5,7 +5,7 @@ public abstract class Playable extends Entity implements Activateable
 {
 	//Protected so its easy to use their isActive, activate and deActivate methods in subclasses
 	protected TargetSelectMenu enemySelect;
-	protected FourOptionMenu moveSelect; 
+	protected FourOptionMenu moveSelect;
 	/**
 	 * Constructor for a playable object
 	 * @param xPos: x coordinate

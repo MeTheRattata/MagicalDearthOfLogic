@@ -23,7 +23,7 @@ public class Entity implements Activateable
 	private int damageFrames = 0;
 	private int attackTarget = -1;
 	private boolean active = true;
-	private boolean isMob;
+	
 	
 	/**
 	 * Constructor for Entity class.
@@ -41,7 +41,6 @@ public class Entity implements Activateable
 		maxHealth = entHealth;
 		name = entName;
 		attackPower = newAttackPower;
-		isMob = isItMob;
 
 		//Create a new BufferedImage object using "res/" + name + ".png"
 		try {
@@ -85,7 +84,7 @@ public class Entity implements Activateable
 		if(damage < 0) //If is damage taken and not healing
 		{
 			damageFrames += 30;
-			setName(name.replaceAll("Dmg", "") + "Dmg");
+			updateImage(name.replaceAll("Dmg", "") + "Dmg");
 		}
 		if(health <= 0)
 			return true;
@@ -131,14 +130,6 @@ public class Entity implements Activateable
 		return maxHealth;
 	}
 	/**
-	 * Sets name of entity and updates its BufferedImage
-	 * @param newName: new name
-	 */
-	public void setName(String newName) {
-		name = newName;
-		updateImage();
-	}
-	/**
 	 * Return entity name
 	 * @return name
 	 */
@@ -172,6 +163,11 @@ public class Entity implements Activateable
 	public void setAttackTarget(int newTarget) {
 		attackTarget = newTarget;
 	}
+	
+	public void setRandomAttackTarget() 
+	{
+		attackTarget = (int) Math.random() ; 
+	}
 	/**
 	 * Return the entity's current target
 	 * @return: target
@@ -189,8 +185,9 @@ public class Entity implements Activateable
 	/**
 	 * Updates the entity's BufferedImage
 	 */
-	public void updateImage()
+	public void updateImage(String newName)
 	{
+		name = newName;
 		try {
 			image = ImageIO.read(new File("res/" + name + ".png"));
 		} catch (IOException e) {
@@ -226,28 +223,21 @@ public class Entity implements Activateable
 		//multiplied by 256 to make image 4 times larger
 		g.drawImage(image, (int) x, (int) y, 128, 128, null);
 		
-		
-		//Draw Health Bar
-		if(isMob)
+		//Draw damage frames
+		//TODO: Change this to just changing the sprite before it is drawn instead of drawing over
+		//the current sprite
+		if(damageFrames > 0)
 		{
-			if(damageFrames > 0)
-			{
-				damageFrames--;
-				if(damageFrames == 0)
-				setName(name.replaceAll("Dmg", ""));
-			}
-			
-			g.setColor(Color.RED);
-			g.fillRect((int)x, (int) y + 132, 128, 8);
-			g.setColor(Color.GREEN);
-			double barLength =  ((double) health / maxHealth) * 128;
-			g.fillRect((int)x, (int) y + 132, (int) barLength, 8);
+			damageFrames--;
+			if(damageFrames == 0)
+			updateImage(name.replaceAll("Dmg", ""));
 		}
 		
-	}
-
-	public void setRandomAttackTarget() 
-	{
-		attackTarget = (int) Math.random() ; 
+		//Draw Health Bar
+		g.setColor(Color.RED);
+		g.fillRect((int)x, (int) y + 132, 128, 8);
+		g.setColor(Color.GREEN);
+		double barLength =  ((double) health / maxHealth) * 128;
+		g.fillRect((int)x, (int) y + 132, (int) barLength, 8);
 	}
 }

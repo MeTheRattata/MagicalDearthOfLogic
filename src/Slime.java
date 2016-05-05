@@ -67,7 +67,7 @@ public class Slime extends Entity
 		else if(((((double) getHealth() / (double) getMaxHealth()) * 100) <= 25))//health is below 25%
 			restOfName += "25";
 		}
-		super.setName(restOfName);
+		super.updateImage(restOfName);
 	}
 	/**
 	 * Decrement 
@@ -79,7 +79,7 @@ public class Slime extends Entity
 		if(damage < 0)
 		{
 			setDamageFrames(30);
-			setName("slime/slime" + getSize() + "Dmg");
+			updateImage("slime/slime" + getSize() + "Dmg");
 		}
 		
 		if(getHealth() <= 0)

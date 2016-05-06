@@ -27,6 +27,11 @@ public class Sprite implements Activateable
 		}
 	}
 	
+	public void updatePosition(double newX, double newY)
+	{
+		x = newX;
+		y = newY;
+	}
 	public void updateImage(String newName)
 	{
 		name = newName;
@@ -51,5 +56,9 @@ public class Sprite implements Activateable
 	{
 		//multiplied by 128 to make image 4 times larger
 		g.drawImage(image, (int) x, (int) y, 128, 128, null);
+	}
+	public void paintComponent(Graphics g, int resize)
+	{
+		g.drawImage(image, (int) x, (int) y, resize, resize, null);
 	}
 }

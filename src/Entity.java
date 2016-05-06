@@ -19,11 +19,10 @@ public class Entity implements Activateable
 	private int maxHealth;
 	private int attackPower;
 	private String name; //path of image used as sprite, change to change sprite
-	private BufferedImage image = null;
 	private int damageFrames = 0;
 	private int attackTarget = -1;
 	private boolean active = true;
-	
+	protected Sprite sprite;
 	
 	/**
 	 * Constructor for Entity class.
@@ -41,13 +40,8 @@ public class Entity implements Activateable
 		maxHealth = entHealth;
 		name = entName;
 		attackPower = newAttackPower;
-
-		//Create a new BufferedImage object using "res/" + name + ".png"
-		try {
-			image = ImageIO.read(new File("res/" + name + ".png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+		sprite = new Sprite(x, y, name);
 	}
 	
 	/**
@@ -72,6 +66,7 @@ public class Entity implements Activateable
 	public void updatePosition(double newX, double newY) {
 		x = newX;
 		y = newY;
+		sprite.updatePosition(newX, newY);
 	}
 	/**
 	 * Decrements health based on the damage taken, then returns a boolean of whether the entity has died or not
@@ -84,7 +79,7 @@ public class Entity implements Activateable
 		if(damage < 0) //If is damage taken and not healing
 		{
 			damageFrames += 30;
-			updateImage(name.replaceAll("Dmg", "") + "Dmg");
+			sprite.updateImage(name.replaceAll("Dmg", "") + "Dmg");
 		}
 		if(health <= 0)
 			return true;
@@ -176,23 +171,10 @@ public class Entity implements Activateable
 		return attackTarget;
 	}
 	/**
-	 * Get image
-	 * @return entity's BufferedImage
-	 */
-	public BufferedImage getImage() {
-		return image;
-	}
-	/**
 	 * Updates the entity's BufferedImage
 	 */
-	public void updateImage(String newName)
-	{
-		name = newName;
-		try {
-			image = ImageIO.read(new File("res/" + name + ".png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void updateImage(String newName){
+		sprite.updateImage(newName);
 	}
 	/**
 	 * Activate entity
@@ -221,7 +203,7 @@ public class Entity implements Activateable
 	public void paintComponent(Graphics g)
 	{
 		//multiplied by 256 to make image 4 times larger
-		g.drawImage(image, (int) x, (int) y, 128, 128, null);
+		sprite.paintComponent(g);
 		
 		//Draw damage frames
 		//TODO: Change this to just changing the sprite before it is drawn instead of drawing over

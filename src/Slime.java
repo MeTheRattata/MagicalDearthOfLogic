@@ -46,7 +46,7 @@ public class Slime extends Entity
 	/**
 	 * Set a slime's name based on size and health percentage
 	 */
-	private void setName()
+	private void updateName()
 	{
 		//TODO: Fix health percentages not working properly
 		String restOfName = "slime/slime";
@@ -67,7 +67,7 @@ public class Slime extends Entity
 		else if(((((double) getHealth() / (double) getMaxHealth()) * 100) <= 25))//health is below 25%
 			restOfName += "25";
 		}
-		super.updateImage(restOfName);
+		sprite.updateImage(restOfName);
 	}
 	/**
 	 * Decrement 
@@ -106,14 +106,14 @@ public class Slime extends Entity
 	 */
 	public void paintComponent(Graphics g)
 	{
-		//multiplied by 256 to make image 8 times larger
-		g.drawImage(getImage(), (int) getX() + getDisplacement(), (int) getY() + getDisplacement(), resize, resize, null);
+		sprite.paintComponent(g, resize);
 		
 		if(getDamageFrames() > 0)
 		{
 			decrementDamageFrames();
 			if(getDamageFrames() == 0)
-				setName();
+				updateName();
+			//TODO: look over slime class, make sure it works right with sprites updatename
 		}
 		
 		//Draw Health Bar

@@ -201,19 +201,17 @@ public class Entity implements Activateable
 	 * @param g: what the image is painted with
 	 */
 	public void paintComponent(Graphics g)
-	{
-		//multiplied by 256 to make image 4 times larger
-		sprite.paintComponent(g);
-		
-		//Draw damage frames
-		//TODO: Change this to just changing the sprite before it is drawn instead of drawing over
-		//the current sprite
+	{	
+		//If taking damage, draw sprite to damaged form
 		if(damageFrames > 0)
 		{
 			damageFrames--;
 			if(damageFrames == 0)
-			updateImage(name.replaceAll("Dmg", ""));
+			sprite.updateImage(name.replaceAll("Dmg", ""));
 		}
+		
+		//multiplied by 256 to make image 4 times larger
+		sprite.paintComponent(g);
 		
 		//Draw Health Bar
 		g.setColor(Color.RED);

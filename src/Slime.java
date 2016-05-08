@@ -17,7 +17,7 @@ public class Slime extends Entity
 		resize = (int) (16 * Math.pow(2, size));
 		//If slimes are smaller than 32 by 32, puts them in the center of the 32 by 32 square where they are
 		//Also updates size the sprite is resized to to keep proportions consistent
-		setName();
+		updateImage();
 		switch (size)
 		{
 			case 1:
@@ -46,7 +46,7 @@ public class Slime extends Entity
 	/**
 	 * Set a slime's name based on size and health percentage
 	 */
-	private void updateName()
+	private void updateImage()
 	{
 		//TODO: Fix health percentages not working properly
 		String restOfName = "slime/slime";
@@ -56,15 +56,16 @@ public class Slime extends Entity
 			restOfName += "Medium";
 		else if(size == 3)
 			restOfName += "Large";
-		else if(getDamageFrames() == 0)
+		
+		if(getDamageFrames() == 0)
 		{
 			if((((double) getHealth() / (double) getMaxHealth()) * 100) > 75) //health is above 75%
 			restOfName += "100";
-		else if((((double) getHealth() / (double) getMaxHealth()) * 100) > 50)//health is above 50%
+			else if((((double) getHealth() / (double) getMaxHealth()) * 100) > 50)//health is above 50%
 			restOfName += "75";
-		else if((((double) getHealth() / (double) getMaxHealth()) * 100) > 25)//health is above 25%
+			else if((((double) getHealth() / (double) getMaxHealth()) * 100) > 25)//health is above 25%
 			restOfName += "50";
-		else if(((((double) getHealth() / (double) getMaxHealth()) * 100) <= 25))//health is below 25%
+			else if(((((double) getHealth() / (double) getMaxHealth()) * 100) <= 25))//health is below 25%
 			restOfName += "25";
 		}
 		sprite.updateImage(restOfName);
@@ -112,7 +113,7 @@ public class Slime extends Entity
 		{
 			decrementDamageFrames();
 			if(getDamageFrames() == 0)
-				updateName();
+				updateImage();
 			//TODO: look over slime class, make sure it works right with sprites updatename
 		}
 		

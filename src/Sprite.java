@@ -18,7 +18,7 @@ public class Sprite implements Activateable
 		x = newX;
 		y = newY;
 		name = newName;
-		System.out.println(name);
+		
 		try {
 			image = ImageIO.read(new File("res/" + name + ".png"));
 		} catch (IOException e) {

@@ -15,6 +15,7 @@ public class Slime extends Entity
 		super(xPos, yPos, "slime/slimeLarge100", assignHealth(newSize), 0, true);
 		size = newSize;
 		resize = (int) (16 * Math.pow(2, size));
+		updateSpritePosition((int) getX() + getDisplacement(), (int) getY() + getDisplacement());
 		//If slimes are smaller than 32 by 32, puts them in the center of the 32 by 32 square where they are
 		//Also updates size the sprite is resized to to keep proportions consistent
 		updateImage();

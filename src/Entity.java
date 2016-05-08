@@ -40,7 +40,6 @@ public class Entity implements Activateable
 		maxHealth = entHealth;
 		name = entName;
 		attackPower = newAttackPower;
-		
 		sprite = new Sprite(x, y, name);
 	}
 	
@@ -208,6 +207,10 @@ public class Entity implements Activateable
 	public void paintSprite(Graphics g, int resize)
 	{
 		sprite.paintComponent(g, resize);
+	}
+	public void updateSpritePosition(int newX, int newY)
+	{
+		sprite.updatePosition(newX, newY);
 	}
 	public void paintComponent(Graphics g)
 	{	

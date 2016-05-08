@@ -65,6 +65,7 @@ public abstract class Playable extends Entity implements Activateable
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
+		
 		if(moveSelect.isActive())
 			moveSelect.paintComponent(g);
 		else if(enemySelect.isActive())

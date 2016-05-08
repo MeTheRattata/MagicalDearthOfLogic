@@ -68,7 +68,7 @@ public class Slime extends Entity
 			else if(((((double) getHealth() / (double) getMaxHealth()) * 100) <= 25))//health is below 25%
 			restOfName += "25";
 		}
-		sprite.updateImage(restOfName);
+		updateImage(restOfName);
 	}
 	/**
 	 * Decrement 
@@ -107,8 +107,6 @@ public class Slime extends Entity
 	 */
 	public void paintComponent(Graphics g)
 	{
-		sprite.paintComponent(g, resize);
-		
 		if(getDamageFrames() > 0)
 		{
 			decrementDamageFrames();
@@ -116,6 +114,8 @@ public class Slime extends Entity
 				updateImage();
 			//TODO: look over slime class, make sure it works right with sprites updatename
 		}
+		
+		paintSprite(g, resize);
 		
 		//Draw Health Bar
 		g.setColor(Color.RED);

@@ -134,21 +134,14 @@ public class Player extends Playable implements Activateable
 	 */
 	public void paintComponent(Graphics g)
 	{ 
-		//multiplied by 256 to make image 4 times larger
-		g.drawImage(getImage(), (int) getX(), (int) getY(), 128, 128, null);
 		if(getDamageFrames() > 0)
 		{
 			decrementDamageFrames();
 			if(getDamageFrames() == 0)
-				updateImage(getName().replaceAll("Dmg", "") + type);
+				updateImage("wizard" + type);
 		}
 		
-		//Draw Health Bar
-		g.setColor(Color.RED);
-		g.fillRect((int) getX(), (int) getY() + 132, 128, 8);
-		g.setColor(Color.GREEN);
-		double barLength =  ((double) getHealth() / getMaxHealth()) * 128;
-		g.fillRect((int) getX(), (int) getY() + 132, (int) barLength, 8);
+		paintSprite(g);
 		
 		//draw mana bar
 		g.setColor(Color.WHITE);

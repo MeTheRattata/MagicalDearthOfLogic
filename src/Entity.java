@@ -22,7 +22,7 @@ public class Entity implements Activateable
 	private int damageFrames = 0;
 	private int attackTarget = -1;
 	private boolean active = true;
-	protected Sprite sprite;
+	private Sprite sprite;
 	
 	/**
 	 * Constructor for Entity class.
@@ -200,6 +200,15 @@ public class Entity implements Activateable
 	 * Paints sprite and then health bar based on health percentage
 	 * @param g: what the image is painted with
 	 */
+	
+	public void paintSprite(Graphics g)
+	{
+		sprite.paintComponent(g);
+	}
+	public void paintSprite(Graphics g, int resize)
+	{
+		sprite.paintComponent(g, resize);
+	}
 	public void paintComponent(Graphics g)
 	{	
 		//If taking damage, draw sprite to damaged form
@@ -211,7 +220,7 @@ public class Entity implements Activateable
 		}
 		
 		//multiplied by 256 to make image 4 times larger
-		sprite.paintComponent(g);
+		paintSprite(g);
 		
 		//Draw Health Bar
 		g.setColor(Color.RED);

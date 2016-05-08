@@ -18,9 +18,9 @@ public class Sprite implements Activateable
 		x = newX;
 		y = newY;
 		name = newName;
-		
+		System.out.println(name);
 		try {
-			image = ImageIO.read(new File(name));
+			image = ImageIO.read(new File("res/" + name + ".png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -35,7 +35,7 @@ public class Sprite implements Activateable
 	{
 		name = newName;
 		try {
-			image = ImageIO.read(new File(newName));
+			image = ImageIO.read(new File("res/" + newName + ".png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

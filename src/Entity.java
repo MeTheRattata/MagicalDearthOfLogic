@@ -26,11 +26,11 @@ public class Entity implements Activateable
 	
 	/**
 	 * Constructor for Entity class.
-	 * @param xPos: x position of entity
-	 * @param yPos: y position of entity
-	 * @param entHealth: health of the entity (when full)
-	 * @param entName: name of the entity, used to determine which sprite image it uses
-	 * @param newAttackPower: attack power of the entity
+	 * @param xPos: x position of Entity
+	 * @param yPos: y position of Entity
+	 * @param entHealth: health of the Entity (when full)
+	 * @param entName: name of the Entity, used to determine which image its sprite uses
+	 * @param newAttackPower: attack power of the Entity
 	 */
 	public Entity(double xPos, double yPos,  String entName, int entHealth, int newAttackPower, boolean isItMob)
 	{
@@ -58,7 +58,7 @@ public class Entity implements Activateable
 		return y;
 	}
 	/**
-	 * Update the position of the entity
+	 * Update the position of the Entity
 	 * @param newX: new x coordinate
 	 * @param newY: new y coordinate
 	 */
@@ -68,8 +68,17 @@ public class Entity implements Activateable
 		sprite.updatePosition(newX, newY);
 	}
 	/**
-	 * Decrements health based on the damage taken, then returns a boolean of whether the entity has died or not
-	 * @param damage: damage dealt to the entity
+	 * Updates the position of the Entity's Sprite, used when sprite position is different than Entity position
+	 * @param newX: the Sprite's new x
+	 * @param newY: the Sprite's new y
+	 */
+	public void updateSpritePosition(int newX, int newY)
+	{
+		sprite.updatePosition(newX, newY);
+	}
+	/**
+	 * Decrements health based on the damage taken, then returns a boolean of whether the Entity has died or not
+	 * @param damage: damage dealt to the Entity, negative if damage, positive if healing
 	 * @return: true if dead, false if not dead
 	 */
 	public boolean takeDamage(int damage)
@@ -124,7 +133,7 @@ public class Entity implements Activateable
 		return maxHealth;
 	}
 	/**
-	 * Return entity name
+	 * Return Entity name
 	 * @return name
 	 */
 	public String getName() {
@@ -151,67 +160,73 @@ public class Entity implements Activateable
 		damageFrames--;
 	}
 	/**
-	 * Set the entity's target 
-	 * @param newTarget: entity's new target
+	 * Set the Entity's target 
+	 * @param newTarget: Entity's new target
 	 */
 	public void setAttackTarget(int newTarget) {
 		attackTarget = newTarget;
 	}
-	
+	/**
+	 * Set the Entity's attack target to either 1 or 0 semi-randomly
+	 */
 	public void setRandomAttackTarget() 
 	{
 		attackTarget = (int) Math.random() ; 
 	}
 	/**
-	 * Return the entity's current target
+	 * Return the Entity's current target
 	 * @return: target
 	 */
 	public int getAttackTarget() {
 		return attackTarget;
 	}
 	/**
-	 * Updates the entity's BufferedImage
+	 * Updates the Entity's BufferedImage
 	 */
 	public void updateImage(String newName){
 		sprite.updateImage(newName);
 	}
 	/**
-	 * Activate entity
+	 * Activate Entity
 	 */
 	public void activate() {
 		active = true;
 	}	
 	/**
-	 * Deactivate entity
+	 * Deactivate Entity
 	 */
 	public void deActivate() {
 		active = false;	
 	}
 	/**
-	 * Return if the entity is active or not
+	 * Return if the Entity is active or not
 	 * @return: boolean value active
 	 */
 	public boolean isActive() {
 		return active;
 	}
 	/**
-	 * Paints the image with the selected Graphics object
-	 * Paints sprite and then health bar based on health percentage
-	 * @param g: what the image is painted with
+	 * Paints the Entity's sprite
+	 * @param g: the Graphics object the sprite is painted onto
 	 */
-	
 	public void paintSprite(Graphics g)
 	{
 		sprite.paintComponent(g);
 	}
+	/**
+	 * Paints the Entity's sprite with the specified resize amount
+	 * @param g: the Graphics object the Entity is painted onto
+	 * @param resize: the amount to resize the sprite by
+	 */
 	public void paintSprite(Graphics g, int resize)
 	{
 		sprite.paintComponent(g, resize);
 	}
-	public void updateSpritePosition(int newX, int newY)
-	{
-		sprite.updatePosition(newX, newY);
-	}
+	/**
+	 * Paints the Entity
+	 * Paints sprite and then health bar based on health percentage
+	 * @param g: the Graphics object the Entity is painted onto
+	 */
 	public void paintComponent(Graphics g)
 	{	
 		//If taking damage, draw sprite to damaged form

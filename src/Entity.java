@@ -6,13 +6,14 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
- * Entity class for MagicalDearthOfLogic
+ * A class to represent an Entity object
  * @author Metherat
  *
- * Used to create subclasses representing objects that have a position, health, attack power, a name and a BufferedImage.
+ * Entity: an Activateable object that has a position, health, attack power, a name and a Sprite.
  */
 public class Entity implements Activateable
 {
+	//TODO: Update Entity to have a default sprite and a damage sprite, damage is turned on when damage is taken
 	private double x;
 	private double y;
 	private int health;

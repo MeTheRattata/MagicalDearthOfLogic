@@ -1,6 +1,12 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
+/**
+ * A class that represents a Slime enemy
+ * @author Metherat
+ * 
+ * Slime: an Activateable Entity with a size, resize amount, and changing sprite based on damage percentile.
+ */
 public class Slime extends Entity
 {
 	private int size; //size of slime

@@ -1,11 +1,17 @@
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
+/**
+ * A class that represents a playable character
+ * @author Metherat
+ *
+ * Playable: an Activateable Entity that has enemySelect and moveSelect menus
+ */
 public abstract class Playable extends Entity implements Activateable
 {
 	//Protected so its easy to use their isActive, activate and deActivate methods in subclasses
-	protected TargetSelectMenu enemySelect;
-	protected FourOptionMenu moveSelect;
+	protected TargetSelectMenu enemySelect; //menu for selecting enemy target
+	protected FourOptionMenu moveSelect; //menu for selecting move to use
 	/**
 	 * Constructor for a playable object
 	 * @param xPos: x coordinate
@@ -43,6 +49,9 @@ public abstract class Playable extends Entity implements Activateable
 		if(enemySelect.intSelected(e) != -1)
 			enemySelect.deActivate();
 	}
+	/**
+	 * Sets the Playable character's target
+	 */
 	public void setAttackTarget(int target)
 	{
 		super.setAttackTarget(target);
@@ -61,7 +70,10 @@ public abstract class Playable extends Entity implements Activateable
 			enemySelect.activate();
 		}
 	}
-	
+	/**
+	 * Paints the Playable character and its active menus
+	 * @ param g: the Graphics panel to paint the Playable character onto
+	 */
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);

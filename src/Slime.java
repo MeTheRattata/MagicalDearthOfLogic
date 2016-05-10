@@ -124,6 +124,7 @@ public class Slime extends Entity
 		
 		paintSprite(g, resize);
 		
+		
 		//Draw Health Bar
 		g.setColor(Color.RED);
 		g.fillRect((int)getX(), (int) getY() + 132, 128, 8);

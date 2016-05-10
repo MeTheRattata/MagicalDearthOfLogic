@@ -24,6 +24,8 @@ public class Entity implements Activateable
 	private int attackTarget = -1;
 	private boolean active = true;
 	private Sprite sprite;
+	private Sprite hurtSprite;
+	private Sprite attackSprite;
 	
 	/**
 	 * Constructor for Entity class.
@@ -42,6 +44,10 @@ public class Entity implements Activateable
 		name = entName;
 		attackPower = newAttackPower;
 		sprite = new Sprite(x, y, name);
+		hurtSprite = new Sprite(x, y, name + "Dmg");
+		//TODO: Change doDamage method 
+		attackSprite = new Sprite(0, 0, name + "DefaultAttack");
+		attackSprite.deActivate();
 	}
 	
 	/**
@@ -101,6 +107,15 @@ public class Entity implements Activateable
 	 */
 	public int getAttackPower() {
 		return attackPower;
+	}
+	//TODO: Replace getAttackPower with doDamage in appropriate places in all subclasses and main class
+	/**
+	 * Do damage to another entity
+	 * @param entity
+	 */
+	public void doDamage(Entity entity)
+	{
+		entity.takeDamage(getAttackPower());
 	}
 	/**
 	 * Set attack power

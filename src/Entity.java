@@ -192,6 +192,7 @@ public class Entity implements Activateable
 	 */
 	public void setRandomAttackTarget() 
 	{
+		System.out.println("In set random attack");
 		attackTarget = (int) Math.random() ; 
 	}
 	/**

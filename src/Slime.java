@@ -18,22 +18,14 @@ public class Slime extends Entity
 	 */
 	public Slime(double xPos, double yPos, int newSize) 
 	{
-		super(xPos, yPos, "slime/slimeLarge100", assignHealth(newSize), 0, true);
+		super(xPos, yPos, "slime/slimeLarge100", assignHealth(newSize), newSize * -5, true);
 		size = newSize;
 		resize = (int) (16 * Math.pow(2, size));
 		updateSpritePosition((int) getX() + getDisplacement(), (int) getY() + getDisplacement());
 		//If slimes are smaller than 32 by 32, puts them in the center of the 32 by 32 square where they are
 		//Also updates size the sprite is resized to to keep proportions consistent
 		updateImage();
-		switch (size)
-		{
-			case 1:
-				setAttackPower(-5);
-			case 2:
-				setAttackPower(-10);
-			case 3:
-				setAttackPower(-15);	
-		}
+		setRandomAttackTarget();
 	}
 	/**
 	 * Assign max health based on size

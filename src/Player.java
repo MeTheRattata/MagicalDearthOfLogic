@@ -9,7 +9,6 @@ public class Player extends Playable implements Activateable
 	private String type;
 	int manaUsed;
 	//target for a healing spell, if it is -1 then the heal is an all heal, if not, target is companion
-	private int healTarget = -1;
 	protected TargetSelectMenu healSelect;
 	private boolean isHeal = false;
 	
@@ -54,7 +53,7 @@ public class Player extends Playable implements Activateable
 	 */
 	public boolean doDamage(Entity entity)
 	{
-		if(canUseMana())
+		if(manaUsed == 0 || canUseMana())
 			return entity.takeDamage(getAttackPower());
 		return false;
 	}
@@ -92,8 +91,6 @@ public class Player extends Playable implements Activateable
 				break;
 			}
 			moveSelect.deActivate();
-			if(!canUseMana())
-				super.setAttackPower(0);
 		}
 	}
 	/**

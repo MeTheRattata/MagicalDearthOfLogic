@@ -65,6 +65,8 @@ public class Player extends Playable implements Activateable
 	{
 		setAttackPower(moveSelect.getAttackPower(e));
 		int attack = getAttackPower();
+		
+		//TODO: Change switch case to using attack names instead of attack power
 		if(attack != -1)
 		{
 			switch(attack)

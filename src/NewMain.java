@@ -132,6 +132,8 @@ public class NewMain extends JPanel
 						{
 							menuNum = 3;
 							player.moveSelect.activate();
+							entities.get(2).setRandomAttackTarget();
+							entities.get(3).setRandomAttackTarget();
 							attackReady = true;
 						}
 						break;	
@@ -146,6 +148,7 @@ public class NewMain extends JPanel
 						
 						if(target < 4) //Attack Enemies or Single Heal
 						{ 	
+							System.out.println(target + " " + entities.get(i).getAttackPower());
 							boolean deadOpponent = entities.get(i).doDamage(entities.get(target));
 							//If the opponent is dead and the attacker is the companion or player
 							if(deadOpponent && i < 2)
@@ -154,7 +157,6 @@ public class NewMain extends JPanel
 								//If a kill is made, refill player's mana
 								player.refillMana();
 							}
-								
 						}
 						else if(target == 4) //Team heal
 						{

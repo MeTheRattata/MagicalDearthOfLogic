@@ -35,11 +35,6 @@ public class Slime extends Entity
 				setAttackPower(-15);	
 		}
 	}
-	public boolean doDamage(Entity entity)
-	{
-		setRandomAttackTarget();
-		return(entity.takeDamage(getAttackPower()));
-	}
 	/**
 	 * Assign max health based on size
 	 * @param size: the size of the slime

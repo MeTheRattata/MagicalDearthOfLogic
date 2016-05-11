@@ -52,13 +52,11 @@ public class Player extends Playable implements Activateable
 	 * Do damage to an Entity and use mana required
 	 * @param entity: the Entity being targeted
 	 */
-	public void doDamage(Entity entity)
+	public boolean doDamage(Entity entity)
 	{
-		if(mana >= manaUsed)
-		{
-			entity.takeDamage(getAttackPower());
-			mana -= manaUsed;
-		}		
+		if(canUseMana())
+			return entity.takeDamage(getAttackPower());
+		return false;
 	}
 	/**
 	 * Return attack power based on MouseEvent click in 4 option menu.

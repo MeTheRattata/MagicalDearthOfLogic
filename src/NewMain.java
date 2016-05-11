@@ -144,16 +144,22 @@ public class NewMain extends JPanel
 					{
 						if(i < 2) //Id of player and companion
 						{
-							if(entities.get(i).getAttackTarget() == 4)
+							int target = entities.get(i).getAttackTarget();
+							
+							if(target < 4) //Attack Enemies or Single Heal
 							{
-								entities.get(0).takeDamage(entities.get(i).getAttackPower());
-								entities.get(1).takeDamage(entities.get(i).getAttackPower());
+								if(entities.get(i).doDamage(entities.get(target)))
+								{
+									entities.set(target, new Slime(xEntityPos[target], yEntityPos[target],(int)(Math.random()*3) + 1));
+									//If a kill is made, refill player's mana
+									player.refillMana();
+								}
+									
 							}
-							else
+							else if(target == 4) //Team heal
 							{
-								if(entities.get(entities.get(i).getAttackTarget()).takeDamage(entities.get(i).getAttackPower()))
-									entities.set(entities.get(i).getAttackTarget(), new Slime(xEntityPos[entities.get(i).getAttackTarget()],
-										yEntityPos[entities.get(i).getAttackTarget()],(int)(Math.random()*3) + 1));
+								entities.get(i).doDamage(entities.get(0));
+								entities.get(i).doDamage(entities.get(1));
 							}
 						}
 						else //Enemy ids

@@ -116,9 +116,9 @@ public class Entity implements Activateable
 	 * Do damage to another entity
 	 * @param entity: the Entity being targeted
 	 */
-	public void doDamage(Entity entity)
+	public boolean doDamage(Entity entity)
 	{
-		entity.takeDamage(getAttackPower());
+		return entity.takeDamage(getAttackPower());
 	}
 	/**
 	 * Set attack power

@@ -23,6 +23,9 @@ public class Entity implements Activateable
 	private int damageFrames = 0;
 	private int attackTarget = -1;
 	private boolean active = true;
+	
+	//2D array used here to later support animated sprites (idle animations, etc)
+	private Sprite [][] sprites;
 	private Sprite sprite;
 	private Sprite hurtSprite;
 	private Sprite attackSprite;
@@ -44,10 +47,10 @@ public class Entity implements Activateable
 		name = entName;
 		attackPower = newAttackPower;
 		sprite = new Sprite(x, y, name);
-		hurtSprite = new Sprite(x, y, name + "Dmg");
+		//hurtSprite = new Sprite(x, y, name + "Dmg");
 		//TODO: Change doDamage method 
-		attackSprite = new Sprite(0, 0, name + "DefaultAttack");
-		attackSprite.deActivate();
+		//attackSprite = new Sprite(0, 0, name + "DefaultAttack");
+		//attackSprite.deActivate();
 	}
 	
 	/**
@@ -111,7 +114,7 @@ public class Entity implements Activateable
 	//TODO: Replace getAttackPower with doDamage in appropriate places in all subclasses and main class
 	/**
 	 * Do damage to another entity
-	 * @param entity
+	 * @param entity: the Entity being targeted
 	 */
 	public void doDamage(Entity entity)
 	{

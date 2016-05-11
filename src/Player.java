@@ -48,9 +48,17 @@ public class Player extends Playable implements Activateable
 		else
 			return false;
 	}
-	public int getAttackPower() 
-	{	
-		return super.getAttackPower();
+	/**
+	 * Do damage to an Entity and use mana required
+	 * @param entity: the Entity being targeted
+	 */
+	public void doDamage(Entity entity)
+	{
+		if(mana >= manaUsed)
+		{
+			entity.takeDamage(getAttackPower());
+			mana -= manaUsed;
+		}		
 	}
 	/**
 	 * Return attack power based on MouseEvent click in 4 option menu.
@@ -142,6 +150,13 @@ public class Player extends Playable implements Activateable
 		}
 		
 		paintSprite(g);
+		
+		//Draw Health Bar
+		g.setColor(Color.RED);
+		g.fillRect((int)getX(), (int) getY() + 132, 128, 8);
+		g.setColor(Color.GREEN);
+		double barLength =  ((double) getHealth() / getMaxHealth()) * 128;
+		g.fillRect((int)getX(), (int) getY() + 132, (int) barLength, 8);
 		
 		//draw mana bar
 		g.setColor(Color.WHITE);

@@ -159,7 +159,7 @@ public class NewMain extends JPanel
 						else //Enemy ids
 						{
 							entities.get(i).setRandomAttackTarget();
-							entities.get(entities.get(i).getAttackTarget()).takeDamage(entities.get(i).getAttackPower());
+							entities.get(i).doDamage(entities.get(entities.get(i).getAttackTarget()));;
 						}
 					}
 					

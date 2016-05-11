@@ -142,30 +142,24 @@ public class NewMain extends JPanel
 				{
 					for(int i = 0; i < entities.size(); i++)
 					{
-						if(i < 2) //Id of player and companion
-						{
-							int target = entities.get(i).getAttackTarget();
-							
-							if(target < 4) //Attack Enemies or Single Heal
+						int target = entities.get(i).getAttackTarget();
+						
+						if(target < 4) //Attack Enemies or Single Heal
+						{ 	
+							boolean deadOpponent = entities.get(i).doDamage(entities.get(target));
+							//If the opponent is dead and the attacker is the companion or player
+							if(deadOpponent && i < 2)
 							{
-								if(entities.get(i).doDamage(entities.get(target)))
-								{
-									entities.set(target, new Slime(xEntityPos[target], yEntityPos[target],(int)(Math.random()*3) + 1));
-									//If a kill is made, refill player's mana
-									player.refillMana();
-								}
-									
+								entities.set(target, new Slime(xEntityPos[target], yEntityPos[target],(int)(Math.random()*3) + 1));
+								//If a kill is made, refill player's mana
+								player.refillMana();
 							}
-							else if(target == 4) //Team heal
-							{
-								entities.get(i).doDamage(entities.get(0));
-								entities.get(i).doDamage(entities.get(1));
-							}
+								
 						}
-						else //Enemy ids
+						else if(target == 4) //Team heal
 						{
-							entities.get(i).setRandomAttackTarget();
-							entities.get(i).doDamage(entities.get(entities.get(i).getAttackTarget()));;
+							entities.get(i).doDamage(entities.get(0));
+							entities.get(i).doDamage(entities.get(1));
 						}
 					}
 					

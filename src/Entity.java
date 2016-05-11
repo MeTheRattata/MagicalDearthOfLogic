@@ -94,6 +94,8 @@ public class Entity implements Activateable
 	public boolean takeDamage(int damage)
 	{
 		health += damage;
+		if(health > maxHealth)
+			health = maxHealth;
 		if(damage < 0) //If is damage taken and not healing
 		{
 			damageFrames += 30;
